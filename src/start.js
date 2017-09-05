@@ -1,15 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-function Welcome(){
-  return (
-    <div>
-      Hi there from Welcome component
-    </div>
-  )
-}
+//React Components
+import Welcome from './Welcome';
+import Logo from './Logo';
 
 ReactDOM.render(
-    <Welcome/>,
+    <Logo/>,
     document.querySelector('main')
 );
