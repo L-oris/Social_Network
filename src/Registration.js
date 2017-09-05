@@ -23,8 +23,8 @@ export default class Registration extends React.Component {
       return;
     }
     axios.post('/register',this.state)
-    .then(function(data){
-      console.log('Post went goood');
+    .then(function(){
+      location.replace('/')
     })
     .catch(function(err){
       console.log('something went wrong');
