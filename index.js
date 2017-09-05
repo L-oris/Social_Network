@@ -2,9 +2,9 @@ const express = require('express'),
       app = express(),
       compression = require('compression'),
       bodyParser = require('body-parser'),
-      cookieSession = require('cookie-session'),
-      db = require('./database/db');
+      cookieSession = require('cookie-session')
 
+const {createUser} = require('./database/methods')
 
 if(process.env.NODE_ENV != 'production'){
   app.use(require('./build'))
@@ -32,11 +32,9 @@ app.get('/welcome', function(req,res){
   res.sendFile(__dirname + '/index.html')
 })
 
-//REGISTER NEW USER INTO DATABASE
+//CREATE NEW USER INTO DATABASE
 app.post('/register', function(req,res,next){
-  const {first,last,email,password} = req.body;
-  const query = 'INSERT INTO users (first,last,email,password) VALUES ($1,$2,$3,$4)'
-  db.query(query,[first,last,email,password])
+  createUser(req.body)
   .then(function(){
     req.session.user = true
     res.json({success:true})
