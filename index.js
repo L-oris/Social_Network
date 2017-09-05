@@ -1,23 +1,27 @@
-const express = require('express');
-const app = express();
-const compression = require('compression');
+const express = require('express')
+const app = express()
+const compression = require('compression')
 
 if(process.env.NODE_ENV != 'production'){
-  app.use(require('./build'));
+  app.use(require('./build'))
 }
 
-app.use(compression());
+app.use(compression())
 
-app.use(express.static('./public'));
+app.use(express.static('./public'))
 
 app.get('/', function(req, res){
-  res.sendFile(__dirname + '/index.html');
-});
+  res.sendFile(__dirname + '/index.html')
+})
 
 app.get('/welcome', function(req, res){
-  res.sendFile(__dirname + '/index.html');
-});
+  res.sendFile(__dirname + '/index.html')
+})
+
+app.get('*',function(req,res){
+  res.send('nothing found')
+})
 
 app.listen(8080, function() {
     console.log("I'm listening.")
-});
+})

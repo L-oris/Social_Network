@@ -1,11 +1,15 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react'
+import ReactDOM from 'react-dom'
 
 //React Components
-import Welcome from './Welcome';
-import Logo from './Logo';
+import Welcome from './Welcome'
+import Logo from './Logo'
+
+//render different component based on url changes
+let componentToRender
+location.pathname === '/welcome' ? componentToRender = <Welcome/> : componentToRender = <Logo/>
 
 ReactDOM.render(
-    <Logo/>,
-    document.querySelector('main')
-);
+  componentToRender,
+  document.querySelector('main')
+)
