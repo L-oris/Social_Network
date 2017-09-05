@@ -4,20 +4,24 @@ export default class Registration extends React.Component {
 
   constructor(props){
     super(props)
-    this.state = {
-      first: null,
-      last: null,
-      email: null,
-      password: null
-    }
+    //initial state
+    this.state = {}
   }
 
   handleInputChange(e){
-    console.log('input changed');
+    //update state with current value of <input>s
+    this.setState({
+      [e.target.name]: e.target.value
+    })
   }
 
   handleSubmit(e){
-    console.log('button clicked')
+    const {first,last,email,password} = this.state
+    if(!(first&&last&&email&&password)){
+      console.log('fields are not filled');
+      return;
+    }
+    console.log('form is filled, state is now',this.state);
   }
 
   render(){
