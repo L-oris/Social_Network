@@ -19,21 +19,25 @@ export default class Registration extends React.Component {
   handleSubmit(e){
     const {first,last,email,password} = this.state
     if(!(first&&last&&email&&password)){
-      console.log('fields are not filled');
-      return;
+      return this.setState({
+        error: 'All fields are required'
+      })
     }
     axios.post('/register',this.state)
     .then(function(){
       location.replace('/')
     })
     .catch(function(err){
-      console.log('something went wrong');
+      return this.setState({
+        error: 'Something went wrong. Please try again!'
+      })
     })
   }
 
   render(){
     return (
       <div>
+        <h4 className="text-error">{this.state.error}</h4>
         <input name="first" onChange={e=>this.handleInputChange(e)} placeholder="First Name"/>
         <input name="last" onChange={e=>this.handleInputChange(e)} placeholder="Last Name"/>
         <input name="email" onChange={e=>this.handleInputChange(e)} placeholder="Email"/>
