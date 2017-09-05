@@ -1,13 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+function Welcome(){
+  return (
+    <div>
+      Hi there from Welcome component
+    </div>
+  )
+}
+
 ReactDOM.render(
-    <HelloWorld />,
+    <Welcome/>,
     document.querySelector('main')
 );
-
-function HelloWorld() {
-    return (
-        <div>Hello, World!</div>
-    );
-}
