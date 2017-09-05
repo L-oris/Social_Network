@@ -1,4 +1,5 @@
-import React from 'react';
+import React from 'react'
+import axios from 'axios'
 
 export default class Registration extends React.Component {
 
@@ -21,7 +22,13 @@ export default class Registration extends React.Component {
       console.log('fields are not filled');
       return;
     }
-    console.log('form is filled, state is now',this.state);
+    axios.post('/register',this.state)
+    .then(function(data){
+      console.log('Post went goood');
+    })
+    .catch(function(err){
+      console.log('something went wrong');
+    })
   }
 
   render(){
