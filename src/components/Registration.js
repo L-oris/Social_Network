@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {Link} from 'react-router'
 import axios from 'axios'
 
 export default class Registration extends Component {
@@ -43,6 +44,7 @@ export default class Registration extends Component {
         <input name="email" onChange={e=>this.handleInputChange(e)} placeholder="Email"/>
         <input name="password" onChange={e=>this.handleInputChange(e)} placeholder="Password"/>
         <button onClick={e=>this.handleSubmit(e)}>Submit</button>
+        <Link to='/login'>Login</Link>
       </div>
     )
   }

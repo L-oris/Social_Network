@@ -3,14 +3,6 @@ import {Link} from 'react-router'
 
 export default function(props){
 
-  function renderLink(currentLocation){
-    if(currentLocation === '/register'){
-      return <Link to='/login'>Login</Link>
-    } else {
-      return <Link to='/register'>Register</Link>
-    }
-  }
-
   return (
     <div>
       <h1>Welcome to Munity</h1>
@@ -19,7 +11,7 @@ export default function(props){
 
       {props.children}
 
-      {renderLink(props.location.pathname)}
     </div>
   )
+  
 }
