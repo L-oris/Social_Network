@@ -4,7 +4,7 @@ const express = require('express'),
       bodyParser = require('body-parser'),
       cookieSession = require('cookie-session')
 
-const {createUser} = require('./database/methods')
+const {createUser, checkUser} = require('./database/methods')
 
 if(process.env.NODE_ENV != 'production'){
   app.use(require('./build'))
@@ -18,6 +18,7 @@ app.use(cookieSession({
 app.use(bodyParser.json());
 app.use(express.static('./public'))
 
+//REDIRECT USER BASED ON HIS REGISTRATION STATUS
 app.get('/', function(req,res){
   if(!req.session.user){
     return res.redirect('/welcome')
@@ -25,6 +26,7 @@ app.get('/', function(req,res){
   res.sendFile(__dirname + '/index.html')
 })
 
+//REDIRECT USER BASED ON HIS REGISTRATION STATUS
 app.get('/welcome', function(req,res){
   if(req.session.user){
     return res.redirect('/')
@@ -45,9 +47,22 @@ app.post('/register', function(req,res,next){
   })
 })
 
+//CHECK FOR ALREADY REGISTERED USER
+app.post('/login', function(req,res,next){
+  checkUser(req.body)
+  .then(function(){
+    req.session.user = true
+    res.json({success:true})
+  })
+  .catch(function(err){
+    //pass error to next Express error handler
+    next('User not found')
+  })
+})
+
 //catch all request for unexisting routes
 app.get('*',function(req,res){
-  res.send('nothing found')
+  res.send('Route not found')
 })
 
 //handle 'Express' errors
