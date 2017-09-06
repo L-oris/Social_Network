@@ -1,5 +1,4 @@
-import React from 'react';
-import Registration from './Registration'
+import React from 'react'
 
 export default function(props){
   return (
@@ -7,7 +6,9 @@ export default function(props){
       <h1>Welcome to Munity</h1>
       <h5>We are rebelling because all other online communities are revolting.</h5>
       <h3>Join the rebellion!</h3>
-      <Registration/>
+
+      {props.children}
+
     </div>
   )
 }

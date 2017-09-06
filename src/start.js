@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom'
 import Welcome from './Welcome'
 import Logo from './Logo'
 
-//render different component based on url changes
+//rely on server-side session to know if user is registered or logged in, and display components based on that
 let componentToRender
 location.pathname === '/welcome' ? componentToRender = <Welcome/> : componentToRender = <Logo/>
 
