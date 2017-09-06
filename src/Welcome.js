@@ -8,7 +8,7 @@ export default function(props){
       <h3>Join the rebellion!</h3>
 
       {props.children}
-
+      
     </div>
   )
 }
