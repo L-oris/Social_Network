@@ -1,7 +1,7 @@
-import React from 'react'
+import React, {Component} from 'react'
 import axios from 'axios'
 
-export default class Registration extends React.Component {
+export default class Registration extends Component {
 
   constructor(props){
     super(props)
@@ -24,10 +24,10 @@ export default class Registration extends React.Component {
       })
     }
     axios.post('/register',this.state)
-    .then(function(){
+    .then(()=>{
       location.replace('/')
     })
-    .catch(function(err){
+    .catch((err)=>{
       return this.setState({
         error: 'Something went wrong. Please try again!'
       })
