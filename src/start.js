@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {Router,Route,IndexRoute,hashHistory} from 'react-router'
+import {hashHistory,Router,Route,IndexRedirect} from 'react-router'
 
 //React Components
 import Welcome from './Welcome'
@@ -12,7 +12,8 @@ import Logo from './Logo'
 const welcomeRouter = (
   <Router history={hashHistory}>
     <Route path="/" component={Welcome}>
-      <IndexRoute component={Registration}/>
+      <IndexRedirect to="/register"/>
+      <Route path="/register" component={Registration}/>
       <Route path="/login" component={Login}/>
     </Route>
   </Router>

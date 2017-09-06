@@ -4,10 +4,10 @@ import {Link} from 'react-router'
 export default function(props){
 
   function renderLink(currentLocation){
-    if(currentLocation === '/'){
+    if(currentLocation === '/register'){
       return <Link to='/login'>Login</Link>
     } else {
-      return <Link to='/'>Register</Link>
+      return <Link to='/register'>Register</Link>
     }
   }
 
