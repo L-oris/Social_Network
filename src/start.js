@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom'
 import {hashHistory,Router,Route,IndexRedirect} from 'react-router'
 
 //React Components
-import Welcome from './Welcome'
-import Registration from './Registration'
-import Login from './Login'
-import Logo from './Logo'
+import Welcome from './components/Welcome'
+import Registration from './components/Registration'
+import Login from './components/Login'
+import Logo from './components/Logo'
 
 //client-side routing for non-registered users
 const welcomeRouter = (
