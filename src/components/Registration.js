@@ -38,13 +38,33 @@ export default class Registration extends Component {
   render(){
     return (
       <div>
-        <h4 className="text-error">{this.state.error}</h4>
-        <input name="first" onChange={e=>this.handleInputChange(e)} placeholder="First Name"/>
-        <input name="last" onChange={e=>this.handleInputChange(e)} placeholder="Last Name"/>
-        <input name="email" onChange={e=>this.handleInputChange(e)} placeholder="Email"/>
-        <input name="password" onChange={e=>this.handleInputChange(e)} placeholder="Password"/>
-        <button onClick={e=>this.handleSubmit(e)}>Submit</button>
-        <Link to='/login'>Login</Link>
+        <div className="form">
+          <h4 className="form-error">{this.state.error}</h4>
+
+          <div className="form-field">
+            <h6 className="form-field-title">First Name</h6>
+            <input name="first" onChange={e=>this.handleInputChange(e)} placeholder="First Name" className="form-field-input"/>
+          </div>
+
+          <div className="form-field">
+            <h6 className="form-field-title">Last Name</h6>
+            <input name="last" onChange={e=>this.handleInputChange(e)} placeholder="Last Name" className="form-field-input"/>
+          </div>
+
+          <div className="form-field">
+            <h6 className="form-field-title">Email</h6>
+            <input name="password" onChange={e=>this.handleInputChange(e)} placeholder="Password" className="form-field-input"/>
+          </div>
+
+          <div className="form-field">
+            <h6 className="form-field-title">Password</h6>
+            <input name="password" onChange={e=>this.handleInputChange(e)} placeholder="Password" className="form-field-input"/>
+          </div>
+
+          <button onClick={e=>this.handleSubmit(e)} className="form-submit">Submit</button>
+        </div>
+
+        <Link to='/login' className="link">Login</Link>
       </div>
     )
   }
