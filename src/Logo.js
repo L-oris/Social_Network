@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function(props){
+export default (props)=>{
   return (
     <div>
       <h1>Munity</h1>
