@@ -18,12 +18,7 @@ export default class Registration extends Component {
   }
 
   handleSubmit(e){
-    const {first,last,email,password} = this.state
-    if(!(first&&last&&email&&password)){
-      return this.setState({
-        error: 'All fields are required'
-      })
-    }
+    e.preventDefault()
     axios.post('/register',this.state)
     .then(()=>{
       location.replace('/')
@@ -38,31 +33,31 @@ export default class Registration extends Component {
   render(){
     return (
       <div>
-        <div className="form">
+        <form onSubmit={e=>this.handleSubmit(e)} className="form">
           <h4 className="form-error">{this.state.error}</h4>
 
           <div className="form-field">
             <h6 className="form-field-title">First Name</h6>
-            <input name="first" onChange={e=>this.handleInputChange(e)} placeholder="First Name" className="form-field-input"/>
+            <input required name="first" onChange={e=>this.handleInputChange(e)} placeholder="First Name" className="form-field-input"/>
           </div>
 
           <div className="form-field">
             <h6 className="form-field-title">Last Name</h6>
-            <input name="last" onChange={e=>this.handleInputChange(e)} placeholder="Last Name" className="form-field-input"/>
+            <input required name="last" onChange={e=>this.handleInputChange(e)} placeholder="Last Name" className="form-field-input"/>
           </div>
 
           <div className="form-field">
             <h6 className="form-field-title">Email</h6>
-            <input name="password" onChange={e=>this.handleInputChange(e)} placeholder="Password" className="form-field-input"/>
+            <input required type="email" name="email" onChange={e=>this.handleInputChange(e)} placeholder="Email" className="form-field-input"/>
           </div>
 
           <div className="form-field">
             <h6 className="form-field-title">Password</h6>
-            <input name="password" onChange={e=>this.handleInputChange(e)} placeholder="Password" className="form-field-input"/>
+            <input required type="password" name="password" onChange={e=>this.handleInputChange(e)} placeholder="Password" className="form-field-input"/>
           </div>
 
-          <button onClick={e=>this.handleSubmit(e)} className="form-submit">Submit</button>
-        </div>
+          <button type="submit" className="form-submit">Submit</button>
+        </form>
 
         <Link to='/login' className="link">Login</Link>
       </div>

@@ -17,12 +17,7 @@ export default class Login extends Component {
   }
 
   handleSubmit(e){
-    const {email,password} = this.state
-    if(!(email&&password)){
-      return this.setState({
-        error: 'All fields are required'
-      })
-    }
+    e.preventDefault()
     axios.post('/login',this.state)
     .then(()=>{
       location.replace('/')
@@ -37,11 +32,23 @@ export default class Login extends Component {
   render(){
     return (
       <div>
-        <h4 className="text-error">{this.state.error}</h4>
-        <input name="email" onChange={e=>this.handleInputChange(e)} placeholder="Email"/>
-        <input name="password" onChange={e=>this.handleInputChange(e)} placeholder="Password"/>
-        <button onClick={e=>this.handleSubmit(e)}>Submit</button>
-        <Link to='/register'>Register</Link>
+        <form onSubmit={e=>this.handleSubmit(e)} className="form">
+          <h4 className="form-error">{this.state.error}</h4>
+
+          <div className="form-field">
+            <h6 className="form-field-title">Email</h6>
+            <input required type="email" name="email" onChange={e=>this.handleInputChange(e)} placeholder="Email" className="form-field-input"/>
+          </div>
+
+          <div className="form-field">
+            <h6 className="form-field-title">Password</h6>
+            <input required type="password" name="password" onChange={e=>this.handleInputChange(e)} placeholder="Password" className="form-field-input"/>
+          </div>
+
+          <button type="submit" className="form-submit">Submit</button>
+        </form>
+
+        <Link to='/register' className="link">Register</Link>
       </div>
     )
   }
