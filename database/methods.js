@@ -12,7 +12,9 @@ module.exports.createUser = function({first,last,email,password}){
       user_id:userData.rows[0].id,
       first:userData.rows[0].first,
       last:userData.rows[0].last,
-      email:userData.rows[0].email
+      email:userData.rows[0].email,
+      profilePicUrl:'https://s3.amazonaws.com/social-network-loris/765-default-avatar.png',
+      bio:null
     }
   })
 }
@@ -46,7 +48,7 @@ module.exports.checkUser = function({email,password:plainTextPassword}){
         first: userObj.first,
         last: userObj.last,
         email: userObj.email,
-        profilePicUrl: userObj.profilePicUrl,
+        profilePicUrl: userObj.profilePicUrl || 'https://s3.amazonaws.com/social-network-loris/765-default-avatar.png',
         bio: userObj.bio
       }
     })

@@ -43,8 +43,6 @@ app.post('/register', function(req,res,next){
   createUser(req.body)
   .then(function(userData){
     req.session.user = userData
-    //set default profile picture for new user
-    req.session.profilePicUrl = 'https://s3.amazonaws.com/social-network-loris/765-default-avatar.png'
     res.json({success:true})
   })
   .catch(function(err){
@@ -61,10 +59,6 @@ app.post('/login', function(req,res,next){
   }
   checkUser(req.body)
   .then(function(userData){
-    //set default profile picture if user doesn't have one
-    if(!userData.profilePicUrl){
-      userData.profilePicUrl = 'https://s3.amazonaws.com/social-network-loris/765-default-avatar.png'
-    }
     req.session.user = userData
     res.json({success:true})
   })
