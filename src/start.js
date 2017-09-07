@@ -6,7 +6,7 @@ import {hashHistory,Router,Route,IndexRedirect} from 'react-router'
 import Welcome from './components/Welcome'
 import Registration from './components/Registration'
 import Login from './components/Login'
-import Logo from './components/Logo'
+import App from './components/App'
 
 //client-side routing for non-registered users
 const welcomeRouter = (
@@ -21,7 +21,7 @@ const welcomeRouter = (
 
 //rely on server-side session to know if user is registered-logged in, and display React components based on that
 let componentToRender
-location.pathname === '/welcome' ? componentToRender = welcomeRouter : componentToRender = <Logo/>
+location.pathname === '/welcome' ? componentToRender = welcomeRouter : componentToRender = <App/>
 
 ReactDOM.render(
   componentToRender,

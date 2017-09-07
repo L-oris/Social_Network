@@ -2,7 +2,6 @@ import React from 'react'
 import {Link} from 'react-router'
 
 export default function(props){
-
   return (
     <div>
       <h1>Welcome to Munity</h1>
@@ -13,5 +12,5 @@ export default function(props){
 
     </div>
   )
-  
+
 }

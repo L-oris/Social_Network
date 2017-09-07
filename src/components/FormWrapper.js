@@ -7,7 +7,6 @@ export default function(Component,url){
 
     constructor(props){
       super(props)
-      //initial state
       this.state = {}
     }
 
