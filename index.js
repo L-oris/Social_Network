@@ -36,6 +36,10 @@ app.get('/welcome', function(req,res){
 
 //CREATE NEW USER INTO DATABASE
 app.post('/register', function(req,res,next){
+  const {first,last,email,password} = req.body
+  if(!(first&&last&&email&&password)){
+    throw 'Not all fields provided for registering a new user'
+  }
   createUser(req.body)
   .then(function(){
     req.session.user = true
@@ -49,6 +53,10 @@ app.post('/register', function(req,res,next){
 
 //CHECK FOR ALREADY REGISTERED USER
 app.post('/login', function(req,res,next){
+  const {email,password} = req.body
+  if(!(email&&password)){
+    throw 'Not all fields provided for logging in the user'
+  }
   checkUser(req.body)
   .then(function(){
     req.session.user = true
