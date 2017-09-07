@@ -31,11 +31,32 @@ export default class App extends Component {
     })
   }
 
+  closeUploader(e){
+    this.setState({
+      uploaderIsVisible: false
+    })
+  }
+
+  uploadUserPic(e){
+    //use built-in FormData API
+    const formData = new FormData()
+    formData.append('file',e.target.files[0])
+    axios.put('/upload_profile_pic',formData)
+    .then((serverResponse)=>{
+      console.log('everything went good when uploading');
+    })
+    .catch((err)=>{
+      this.setState({
+        error: 'Something went wrong. Please try again!'
+      })
+    })
+  }
+
   render(){
     const {error,uploaderIsVisible,first,last,profilePicUrl} = this.state
     return (
       <div>
-        {uploaderIsVisible && <ProfilePicUpload/>}
+        {uploaderIsVisible && <ProfilePicUpload uploadUserPic={e=>this.uploadUserPic(e)} closeUploader={e => this.closeUploader(e)}/>}
         <nav className="nav">
           <Logo/>
           <ProfilePic first={first} last={last} profilePicUrl={profilePicUrl} showUploader={e => this.showUploader(e)}/>
