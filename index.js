@@ -68,6 +68,13 @@ app.post('/login', function(req,res,next){
   })
 })
 
+app.get('/getUser',function(req,res){
+  if(!req.session.user){
+    throw 'No logged in user in current session'
+  }
+  res.json(req.session.user)
+})
+
 //catch all request for unexisting routes
 app.get('*',function(req,res){
   res.send('Route not found')
