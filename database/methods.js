@@ -4,14 +4,15 @@ const {hashPassword,checkPassword} = require('./hashing')
 module.exports.createUser = function({first,last,email,password}){
   return hashPassword(password)
   .then(function(hash){
-    const query = 'INSERT INTO users (first,last,email,password) VALUES ($1,$2,$3,$4) RETURNING id,first,last'
+    const query = 'INSERT INTO users (first,last,email,password) VALUES ($1,$2,$3,$4) RETURNING id,first,last,email'
     return db.query(query,[first,last,email,hash])
   })
   .then(function(userData){
     return {
       user_id:userData.rows[0].id,
       first:userData.rows[0].first,
-      last:userData.rows[0].last
+      last:userData.rows[0].last,
+      email:userData.rows[0].email
     }
   })
 }
@@ -41,7 +42,8 @@ module.exports.checkUser = function({email,password:plainTextPassword}){
       return {
         user_id: userObj.id,
         first: userObj.first,
-        last: userObj.last
+        last: userObj.last,
+        email: userObj.email
       }
     })
   })

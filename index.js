@@ -41,8 +41,8 @@ app.post('/register', function(req,res,next){
     throw 'Not all fields provided for registering a new user'
   }
   createUser(req.body)
-  .then(function(){
-    req.session.user = true
+  .then(function(userData){
+    req.session.user = userData
     res.json({success:true})
   })
   .catch(function(err){
@@ -58,8 +58,8 @@ app.post('/login', function(req,res,next){
     throw 'Not all fields provided for logging in the user'
   }
   checkUser(req.body)
-  .then(function(){
-    req.session.user = true
+  .then(function(userData){
+    req.session.user = userData
     res.json({success:true})
   })
   .catch(function(err){
