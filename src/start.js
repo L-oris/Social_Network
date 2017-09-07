@@ -7,6 +7,7 @@ import Welcome from './components/Welcome'
 import Registration from './components/Registration'
 import Login from './components/Login'
 import App from './components/App'
+import UserInfo from './components/UserInfo'
 
 //client-side routing for non-registered users
 const welcomeRouter = (
@@ -19,11 +20,20 @@ const welcomeRouter = (
   </Router>
 )
 
+//client-side routing for logged-in users
+const loggedInRouter = (
+  <Router history={hashHistory}>
+    <Route path="/" component={App}>
+      <Route path="/user" component={UserInfo}/>
+    </Route>
+  </Router>
+)
+
 //rely on server-side session to know if user is registered-logged in, and display React components based on that
-let componentToRender
-location.pathname === '/welcome' ? componentToRender = welcomeRouter : componentToRender = <App/>
+let routerToRender
+location.pathname === '/welcome' ? routerToRender = welcomeRouter : routerToRender = loggedInRouter
 
 ReactDOM.render(
-  componentToRender,
+  routerToRender,
   document.querySelector('main')
 )

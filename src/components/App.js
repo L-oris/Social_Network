@@ -4,7 +4,7 @@ import axios from 'axios'
 //React Components
 import Logo from './Logo'
 
-export default class FormWrapper extends Component {
+export default class App extends Component {
 
   constructor(props){
     super(props)
@@ -16,6 +16,9 @@ export default class FormWrapper extends Component {
       <div>
         <Logo/>
         <div>Hi there from App component</div>
+
+        {this.props.children}
+
       </div>
     )
   }
