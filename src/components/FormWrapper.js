@@ -1,10 +1,9 @@
-import React, {Component} from 'react'
-import {Link} from 'react-router'
+import React from 'react'
 import axios from 'axios'
 
 export default function(Component,url){
 
-  return class FormWrapper extends Component {
+  return class FormWrapper extends React.Component {
 
     constructor(props){
       super(props)
@@ -21,7 +20,7 @@ export default function(Component,url){
 
     handleSubmit(e){
       e.preventDefault()
-      axios.post('/register',this.state)
+      axios.post(url,this.state)
       .then(()=>{
         location.replace('/')
       })
@@ -34,7 +33,7 @@ export default function(Component,url){
 
     render(){
       return <Component
-              error={this.error}
+              error={this.state.error}
               handleInputChange={e => this.handleInputChange(e)}
               handleSubmit={e => this.handleSubmit(e)}/>
     }

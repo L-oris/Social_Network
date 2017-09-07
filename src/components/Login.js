@@ -1,56 +1,29 @@
-import React, {Component} from 'react'
+import React from 'react'
 import {Link} from 'react-router'
-import axios from 'axios'
+import FormWrapper from './FormWrapper'
 
-export default class Login extends Component {
+function LoginForm ({error,handleInputChange,handleSubmit}){
+  return (
+    <div>
+      <form onSubmit={handleSubmit} className="form">
+        <h4 className="form-error">{error}</h4>
 
-  constructor(props){
-    super(props)
-    this.state = {}
-  }
+        <div className="form-field">
+          <h6 className="form-field-title">Email</h6>
+          <input required type="email" name="email" onChange={handleInputChange} placeholder="Email" className="form-field-input"/>
+        </div>
 
-  handleInputChange(e){
-    //update state with current value of <input>s
-    this.setState({
-      [e.target.name]: e.target.value
-    })
-  }
+        <div className="form-field">
+          <h6 className="form-field-title">Password</h6>
+          <input required type="password" name="password" onChange={handleInputChange} placeholder="Password" className="form-field-input"/>
+        </div>
 
-  handleSubmit(e){
-    e.preventDefault()
-    axios.post('/login',this.state)
-    .then(()=>{
-      location.replace('/')
-    })
-    .catch((err)=>{
-      return this.setState({
-        error: 'Something went wrong. Please try again!'
-      })
-    })
-  }
+        <button type="submit" className="form-submit">Submit</button>
+      </form>
 
-  render(){
-    return (
-      <div>
-        <form onSubmit={e=>this.handleSubmit(e)} className="form">
-          <h4 className="form-error">{this.state.error}</h4>
-
-          <div className="form-field">
-            <h6 className="form-field-title">Email</h6>
-            <input required type="email" name="email" onChange={e=>this.handleInputChange(e)} placeholder="Email" className="form-field-input"/>
-          </div>
-
-          <div className="form-field">
-            <h6 className="form-field-title">Password</h6>
-            <input required type="password" name="password" onChange={e=>this.handleInputChange(e)} placeholder="Password" className="form-field-input"/>
-          </div>
-
-          <button type="submit" className="form-submit">Submit</button>
-        </form>
-
-        <Link to='/register' className="link">Register</Link>
-      </div>
-    )
-  }
-
+      <Link to='/register' className="link">Register</Link>
+    </div>
+  )
 }
+
+export default FormWrapper(LoginForm,'/login')
