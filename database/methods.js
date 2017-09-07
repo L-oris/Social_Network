@@ -19,7 +19,7 @@ module.exports.createUser = function({first,last,email,password}){
 
 module.exports.checkUser = function({email,password:plainTextPassword}){
   //here password passed in has been renamed to 'plainTextPassword'
-  const query = 'SELECT id,first,last,email,password FROM users WHERE email = $1'
+  const query = 'SELECT id,first,last,email,password,profilePicUrl,bio FROM users WHERE email = $1'
   return db.query(query,[email])
   .then(function(userData){
     //create object containing useful user's data
@@ -28,6 +28,8 @@ module.exports.checkUser = function({email,password:plainTextPassword}){
       first:userData.rows[0].first,
       last:userData.rows[0].last,
       email:userData.rows[0].email,
+      profilePicUrl:userData.rows[0].profilePicUrl,
+      bio:userData.rows[0].bio,
       hashedPassword:userData.rows[0].password
     }
   })
@@ -43,7 +45,9 @@ module.exports.checkUser = function({email,password:plainTextPassword}){
         user_id: userObj.id,
         first: userObj.first,
         last: userObj.last,
-        email: userObj.email
+        email: userObj.email,
+        profilePicUrl: userObj.profilePicUrl,
+        bio: userObj.bio
       }
     })
   })
