@@ -8,3 +8,11 @@
 .form-field-title {}
 .form-field-input {}
 .form-submit {}
+
+.nav {
+  background-color: green;
+}
+.nav-logo {}
+.nav-user {
+  width: 10%;
+}

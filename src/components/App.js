@@ -3,6 +3,7 @@ import axios from 'axios'
 
 //React Components
 import Logo from './Logo'
+import ProfilePic from './ProfilePic'
 
 export default class App extends Component {
 
@@ -24,9 +25,13 @@ export default class App extends Component {
   }
 
   render(){
+    const {first,last,profilePicUrl} = this.state
     return (
       <div>
-        <Logo/>
+        <nav className="nav">
+          <Logo/>
+          <ProfilePic first={first} last={last} profilePicUrl={profilePicUrl}/>
+        </nav>
         <div>Hi there from App component</div>
 
         {this.props.children}
