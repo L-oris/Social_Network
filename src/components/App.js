@@ -11,6 +11,18 @@ export default class App extends Component {
     this.state = {}
   }
 
+  componentDidMount(){
+    axios.get('/getUser')
+    .then((serverResponse)=>{
+      this.setState(serverResponse.data)
+    })
+    .catch((err)=>{
+      this.setState({
+        error: 'Something went wrong. Please try again!'
+      })
+    })
+  }
+
   render(){
     return (
       <div>
