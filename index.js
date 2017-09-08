@@ -1,7 +1,7 @@
 const express = require('express'),
       app = express()
 
-const {middlewares} = require('./express/middlewares')
+const {middlewares} = require('./express/middlewares'),
       RESTfulRouter = require('./express/RESTfulRouter')
 
 if(process.env.NODE_ENV != 'production'){

@@ -2,7 +2,9 @@ const fs = require('fs'),
       path = require('path'),
       compression = require('compression'),
       bodyParser = require('body-parser'),
+      cookieParser = require('cookie-parser'),
       cookieSession = require('cookie-session'),
+      csrf = require('csurf'),
       multer = require('multer'),
       uidSafe = require('uid-safe'),
       knox = require('knox')
@@ -15,7 +17,14 @@ module.exports.middlewares = function(app){
     secret: require('../secret.json').sessionSecret,
     maxAge: 1000 * 60 * 60 * 24 * 14
   }))
-  app.use(bodyParser.json());
+  app.use(bodyParser.json())
+  app.use(cookieParser())
+  //prevent csrf attacks
+  app.use(csrf());
+  app.use(function(req,res,next){
+    res.cookie('csrf-token-cookie', req.csrfToken());
+    next();
+  })
 }
 
 
