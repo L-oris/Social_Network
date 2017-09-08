@@ -56,6 +56,7 @@ router.put('/upload_profile_pic',uploader.single('file'),uploadToS3,function(req
   }
   updateProfilePic(user_id,filename)
   .then(function(userData){
+    req.session.user.profilePicUrl = userData.profilePicUrl
     res.json(userData)
   })
   .catch(function(err){

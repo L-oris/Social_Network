@@ -22,7 +22,7 @@ module.exports.createUser = function({first,last,email,password}){
 
 module.exports.checkUser = function({email,password:plainTextPassword}){
   //here password passed in has been renamed to 'plainTextPassword'
-  const query = 'SELECT id,first,last,email,password,profilePicUrl,bio FROM users WHERE email = $1'
+  const query = 'SELECT id,first,last,email,password,profilepicurl,bio FROM users WHERE email = $1'
   return db.query(query,[email])
   .then(function(userData){
     //create object containing useful user's data
@@ -31,7 +31,7 @@ module.exports.checkUser = function({email,password:plainTextPassword}){
       first:userData.rows[0].first,
       last:userData.rows[0].last,
       email:userData.rows[0].email,
-      profilePicUrl:userData.rows[0].profilePicUrl,
+      profilePicUrl:userData.rows[0].profilepicurl,
       bio:userData.rows[0].bio,
       hashedPassword:userData.rows[0].password
     }
@@ -43,6 +43,10 @@ module.exports.checkUser = function({email,password:plainTextPassword}){
       //if passwords match return from promise 'id','firstName','lastName' of currently searched user, otherwise throw an error
       if(!doesMatch){
         throw 'Passwords do not match!'
+      }
+      if(userObj.profilePicUrl){
+        //append path to AWS S3
+        userObj.profilePicUrl = s3Url + userObj.profilePicUrl
       }
       return {
         user_id: userObj.id,
@@ -57,7 +61,7 @@ module.exports.checkUser = function({email,password:plainTextPassword}){
 }
 
 module.exports.updateProfilePic = function(user_id,filename){
-  const query = 'UPDATE users SET profilePicUrl = $1 WHERE id = $2'
+  const query = 'UPDATE users SET profilepicurl = $1 WHERE id = $2'
   return db.query(query,[filename,user_id])
   .then(function(){
     return {
