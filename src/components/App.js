@@ -71,11 +71,14 @@ export default class App extends Component {
     const {error,info,uploaderIsVisible,first,last,profilePicUrl} = this.state
     return (
       <div>
+
         {uploaderIsVisible && <ProfilePicUpload uploadUserPic={e=>this.uploadUserPic(e)} closeUploader={e => this.closeUploader(e)}/>}
+
         <nav className="nav">
           <Logo/>
           <ProfilePic first={first} last={last} profilePicUrl={profilePicUrl} showUploader={e => this.showUploader(e)}/>
         </nav>
+
         <h4 className="text-error">{error}</h4>
         <h4 className="text-info">{info}</h4>
         <div>Hi there from App component</div>
