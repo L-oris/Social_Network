@@ -26,4 +26,4 @@ function LoginForm ({error,handleInputChange,handleSubmit}){
   )
 }
 
-export default FormWrapper(LoginForm,'/login')
+export default FormWrapper(LoginForm,'/api/login')

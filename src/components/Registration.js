@@ -36,4 +36,4 @@ function RegistrationForm ({error,handleInputChange,handleSubmit}){
   )
 }
 
-export default FormWrapper(RegistrationForm,'/register')
+export default FormWrapper(RegistrationForm,'/api/register')

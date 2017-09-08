@@ -16,7 +16,7 @@ export default class App extends Component {
   }
 
   componentDidMount(){
-    axios.get('/getUser')
+    axios.get('/api/getUser')
     .then((serverResponse)=>{
       this.setState(serverResponse.data)
     })
@@ -57,7 +57,7 @@ export default class App extends Component {
     //use built-in FormData API
     const formData = new FormData()
     formData.append('file',e.target.files[0])
-    axios.put('/upload_profile_pic',formData)
+    axios.put('/api/upload_profile_pic',formData)
     .then((serverResponse)=>{
       this.setState(serverResponse.data)
       this.removeInfo()

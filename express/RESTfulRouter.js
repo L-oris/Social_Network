@@ -6,7 +6,7 @@ const {createUser, checkUser, updateProfilePic} = require('../database/methods')
 
 
 //CREATE NEW USER INTO DATABASE
-router.post('/register', function(req,res,next){
+router.post('/api/register', function(req,res,next){
   const {first,last,email,password} = req.body
   if(!(first&&last&&email&&password)){
     throw 'Not all fields provided for registering a new user'
@@ -23,7 +23,7 @@ router.post('/register', function(req,res,next){
 })
 
 //CHECK FOR ALREADY REGISTERED USER
-router.post('/login', function(req,res,next){
+router.post('/api/login', function(req,res,next){
   const {email,password} = req.body
   if(!(email&&password)){
     throw 'Not all fields provided for logging in the user'
@@ -40,7 +40,7 @@ router.post('/login', function(req,res,next){
 })
 
 //GET LOGGED-IN USER INFO
-router.get('/getUser',function(req,res){
+router.get('/api/getUser',function(req,res){
   if(!req.session.user){
     throw 'No logged in user in current session'
   }
@@ -48,7 +48,7 @@ router.get('/getUser',function(req,res){
 })
 
 //UPDATE USER'S PROFILE PICTURE
-router.put('/upload_profile_pic',uploader.single('file'),uploadToS3,function(req,res){
+router.put('/api/upload_profile_pic',uploader.single('file'),uploadToS3,function(req,res){
   const {user_id} = req.session.user
   const {filename} = req.file
   if(!filename){
