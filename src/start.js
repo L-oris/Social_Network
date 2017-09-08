@@ -7,6 +7,7 @@ import Welcome from './components/Welcome'
 import Registration from './components/Registration'
 import Login from './components/Login'
 import App from './components/App'
+import Profile from './components/Profile'
 import UserInfo from './components/UserInfo'
 
 //client-side routing for non-registered users
@@ -23,6 +24,7 @@ const welcomeRouter = (
 const loggedInRouter = (
   <Router history={browserHistory}>
     <Route path="/" component={App}>
+      <IndexRoute component={Profile}/>
       <Route path="user" component={UserInfo}/>
     </Route>
   </Router>

@@ -71,22 +71,26 @@ export default class App extends Component {
 
   render(){
     const {error,info,uploaderIsVisible,first,last,profilePicUrl,bio} = this.state
+    //pass props to every children rendered inside <Route path="/" component={App}>..</Route>
+    const children = React.cloneElement(this.props.children,{
+      first, last, profilePicUrl, bio
+    })
+
     return (
       <div>
 
-        {uploaderIsVisible && <ProfilePicUpload uploadUserPic={e=>this.uploadUserPic(e)} closeUploader={e => this.closeUploader(e)}/>}
+        {uploaderIsVisible && <ProfilePicUpload uploadUserPic={e=>this.uploadUserPic(e)} closeUploader={e=>this.closeUploader(e)}/>}
 
         <nav className="nav">
           <Logo/>
-          <ProfilePic first={first} last={last} profilePicUrl={profilePicUrl} showUploader={e => this.showUploader(e)}/>
+          <ProfilePic first={first} last={last} profilePicUrl={profilePicUrl} showUploader={e=>this.showUploader(e)}/>
         </nav>
 
         <h4 className="text-error">{error}</h4>
         <h4 className="text-info">{info}</h4>
         <div>Hi there from App component</div>
-        <Profile first={first} last={last} profilePicUrl={profilePicUrl} bio={bio}/>
 
-        {this.props.children}
+        {children}
 
       </div>
     )

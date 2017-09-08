@@ -33,8 +33,8 @@ export default function(Component,url){
     render(){
       return <Component
               error={this.state.error}
-              handleInputChange={e => this.handleInputChange(e)}
-              handleSubmit={e => this.handleSubmit(e)}/>
+              handleInputChange={e=>this.handleInputChange(e)}
+              handleSubmit={e=>this.handleSubmit(e)}/>
     }
 
   }
