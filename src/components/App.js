@@ -31,19 +31,22 @@ export default class App extends Component {
     })
   }
 
-  closeUploader(e){
+  closeUploader(){
     this.setState({
       uploaderIsVisible: false
     })
   }
 
   uploadUserPic(e){
+    //render loading spinner now
     //use built-in FormData API
     const formData = new FormData()
     formData.append('file',e.target.files[0])
     axios.put('/upload_profile_pic',formData)
     .then((serverResponse)=>{
-      console.log('everything went good when uploading');
+      console.log('UPLOAD SUCCESSFUL');
+      this.setState(serverResponse.data)
+      closeUploader()
     })
     .catch((err)=>{
       this.setState({

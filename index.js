@@ -1,10 +1,15 @@
 const express = require('express'),
       app = express(),
+      fs = require('fs'),
+      path = require('path'),
       compression = require('compression'),
       bodyParser = require('body-parser'),
-      cookieSession = require('cookie-session')
+      cookieSession = require('cookie-session'),
+      multer = require('multer'),
+      uidSafe = require('uid-safe'),
+      knox = require('knox')
 
-const {createUser, checkUser} = require('./database/methods')
+const {createUser, checkUser, updateProfilePic} = require('./database/methods')
 
 if(process.env.NODE_ENV != 'production'){
   app.use(require('./build'))
@@ -17,6 +22,55 @@ app.use(cookieSession({
 }))
 app.use(bodyParser.json());
 app.use(express.static('./public'))
+
+//image uploading
+const diskStorage = multer.diskStorage({
+  destination: function (req, file, callback){
+    callback(null, path.join(__dirname + '/uploads'))
+  },
+  filename: function (req, file, callback){
+    uidSafe(24).then(function(uid){
+      callback(null, uid + path.extname(file.originalname))
+    })
+  }
+})
+
+const uploader = multer({
+  storage: diskStorage,
+  limits: {
+    filesize: 2097152
+  }
+})
+
+//setup 'knox' module to upload files to Amazon S3 Service
+let secrets
+if(process.env.NODE_ENV==='production'){
+  secrets = process.env
+} else {
+  secret = require('./secret.json')
+}
+const client = knox.createClient({
+  key: secret.AWS_KEY,
+  secret: secret.AWS_SECRET,
+  bucket: 'social-network-loris'
+})
+
+const uploadToS3 = function(req,res,next){
+  const s3Request = client.put(req.file.filename,{
+    'Content-Type': req.file.mimetype,
+    'Content-Length': req.file.size,
+    'x-amz-acl': 'public-read'
+  })
+  fs.createReadStream(req.file.path).pipe(s3Request)
+  s3Request.on('response', function(s3Response){
+    if(s3Response.statusCode !== 200){
+      res.json({success: false})
+    } else {
+      next()
+    }
+  })
+}
+
 
 //REDIRECT USER BASED ON HIS REGISTRATION STATUS
 app.get('/', function(req,res){
@@ -73,6 +127,21 @@ app.get('/getUser',function(req,res){
     throw 'No logged in user in current session'
   }
   res.json(req.session.user)
+})
+
+app.put('/upload_profile_pic',uploader.single('file'),uploadToS3,function(req,res){
+  const {user_id} = req.session.user
+  const {filename} = req.file
+  if(!filename){
+    throw 'No file to upload'
+  }
+  updateProfilePic(user_id,filename)
+  .then(function(userData){
+    res.json(userData)
+  })
+  .catch(function(err){
+    next('Uploading of new image failed')
+  })
 })
 
 //catch all request for unexisting routes

@@ -1,5 +1,6 @@
 const db = require('./db');
 const {hashPassword,checkPassword} = require('./hashing')
+const {s3Url} = require('../config/config.json')
 
 module.exports.createUser = function({first,last,email,password}){
   return hashPassword(password)
@@ -52,5 +53,15 @@ module.exports.checkUser = function({email,password:plainTextPassword}){
         bio: userObj.bio
       }
     })
+  })
+}
+
+module.exports.updateProfilePic = function(user_id,filename){
+  const query = 'UPDATE users SET profilePicUrl = $1 WHERE id = $2'
+  return db.query(query,[filename,user_id])
+  .then(function(){
+    return {
+      profilePicUrl: s3Url+filename
+    }
   })
 }
