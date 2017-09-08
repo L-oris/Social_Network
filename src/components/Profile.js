@@ -3,7 +3,7 @@ import React from 'react'
 //React Components
 import ProfilePic from './ProfilePic'
 
-export default ({first,last,profilePicUrl,bio})=>{
+export default function Profile ({first,last,profilePicUrl,bio}){
   return (
     <div>
       <h1>User's profile here</h1>

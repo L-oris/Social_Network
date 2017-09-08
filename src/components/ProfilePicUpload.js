@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default ({uploadUserPic,closeUploader})=>{
+export default function ProfilePicUpload({uploadUserPic,closeUploader}){
   return (
     <div className="uploader-overlay">
       <div className="uploader-container">

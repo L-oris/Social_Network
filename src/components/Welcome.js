@@ -1,7 +1,7 @@
 import React from 'react'
 import {Link} from 'react-router'
 
-export default function(props){
+export default function Welcome(props){
   return (
     <div>
       <h1>Welcome to Munity</h1>
