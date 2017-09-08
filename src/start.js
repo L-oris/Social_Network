@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {hashHistory,browserHistory,Router,Route,IndexRoute,IndexRedirect} from 'react-router'
+import {hashHistory,browserHistory,Router,Route,IndexRoute} from 'react-router'
 
 //React Components
 import Welcome from './components/Welcome'

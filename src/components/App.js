@@ -6,6 +6,7 @@ import axios from 'axios'
 import Logo from './Logo'
 import ProfilePic from './ProfilePic'
 import ProfilePicUpload from './ProfilePicUpload'
+import Profile from './Profile'
 
 export default class App extends Component {
 
@@ -69,7 +70,7 @@ export default class App extends Component {
   }
 
   render(){
-    const {error,info,uploaderIsVisible,first,last,profilePicUrl} = this.state
+    const {error,info,uploaderIsVisible,first,last,profilePicUrl,bio} = this.state
     return (
       <div>
 
@@ -83,7 +84,7 @@ export default class App extends Component {
         <h4 className="text-error">{error}</h4>
         <h4 className="text-info">{info}</h4>
         <div>Hi there from App component</div>
-        <Link to="/user">User Page</Link>
+        <Profile first={first} last={last} profilePicUrl={profilePicUrl} bio={bio}/>
 
         {this.props.children}
 

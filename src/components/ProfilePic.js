@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default ({profilePicUrl,first,last,showUploader})=>{
+export default ({first,last,profilePicUrl,showUploader})=>{
   return (
     <div onClick={showUploader}>
       <img src={profilePicUrl} alt={first + ' ' + last} className="nav-user"/>
