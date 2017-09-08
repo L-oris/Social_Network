@@ -1,4 +1,5 @@
 import React,{Component} from 'react'
+import {Link} from 'react-router'
 import axios from 'axios'
 
 //React Components
@@ -82,6 +83,7 @@ export default class App extends Component {
         <h4 className="text-error">{error}</h4>
         <h4 className="text-info">{info}</h4>
         <div>Hi there from App component</div>
+        <Link to="/user">User Page</Link>
 
         {this.props.children}
 

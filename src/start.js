@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {hashHistory,Router,Route,IndexRedirect} from 'react-router'
+import {hashHistory,browserHistory,Router,Route,IndexRoute,IndexRedirect} from 'react-router'
 
 //React Components
 import Welcome from './components/Welcome'
@@ -13,18 +13,17 @@ import UserInfo from './components/UserInfo'
 const welcomeRouter = (
   <Router history={hashHistory}>
     <Route path="/" component={Welcome}>
-      <IndexRedirect to="/register"/>
-      <Route path="/register" component={Registration}/>
-      <Route path="/login" component={Login}/>
+      <IndexRoute component={Registration}/>
+      <Route path="login" component={Login}/>
     </Route>
   </Router>
 )
 
 //client-side routing for logged-in users
 const loggedInRouter = (
-  <Router history={hashHistory}>
+  <Router history={browserHistory}>
     <Route path="/" component={App}>
-      <Route path="/user" component={UserInfo}/>
+      <Route path="user" component={UserInfo}/>
     </Route>
   </Router>
 )

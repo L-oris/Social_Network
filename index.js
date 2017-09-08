@@ -14,28 +14,15 @@ middlewares(app)
 //serve static files
 app.use(express.static('./public'))
 
-//REDIRECT USER BASED ON HIS REGISTRATION STATUS
-app.get('/', function(req,res){
-  if(!req.session.user){
-    return res.redirect('/welcome')
-  }
-  res.sendFile(__dirname + '/index.html')
-})
-
-//REDIRECT USER BASED ON HIS REGISTRATION STATUS
-app.get('/welcome', function(req,res){
-  if(req.session.user){
-    return res.redirect('/')
-  }
-  res.sendFile(__dirname + '/index.html')
-})
-
 //apply RESTful routes
 app.use('/',RESTfulRouter)
 
-//catch all request for unexisting routes
-app.get('*',function(req,res){
-  res.send('Route not found')
+//REDIRECT USER BASED ON HIS REGISTRATION STATUS
+app.get('*', function(req,res){
+  if(!req.session.user && req.url !== '/welcome'){
+    return res.redirect('/welcome')
+  }
+  res.sendFile(__dirname + '/index.html')
 })
 
 //handle 'Express' errors
