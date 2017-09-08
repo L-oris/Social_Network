@@ -37,15 +37,28 @@ export default class App extends Component {
     })
   }
 
+  setInfo(newMessage){
+    this.setState({
+      info: newMessage
+    })
+  }
+
+  removeInfo(){
+    this.setState({
+      info: null
+    })
+  }
+
   uploadUserPic(e){
-    //render loading spinner now
+    this.closeUploader()
+    this.setInfo('Loading..')
     //use built-in FormData API
     const formData = new FormData()
     formData.append('file',e.target.files[0])
     axios.put('/upload_profile_pic',formData)
     .then((serverResponse)=>{
       this.setState(serverResponse.data)
-      this.closeUploader()
+      this.removeInfo()
     })
     .catch((err)=>{
       this.setState({
@@ -55,7 +68,7 @@ export default class App extends Component {
   }
 
   render(){
-    const {error,uploaderIsVisible,first,last,profilePicUrl} = this.state
+    const {error,info,uploaderIsVisible,first,last,profilePicUrl} = this.state
     return (
       <div>
         {uploaderIsVisible && <ProfilePicUpload uploadUserPic={e=>this.uploadUserPic(e)} closeUploader={e => this.closeUploader(e)}/>}
@@ -64,6 +77,7 @@ export default class App extends Component {
           <ProfilePic first={first} last={last} profilePicUrl={profilePicUrl} showUploader={e => this.showUploader(e)}/>
         </nav>
         <h4 className="text-error">{error}</h4>
+        <h4 className="text-info">{info}</h4>
         <div>Hi there from App component</div>
 
         {this.props.children}

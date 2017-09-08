@@ -2,6 +2,9 @@
 .text-error {
   color: red;
 }
+.text-info {
+  color: green;
+}
 
 .form {}
 .form-error {
