@@ -14,7 +14,6 @@ export default class App extends Component {
   }
 
   componentDidMount(){
-    console.log('componentDidMount!');
     axios.get('/getUser')
     .then((serverResponse)=>{
       this.setState(serverResponse.data)

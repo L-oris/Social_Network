@@ -2,7 +2,7 @@ const express = require('express'),
       app = express()
 
 const {middlewares} = require('./express/middlewares')
-      router = require('./express/router')
+      RESTfulRouter = require('./express/RESTfulRouter')
 
 if(process.env.NODE_ENV != 'production'){
   app.use(require('./build'))
@@ -31,7 +31,7 @@ app.get('/welcome', function(req,res){
 })
 
 //apply RESTful routes
-app.use('/',router)
+app.use('/',RESTfulRouter)
 
 //catch all request for unexisting routes
 app.get('*',function(req,res){
