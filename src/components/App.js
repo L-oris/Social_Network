@@ -6,7 +6,6 @@ import axios from '../axios'
 import Logo from './Logo'
 import ProfilePic from './ProfilePic'
 import ProfilePicUpload from './ProfilePicUpload'
-import Profile from './Profile'
 
 export default class App extends Component {
 
