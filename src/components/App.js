@@ -44,9 +44,8 @@ export default class App extends Component {
     formData.append('file',e.target.files[0])
     axios.put('/upload_profile_pic',formData)
     .then((serverResponse)=>{
-      console.log('UPLOAD SUCCESSFUL');
       this.setState(serverResponse.data)
-      closeUploader()
+      this.closeUploader()
     })
     .catch((err)=>{
       this.setState({
