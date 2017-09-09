@@ -1,4 +1,5 @@
 import React,{Component} from 'react'
+import axios from '../axios'
 
 //React Components
 import ProfilePic from './ProfilePic'
@@ -7,7 +8,9 @@ export default class Profile extends Component {
 
   constructor(props){
     super(props)
-    this.state = {}
+    this.state = {
+      bio: this.props.bio
+    }
   }
 
   showBio(){
@@ -22,8 +25,20 @@ export default class Profile extends Component {
     })
   }
 
-  saveBio(){
-    console.log('trying to save bio');
+  handleChangeBio(e){
+    this.setState({
+      editBioText: e.target.value
+    })
+  }
+
+  handleSaveBio(){
+    axios.put('/api/update_bio',this.state.bio)
+    .then(function(serverResponse){
+      console.log('bio updated!');
+    })
+    .catch(function(err){
+      console.log('erro happened trying to update bio');
+    })
   }
 
   render(){
@@ -33,13 +48,13 @@ export default class Profile extends Component {
       if(!bio){
         return <p onClick={e=>this.editBio(e)} className="text-link">Add your bio now</p>
       }
-      return <p>{bio} <span onClick={e=>this.editBio(e)} className="text-link">Edit</span></p>
+      return <p>{bio} || <span onClick={e=>this.editBio(e)} className="text-link">Edit</span></p>
     }
     const bioInput = ()=>{
       return (
         <div>
-          <textarea rows="4" cols="50">{bio}</textarea>
-          <button onClick={e=>this.saveBio(e)}>Save</button>
+          <textarea onChange={e=>this.handleChangeBio(e)} rows="4" cols="50">{this.state.bio}</textarea>
+          <button onClick={e=>this.handleSaveBio(e)}>Save</button>
           <button onClick={e=>this.showBio(e)}>Return</button>
         </div>
       )
