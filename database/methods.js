@@ -60,6 +60,28 @@ module.exports.checkUser = function({email,password:plainTextPassword}){
   })
 }
 
+module.exports.getUser = function(user_id){
+  const query = 'SELECT first,last,email,profilepicurl,bio FROM users WHERE id = $1'
+  return db.query(query,[user_id])
+  .then(function(userData){
+    if(!userData){
+      throw 'User not found'
+    }
+    let profilePicUrl = userData.rows[0].profilepicurl
+    if(profilePicUrl){
+      //append path to AWS S3
+      profilePicUrl = s3Url + profilePicUrl
+    }
+    return {
+      first:userData.rows[0].first,
+      last:userData.rows[0].last,
+      email:userData.rows[0].email,
+      profilePicUrl:profilePicUrl || 'https://s3.amazonaws.com/social-network-loris/765-default-avatar.png',
+      bio:userData.rows[0].bio
+    }
+  })
+}
+
 module.exports.updateProfilePic = function(user_id,filename){
   const query = 'UPDATE users SET profilepicurl = $1 WHERE id = $2'
   return db.query(query,[filename,user_id])

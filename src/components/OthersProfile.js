@@ -15,7 +15,7 @@ export default class OthersProfile extends Component {
     const {id} = this.props.params
     axios.get(`/api/getUser/${id}`)
     .then(function(serverResponse){
-      console.log('RESPONSE RECEIVED!');
+      console.log('RESPONSE RECEIVED!',serverResponse);
     })
     .catch(function(err){
       console.log('error happened');
@@ -26,9 +26,9 @@ export default class OthersProfile extends Component {
     return (
       <div>
         <h1>User's profile here</h1>
-        <ProfilePic first={first} last={last} profilePicUrl={profilePicUrl}/>
+        {/* <ProfilePic first={first} last={last} profilePicUrl={profilePicUrl}/>
         <h4>{first} {last}</h4>
-        <h4>Bio here {bio}</h4>
+        <h4>Bio here {bio}</h4> */}
       </div>
     )
   }

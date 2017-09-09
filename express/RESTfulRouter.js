@@ -2,7 +2,7 @@ const express = require('express'),
       router = express.Router()
 
 const {uploader,uploadToS3} = require('./middlewares')
-const {createUser, checkUser, updateProfilePic} = require('../database/methods')
+const {createUser, checkUser, getUser, updateProfilePic} = require('../database/methods')
 
 
 //CREATE NEW USER INTO DATABASE
@@ -13,6 +13,7 @@ router.post('/api/register', function(req,res,next){
   }
   createUser(req.body)
   .then(function(userData){
+    //set user info inside session
     req.session.user = userData
     res.json({success:true})
   })
@@ -30,6 +31,7 @@ router.post('/api/login', function(req,res,next){
   }
   checkUser(req.body)
   .then(function(userData){
+    //set user info inside session
     req.session.user = userData
     res.json({success:true})
   })
@@ -39,12 +41,24 @@ router.post('/api/login', function(req,res,next){
   })
 })
 
-//GET LOGGED-IN USER INFO
+//GET LOGGED-IN USER'S INFO (FROM SESSION)
 router.get('/api/getUser',function(req,res){
   if(!req.session.user){
     throw 'No logged in user in current session'
   }
   res.json(req.session.user)
+})
+
+//SEARCH FOR USER INFO BY ID (FROM DATABASE)
+router.get('/api/getUser/:id',function(req,res){
+  getUser(req.params.id)
+  .then(function(userData){
+    res.json(userData)
+  })
+  .catch(function(err){
+    //send 301 HTTP status code when user not found
+    res.status(301).json({success:false})
+  })
 })
 
 //UPDATE USER'S PROFILE PICTURE
