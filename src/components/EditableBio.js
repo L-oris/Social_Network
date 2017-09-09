@@ -40,33 +40,27 @@ export default class EditableBio extends Component {
   }
 
   render(){
-    const {error,bio} = this.state
+    const {error,bio,editBioIsVisible} = this.state
 
-    const bioText = ()=>{
-      if(!bio){
-        return <p onClick={e=>this.editBioIsVisible(true)} className="text-link">Add your bio now</p>
-      }
-      return (
-        <div>
-          <h4 className="text-error">{error}</h4>
-          <p>{bio} || <span onClick={e=>this.editBioIsVisible(true)} className="text-link">Edit</span></p>
-        </div>
-      )
-    }
-    const bioInput = ()=>{
-      return (
-        <div>
-          <textarea onChange={e=>this.handleChangeBio(e)} rows="4" cols="50">{bio}</textarea>
-          <button onClick={e=>this.handleSaveBio(e)}>Save</button>
-          <button onClick={e=>this.editBioIsVisible(false)}>Return</button>
-        </div>
-      )
-    }
+    const noBioText = <p onClick={e=>this.editBioIsVisible(true)} className="text-link">Add your bio now</p>
+    const bioText = (
+      <div>
+        <h4 className="text-error">{error}</h4>
+        <p>{bio} || <span onClick={e=>this.editBioIsVisible(true)} className="text-link">Edit</span></p>
+      </div>
+    )
+    const bioInput = (
+      <div>
+        <textarea onChange={e=>this.handleChangeBio(e)} rows="4" cols="50">{bio}</textarea>
+        <button onClick={e=>this.handleSaveBio(e)}>Save</button>
+        <button onClick={e=>this.editBioIsVisible(false)}>Return</button>
+      </div>
+    )
     const bioRender =()=>{
-      if(!this.state.editBioIsVisible){
-        return bioText()
+      if(editBioIsVisible){
+        return bioInput
       }
-      return bioInput()
+      return (bio ? bioText : noBioText)
     }
 
     return (
