@@ -9,6 +9,7 @@ import Login from './components/Login'
 import App from './components/App'
 import Profile from './components/Profile'
 import OthersProfile from './components/OthersProfile'
+import NotFound from './components/NotFound'
 
 //client-side routing for non-registered users
 const welcomeRouter = (
@@ -26,6 +27,7 @@ const loggedInRouter = (
     <Route path="/" component={App}>
       <IndexRoute component={Profile}/>
       <Route path="user/:id" component={OthersProfile}/>
+      <Route path="*" component={NotFound}/>
     </Route>
   </Router>
 )
