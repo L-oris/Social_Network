@@ -9,8 +9,7 @@ export default function Welcome(props){
     <div className="welcome">
       <Logo/>
       <h1 className="welcome-title">Slipperz</h1>
-      <h5 className="welcome-intro">We are rebelling because all other online communities are revolting.</h5>
-      <h4 className="welcome-community">Join the rebellion!</h4>
+      <h5 className="welcome-intro">The social community of people that have no reasons for moving away from home<br/><span className="welcome-community">Be part of us!</span></h5>
 
       {props.children}
 

@@ -1,3 +1,13 @@
+:root {
+  --logo_text-color: #0CB3CC;
+}
+body, input, button {
+  font-family: 'Gochi Hand', cursive;
+  background-color: rgba(30,144,255,.1);
+}
+a {
+  color: inherit;
+}
 .text-link {
   text-decoration: underline;
   cursor: pointer;
@@ -12,19 +22,55 @@
 /*===========*/
 /*WELCOME*/
 /*===========*/
-.welcome {}
+.welcome {
+  width: 95%;
+  margin: 2em auto;
+}
 .welcome .social_logo {}
-.welcome .social_logo-img {}
-.welcome-title {}
-.welcome-intro {}
-.welcome-community {}
+.welcome .social_logo-img {
+  display: block;
+  width: 50%;
+  margin: 0 auto;
+}
+.welcome-title {
+  color: var(--logo_text-color);
+  text-align: center;
+  font-size: 3em;
+  margin: .5em;
+}
+.welcome-intro {
+  text-align: center;
+}
+.welcome-community {
+  font-size: 1.3em;
+}
 .welcome-link {}
 
-.form {}
+.form {
+  text-align: center;
+}
 .form-field {}
-.form-field-title {}
-.form-field-input {}
-.form-submit_btn {}
+.form-field-title {
+  margin: .5em;
+}
+.form-field-input {
+  border: 3px solid var(--logo_text-color);
+  border-radius: 2em;
+  padding: .6em;
+}
+.form-submit_btn {
+  color: green;
+  border: none;
+  background-color: inherit;
+  font-size: 1.3em;
+  text-decoration: underline;
+  margin: 1em;
+}
+.form-submit_btn img {
+  display: inline;
+  height: 50px;
+  vertical-align: middle;
+}
 
 /*===========*/
 /*NAV*/

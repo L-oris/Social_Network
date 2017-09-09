@@ -17,9 +17,9 @@ function LoginForm ({error,handleInputChange,handleSubmit}){
         <input required type="password" name="password" onChange={handleInputChange} placeholder="Password" className="form-field-input"/>
       </div>
 
-      <button type="submit" className="form-submit_btn">Submit</button>
+      <button type="submit" className="form-submit_btn"><img src="/images/homer-icon.png"/> Submit</button>
 
-      <h4 className="welcome-link"><Link to='/' className="text-link">Not</Link> a member?</h4>
+      <h4 className="welcome-link"><Link to='/' className="text-link">Not a member?</Link></h4>
     </form>
   )
 }
