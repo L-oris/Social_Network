@@ -44,9 +44,16 @@ export default class App extends Component {
     })
   }
 
-  removeInfo(){
+  setError(newMessage){
     this.setState({
-      info: null
+      error: newMessage
+    })
+  }
+
+  deleteMessages(){
+    this.setState({
+      info: null,
+      error: null
     })
   }
 
@@ -59,7 +66,7 @@ export default class App extends Component {
     axios.put('/api/upload_profile_pic',formData)
     .then((serverResponse)=>{
       this.setState(serverResponse.data)
-      this.removeInfo()
+      this.deleteMessages()
     })
     .catch((err)=>{
       this.setState({

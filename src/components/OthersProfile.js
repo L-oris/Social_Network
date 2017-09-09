@@ -1,4 +1,5 @@
 import React,{Component} from 'react'
+import {browserHistory} from 'react-router'
 import axios from '../axios'
 
 //React Components
@@ -11,24 +12,29 @@ export default class OthersProfile extends Component {
     this.state = {}
   }
 
-  componentDidMount(){
+  componentWillReceiveProps(){
     const {id} = this.props.params
     axios.get(`/api/getUser/${id}`)
-    .then(function(serverResponse){
-      console.log('RESPONSE RECEIVED!',serverResponse);
+    .then((serverResponse)=>{
+      this.setState(serverResponse.data)
     })
-    .catch(function(err){
-      console.log('error happened',err.response);
+    .catch((err)=>{
+      if(err.response.status===301){
+        //redirect user to home when trying to get his data
+        return browserHistory.push('/')
+      }
+      browserHistory.push('/not_found')
     })
   }
 
   render(){
+    const {first,last,profilePicUrl,bio} = this.state
     return (
       <div>
         <h1>User's profile here</h1>
-        {/* <ProfilePic first={first} last={last} profilePicUrl={profilePicUrl}/>
+        <ProfilePic first={first} last={last} profilePicUrl={profilePicUrl}/>
         <h4>{first} {last}</h4>
-        <h4>Bio here {bio}</h4> */}
+        <h4>Bio here {bio}</h4>
       </div>
     )
   }
