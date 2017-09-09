@@ -35,20 +35,27 @@ export default class Profile extends Component {
     .then((serverResponse)=>{
       this.setState(serverResponse.data)
     })
-    .catch(function(err){
-      console.log('error happened trying to update bio');
+    .catch((err)=>{
+      this.setState({
+        error: 'Something went wrong. Please try again!'
+      })
     })
   }
 
   render(){
     const {first,last,profilePicUrl} = this.props
-    const {bio} = this.state
+    const {error,bio} = this.state
 
     const bioText = ()=>{
       if(!bio){
         return <p onClick={e=>this.editBioIsVisible(true)} className="text-link">Add your bio now</p>
       }
-      return <p>{bio} || <span onClick={e=>this.editBioIsVisible(true)} className="text-link">Edit</span></p>
+      return (
+        <div>
+          <h4 className="text-error">{error}</h4>
+          <p>{bio} || <span onClick={e=>this.editBioIsVisible(true)} className="text-link">Edit</span></p>
+        </div>
+      )
     }
     const bioInput = ()=>{
       return (

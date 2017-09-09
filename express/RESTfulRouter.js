@@ -19,7 +19,7 @@ router.post('/api/register', function(req,res,next){
   })
   .catch(function(err){
     //pass error to next Express error handler
-    throw 'Error happened adding user to database'
+    next('Error happened adding user to database')
   })
 })
 
@@ -37,7 +37,7 @@ router.post('/api/login', function(req,res,next){
   })
   .catch(function(err){
     //pass error to next Express error handler
-    throw 'User not found'
+    next('User not found')
   })
 })
 
@@ -77,12 +77,12 @@ router.put('/api/upload_profile_pic',uploader.single('file'),uploadToS3,function
     res.json(userData)
   })
   .catch(function(err){
-    throw 'Uploading of new image failed'
+    next('Uploading of new image failed')
   })
 })
 
 //UPDATE USER'S BIO
-router.put('/api/update_bio',function(req,res){
+router.put('/api/update_bio',function(req,res,next){
   const {bio} = req.body
   const {user_id} = req.session.user
   if(!bio){
@@ -94,7 +94,7 @@ router.put('/api/update_bio',function(req,res){
     res.json(userData)
   })
   .catch(function(err){
-    throw 'Updating bio failed'
+    next('Updating bio failed')
   })
 })
 
