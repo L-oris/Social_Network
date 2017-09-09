@@ -6,11 +6,11 @@ import Logo from './Logo'
 
 export default function Welcome(props){
   return (
-    <div>
-      <h1>Welcome to</h1>
+    <div className="welcome">
       <Logo/>
-      <h5>We are rebelling because all other online communities are revolting.</h5>
-      <h3>Join the rebellion!</h3>
+      <h1 className="welcome-title">Slipperz</h1>
+      <h5 className="welcome-intro">We are rebelling because all other online communities are revolting.</h5>
+      <h4 className="welcome-community">Join the rebellion!</h4>
 
       {props.children}
 

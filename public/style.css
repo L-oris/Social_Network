@@ -9,19 +9,31 @@
   color: green;
 }
 
+/*===========*/
+/*WELCOME*/
+/*===========*/
+.welcome {}
+.welcome .social_logo {}
+.welcome .social_logo-img {}
+.welcome-title {}
+.welcome-intro {}
+.welcome-community {}
+.welcome-link {}
+
 .form {}
-.form-error {
-  color: red;
-}
 .form-field {}
 .form-field-title {}
 .form-field-input {}
-.form-submit {}
+.form-submit_btn {}
 
+/*===========*/
+/*NAV*/
+/*===========*/
 .nav {
   background-color: green;
 }
-.nav-logo {}
+.nav .social_logo {}
+.nav .social_logo-img {}
 .nav-user {
   width: 10%;
 }
