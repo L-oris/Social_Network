@@ -18,7 +18,7 @@ export default class OthersProfile extends Component {
       console.log('RESPONSE RECEIVED!',serverResponse);
     })
     .catch(function(err){
-      console.log('error happened');
+      console.log('error happened',err.response);
     })
   }
 
