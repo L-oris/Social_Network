@@ -119,3 +119,40 @@ a {
   margin: 1.5em;
   border-radius: 5px;
 }*/
+
+@media screen and (min-width: 768px){
+  .welcome {
+    width: 85%;
+    font-size: 1.8em;
+  }
+  .welcome .social_logo-img {
+    width: 30%;
+  }
+  .form-field-input {
+    width: 40%;
+  }
+  .form-submit_btn img {
+    height: 100px;
+  }
+}
+
+@media screen and (min-width: 1024px){
+  .welcome {
+    width: 75%;
+    text-align: center;
+    font-size: 2.2em;
+  }
+  .welcome div.social_logo {
+    display: inline;
+  }
+  .welcome img.social_logo-img {
+    display: inline;
+    vertical-align: bottom;
+  }
+  .welcome-title {
+    display: inline;
+  }
+  .form-field-input {
+    font-size: .6em;
+  }
+}

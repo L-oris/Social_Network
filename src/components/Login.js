@@ -9,12 +9,12 @@ function LoginForm ({error,handleInputChange,handleSubmit}){
 
       <div className="form-field">
         <h6 className="form-field-title">Email</h6>
-        <input required type="email" name="email" onChange={handleInputChange} placeholder="Email" className="form-field-input"/>
+        <input required type="email" name="email" onChange={handleInputChange} placeholder="homer@springfield.com" className="form-field-input"/>
       </div>
 
       <div className="form-field">
         <h6 className="form-field-title">Password</h6>
-        <input required type="password" name="password" onChange={handleInputChange} placeholder="Password" className="form-field-input"/>
+        <input required type="password" name="password" onChange={handleInputChange} placeholder="D'oh!" className="form-field-input"/>
       </div>
 
       <button type="submit" className="form-submit_btn"><img src="/images/homer-icon.png"/> Submit</button>
