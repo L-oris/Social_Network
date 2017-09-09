@@ -69,9 +69,7 @@ export default class App extends Component {
       this.deleteMessages()
     })
     .catch((err)=>{
-      this.setState({
-        error: 'Something went wrong. Please try again!'
-      })
+      setError('Something went wrong. Please try again!')
     })
   }
 

@@ -21,7 +21,7 @@ function LoginForm ({error,handleInputChange,handleSubmit}){
         <button type="submit" className="form-submit">Submit</button>
       </form>
 
-      <Link to='/register' className="link">Register</Link>
+      <Link to='/register' className="text-link">Register</Link>
     </div>
   )
 }

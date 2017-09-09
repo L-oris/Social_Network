@@ -31,7 +31,7 @@ function RegistrationForm ({error,handleInputChange,handleSubmit}){
         <button type="submit" className="form-submit">Submit</button>
       </form>
 
-      <Link to='/login' className="link">Login</Link>
+      <Link to='/login' className="text-link">Login</Link>
     </div>
   )
 }
