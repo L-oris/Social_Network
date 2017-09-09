@@ -8,20 +8,18 @@ export default class Profile extends Component {
 
   constructor(props){
     super(props)
-    this.state = {
-      bio: this.props.bio
-    }
+    this.state = {}
   }
 
-  showBio(){
+  componentWillReceiveProps(props){
     this.setState({
-      editBioIsVisible: false
+      bio: props.bio
     })
   }
 
-  editBio(){
+  editBioIsVisible(boolean){
     this.setState({
-      editBioIsVisible: true
+      editBioIsVisible: boolean
     })
   }
 
@@ -32,30 +30,32 @@ export default class Profile extends Component {
   }
 
   handleSaveBio(){
+    this.editBioIsVisible(false)
     axios.put('/api/update_bio',{bio:this.state.editBioText})
-    .then(function(serverResponse){
-      console.log('bio updated!');
+    .then((serverResponse)=>{
+      this.setState(serverResponse.data)
     })
     .catch(function(err){
-      console.log('erro happened trying to update bio');
+      console.log('error happened trying to update bio');
     })
   }
 
   render(){
-    const {first,last,profilePicUrl,bio} = this.props
+    const {first,last,profilePicUrl} = this.props
+    const {bio} = this.state
 
     const bioText = ()=>{
       if(!bio){
-        return <p onClick={e=>this.editBio(e)} className="text-link">Add your bio now</p>
+        return <p onClick={e=>this.editBioIsVisible(true)} className="text-link">Add your bio now</p>
       }
-      return <p>{bio} || <span onClick={e=>this.editBio(e)} className="text-link">Edit</span></p>
+      return <p>{bio} || <span onClick={e=>this.editBioIsVisible(true)} className="text-link">Edit</span></p>
     }
     const bioInput = ()=>{
       return (
         <div>
-          <textarea onChange={e=>this.handleChangeBio(e)} rows="4" cols="50">{this.state.bio}</textarea>
+          <textarea onChange={e=>this.handleChangeBio(e)} rows="4" cols="50">{bio}</textarea>
           <button onClick={e=>this.handleSaveBio(e)}>Save</button>
-          <button onClick={e=>this.showBio(e)}>Return</button>
+          <button onClick={e=>this.editBioIsVisible(false)}>Return</button>
         </div>
       )
     }
