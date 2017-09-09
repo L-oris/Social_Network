@@ -2,14 +2,14 @@ const express = require('express'),
       router = express.Router()
 
 const {uploader,uploadToS3} = require('./middlewares')
-const {createUser, checkUser, getUser, updateProfilePic} = require('../database/methods')
+const {createUser, checkUser, getUser, updateProfilePic, updateBio} = require('../database/methods')
 
 
 //CREATE NEW USER INTO DATABASE
 router.post('/api/register', function(req,res,next){
   const {first,last,email,password} = req.body
   if(!(first&&last&&email&&password)){
-    return next('Not all fields provided for registering a new user')
+    throw 'Not all fields provided for registering a new user'
   }
   createUser(req.body)
   .then(function(userData){
@@ -19,7 +19,7 @@ router.post('/api/register', function(req,res,next){
   })
   .catch(function(err){
     //pass error to next Express error handler
-    next('Error happened adding user to database')
+    throw 'Error happened adding user to database'
   })
 })
 
@@ -27,7 +27,7 @@ router.post('/api/register', function(req,res,next){
 router.post('/api/login', function(req,res,next){
   const {email,password} = req.body
   if(!(email&&password)){
-    return next('Not all fields provided for logging in the user')
+    throw 'Not all fields provided for logging in the user'
   }
   checkUser(req.body)
   .then(function(userData){
@@ -37,14 +37,14 @@ router.post('/api/login', function(req,res,next){
   })
   .catch(function(err){
     //pass error to next Express error handler
-    next('User not found')
+    throw 'User not found'
   })
 })
 
 //GET LOGGED-IN USER'S INFO (FROM SESSION)
 router.get('/api/getUser',function(req,res){
   if(!req.session.user){
-    return next('No logged in user in current session')
+    throw 'No logged in user in current session'
   }
   res.json(req.session.user)
 })
@@ -69,7 +69,7 @@ router.put('/api/upload_profile_pic',uploader.single('file'),uploadToS3,function
   const {user_id} = req.session.user
   const {filename} = req.file
   if(!filename){
-    return next('No file to upload')
+    throw 'No file to upload'
   }
   updateProfilePic(user_id,filename)
   .then(function(userData){
@@ -77,7 +77,24 @@ router.put('/api/upload_profile_pic',uploader.single('file'),uploadToS3,function
     res.json(userData)
   })
   .catch(function(err){
-    next('Uploading of new image failed')
+    throw 'Uploading of new image failed'
+  })
+})
+
+//UPDATE USER'S BIO
+router.put('/api/update_bio',function(req,res){
+  const {bio} = req.body
+  const {user_id} = req.session.user
+  if(!bio){
+    throw 'No bio provided'
+  }
+  updateBio(user_id,bio)
+  .then(function(userData){
+    req.session.user.bio = userData.bio
+    res.json(userData)
+  })
+  .catch(function(err){
+    throw 'Updating bio failed'
   })
 })
 

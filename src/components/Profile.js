@@ -32,7 +32,7 @@ export default class Profile extends Component {
   }
 
   handleSaveBio(){
-    axios.put('/api/update_bio',this.state.bio)
+    axios.put('/api/update_bio',{bio:this.state.editBioText})
     .then(function(serverResponse){
       console.log('bio updated!');
     })

@@ -91,3 +91,13 @@ module.exports.updateProfilePic = function(user_id,filename){
     }
   })
 }
+
+module.exports.updateBio = function(user_id,bio){
+  const query = 'UPDATE users SET bio = $1 WHERE id = $2'
+  return db.query(query,[bio,user_id])
+  .then(function(){
+    return {
+      bio
+    }
+  })
+}
