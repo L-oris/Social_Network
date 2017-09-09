@@ -65,7 +65,7 @@ router.get('/api/getUser/:id',function(req,res){
 })
 
 //UPDATE USER'S PROFILE PICTURE
-router.put('/api/upload_profile_pic',uploader.single('file'),uploadToS3,function(req,res){
+router.put('/api/upload_profile_pic',uploader.single('file'),uploadToS3,function(req,res,next){
   const {user_id} = req.session.user
   const {filename} = req.file
   if(!filename){
@@ -96,6 +96,12 @@ router.put('/api/update_bio',function(req,res,next){
   .catch(function(err){
     next('Updating bio failed')
   })
+})
+
+//LOGOUT USER
+router.get('/api/logout',function(req,res){
+  req.session = null
+  res.redirect('/welcome')
 })
 
 
