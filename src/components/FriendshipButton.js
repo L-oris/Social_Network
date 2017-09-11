@@ -17,17 +17,13 @@ export default class FriendshipButton extends Component {
 
   render(){
     const {friendshipGo,friendshipStop} = this.state
-    const renderFriendshipGoButton = ()=>{
-      return friendshipGo && <button onClick={e=>this.handleFriendshipGo(e)}>{friendshipGo}</button>
-    }
-    const renderFriendshipStopButton = ()=>{
-      return friendshipStop && <button onClick={e=>this.handleFriendshipStop(e)}>{friendshipStop}</button>
-    }
-
     return (
       <div>
-        {renderFriendshipGoButton()}
-        {renderFriendshipStopButton()}
+
+        {friendshipGo && <button onClick={e=>this.handleFriendshipGo(e)}>{friendshipGo}</button>}
+
+        {friendshipStop && <button onClick={e=>this.handleFriendshipStop(e)}>{friendshipStop}</button>}
+
       </div>
     )
   }
