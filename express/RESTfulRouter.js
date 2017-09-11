@@ -2,7 +2,7 @@ const express = require('express'),
       router = express.Router()
 
 const {uploader,uploadToS3} = require('./middlewares')
-const {createUser, checkUser, getUser, updateProfilePic, updateBio} = require('../database/methods')
+const {createUser, checkUser, getUser, getUserFriendship, updateProfilePic, updateBio} = require('../database/methods')
 
 
 //CREATE NEW USER INTO DATABASE
@@ -55,8 +55,14 @@ router.get('/api/getUser/:id',function(req,res){
   if(req.params.id == req.session.user.user_id){
     return res.status(301).json({success:false})
   }
+  let userData
   getUser(req.params.id)
-  .then(function(userData){
+  .then(function(dbUser){
+    userData = dbUser
+    return getUserFriendship(req.session.user.user_id,req.params.id)
+  })
+  .then(function(dbFriendship){
+    console.log('friendship is ',dbFriendship);
     res.json(userData)
   })
   .catch(function(err){

@@ -82,6 +82,11 @@ module.exports.getUser = function(user_id){
   })
 }
 
+module.exports.getUserFriendship = function(user_id,friend_id){
+  const query = 'SELECT sender_id,status FROM friendships WHERE (sender_id = $1 AND receiver_id = $2) OR (sender_id = $2 AND receiver_id = $1)'
+  return db.query(query,[user_id,friend_id])
+}
+
 module.exports.updateProfilePic = function(user_id,filename){
   const query = 'UPDATE users SET profilepicurl = $1 WHERE id = $2'
   return db.query(query,[filename,user_id])
