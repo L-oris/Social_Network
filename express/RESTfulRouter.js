@@ -2,7 +2,7 @@ const express = require('express'),
       router = express.Router()
 
 const {uploader,uploadToS3} = require('./middlewares')
-const {createUser, checkUser, getUser, getUserFriendship, updateProfilePic, updateBio} = require('../database/methods')
+const {createUser, checkUser, getUser, getNextUserFriendshipState, updateProfilePic, updateBio} = require('../database/methods')
 
 
 //CREATE NEW USER INTO DATABASE
@@ -64,44 +64,13 @@ router.get('/api/getUser/:id',function(req,res){
   })
 })
 
-function getNextGoStatus(currentStatus,isSender){
-  let user
-  isSender ? user = 'SENDER' : user = 'RECEIVER'
-  const key = `${currentStatus.toUpperCase()}_${user}`
-  const statuses = {
-    NONE_SENDER: 'PENDING',
-    PENDING_RECEIVER: 'ACCEPT'
-  }
-  return statuses[key]
-}
-
-function getNextStopStatus(currentStatus,isSender){
-  let user
-  isSender ? user = 'SENDER' : user = 'RECEIVER'
-  const key = `${currentStatus.toUpperCase()}_${user}`
-  const statuses = {
-    PENDING_SENDER: 'CANCEL',
-    ACCEPT_SENDER: 'TERMINATE',
-    TERMINATE_SENDER: 'NONE',
-    PENDING_RECEIVER: 'REJECT',
-    ACCEPT_RECEIVER: 'TERMINATE',
-    TERMINATE_RECEIVER: 'NONE'
-  }
-  return statuses[key]
-}
-
 //SEND BACK NEXT STATE FOR BOTH 'GoButton' and 'StopButton'
 router.get('/api/getUserFriendship/:id',function(req,res){
   const {user_id} = req.session.user
   const {id:friend_id} = req.params
-  getUserFriendship(user_id,friend_id)
+  getNextUserFriendshipState(user_id,friend_id)
   .then(function(userData){
-    const {status,sender_id} = userData
-    const nextGoStatus = getNextGoStatus(status,sender_id===user_id) || ''
-    const nextStopStatus = getNextStopStatus(status,sender_id===user_id) || ''
-    res.json({
-      nextGoStatus, nextStopStatus
-    })
+    res.json(userData)
   })
   .catch(function(err){
     res.status(404).json({success:false})
@@ -111,16 +80,11 @@ router.get('/api/getUserFriendship/:id',function(req,res){
 router.post('/api/friend_go',function(req,res){
   const {user_id} = req.session.user
   const {id:friend_id} = req.body
-  getUserFriendship(user_id,friend_id)
-  .then(function(userData){
-    const {status,sender_id} = userData
-    let nextGoStatus = getNextGoStatus(status,sender_id===user_id) || ''
+  getNextUserFriendshipState(user_id,friend_id)
+  .then(function({nextGoStatus}){
     return updateFriendShipStatus(user_id,friend_id,nextGoStatus)
   })
-  .then(function(updatedUserData){
-    const {status,sender_id} = updatedUserData
-    const nextGoStatus = getNextGoStatus(status,sender_id===user_id) || ''
-    const nextStopStatus = getNextStopStatus(status,sender_id===user_id) || ''
+  .then(function({nextGoStatus,nextStopStatus}){
     res.json({
       nextGoStatus, nextStopStatus
     })

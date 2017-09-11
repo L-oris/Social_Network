@@ -82,12 +82,48 @@ module.exports.getUser = function(user_id){
   })
 }
 
-module.exports.getUserFriendship = function(user_id,friend_id){
+
+function getNextGoStatus(currentStatus,isSender){
+  let user
+  isSender ? user = 'SENDER' : user = 'RECEIVER'
+  const key = `${currentStatus.toUpperCase()}_${user}`
+  const statuses = {
+    NONE_SENDER: 'PENDING',
+    PENDING_RECEIVER: 'ACCEPT'
+  }
+  return statuses[key]
+}
+
+function getNextStopStatus(currentStatus,isSender){
+  let user
+  isSender ? user = 'SENDER' : user = 'RECEIVER'
+  const key = `${currentStatus.toUpperCase()}_${user}`
+  const statuses = {
+    PENDING_SENDER: 'CANCEL',
+    ACCEPT_SENDER: 'TERMINATE',
+    TERMINATE_SENDER: 'NONE',
+    PENDING_RECEIVER: 'REJECT',
+    ACCEPT_RECEIVER: 'TERMINATE',
+    TERMINATE_RECEIVER: 'NONE'
+  }
+  return statuses[key]
+}
+
+module.exports.getNextUserFriendshipState = function(user_id,friend_id){
   const query = 'SELECT sender_id,status FROM friendships WHERE (sender_id = $1 AND receiver_id = $2) OR (sender_id = $2 AND receiver_id = $1)'
   return db.query(query,[user_id,friend_id])
   .then(function(userData){
-    return userData.rows[0]
+    const {status,sender_id} = userData.rows[0]
+    const nextGoStatus = getNextGoStatus(status,sender_id===user_id) || ''
+    const nextStopStatus = getNextStopStatus(status,sender_id===user_id) || ''
+    return {
+      nextGoStatus, nextStopStatus
+    }
   })
+}
+
+module.exports.updateFriendShipStatus = function(user_id,friend_id,newStatus){
+
 }
 
 module.exports.updateProfilePic = function(user_id,filename){
