@@ -5,7 +5,9 @@ const {middlewares} = require('./express/middlewares'),
       RESTfulRouter = require('./express/RESTfulRouter')
 
 if(process.env.NODE_ENV != 'production'){
-  app.use(require('./build'))
+  app.use('/bundle.js', require('http-proxy-middleware')({
+    target: 'http://localhost:8081'
+  }))
 }
 
 //apply middlewares
