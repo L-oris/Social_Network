@@ -1,10 +1,22 @@
 import React,{Component} from 'react'
+import axios from '../axios'
 
 export default class FriendshipButton extends Component {
 
   constructor(props){
     super(props)
     this.state = {}
+  }
+
+  componentDidMount(){
+    const {id} = this.props
+    axios.get(`/api/getUserFriendship/${id}`)
+    .then((serverResponse)=>{
+      console.log('received!',serverResponse);
+    })
+    .catch((err)=>{
+      console.log('error happened');
+    })
   }
 
   handleFriendshipGo(e){

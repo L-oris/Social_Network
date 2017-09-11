@@ -36,7 +36,7 @@ export default class OthersProfile extends Component {
         <ProfilePic first={first} last={last} profilePicUrl={profilePicUrl}/>
         <h4>{first} {last}</h4>
         <h4>Bio here {bio}</h4>
-        <FriendshipButton />
+        <FriendshipButton id={this.props.params.id}/>
       </div>
     )
   }
