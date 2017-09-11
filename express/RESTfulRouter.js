@@ -81,9 +81,11 @@ function getNextStopStatus(currentStatus,isSender){
   const key = `${currentStatus.toUpperCase()}_${user}`
   const statuses = {
     PENDING_SENDER: 'CANCEL',
-    ACCEPTED_SENDER: 'TERMINATE',
+    ACCEPT_SENDER: 'TERMINATE',
+    TERMINATE_SENDER: 'NONE',
     PENDING_RECEIVER: 'REJECT',
-    ACCEPTED_RECEIVER: 'TERMINATE'
+    ACCEPT_RECEIVER: 'TERMINATE',
+    TERMINATE_RECEIVER: 'NONE'
   }
   return statuses[key]
 }
@@ -104,6 +106,32 @@ router.get('/api/getUserFriendship/:id',function(req,res){
   .catch(function(err){
     res.status(404).json({success:false})
   })
+})
+
+router.post('/api/friend_go',function(req,res){
+  const {user_id} = req.session.user
+  const {id:friend_id} = req.body
+  getUserFriendship(user_id,friend_id)
+  .then(function(userData){
+    const {status,sender_id} = userData
+    let nextGoStatus = getNextGoStatus(status,sender_id===user_id) || ''
+    return updateFriendShipStatus(user_id,friend_id,nextGoStatus)
+  })
+  .then(function(updatedUserData){
+    const {status,sender_id} = updatedUserData
+    const nextGoStatus = getNextGoStatus(status,sender_id===user_id) || ''
+    const nextStopStatus = getNextStopStatus(status,sender_id===user_id) || ''
+    res.json({
+      nextGoStatus, nextStopStatus
+    })
+  })
+  .catch(function(err){
+    res.status(404).json({success:false})
+  })
+})
+
+router.post('/api/friend_stop',function(req,res){
+  console.log('Received post stop');
 })
 
 //UPDATE USER'S PROFILE PICTURE

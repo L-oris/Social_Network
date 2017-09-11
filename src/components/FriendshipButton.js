@@ -21,11 +21,23 @@ export default class FriendshipButton extends Component {
   }
 
   handleFriendshipGo(e){
-    console.log('button clicked');
+    axios.post('/api/friend_go',{id:this.props.id})
+    .then((serverResponse)=>{
+      console.log('Go received!',serverResponse);
+    })
+    .catch((err)=>{
+      console.log('error happened');
+    })
   }
 
   handleFriendshipStop(e){
-    console.log('button clicked');
+    axios.post('/api/friend_stop',{id:this.props.id})
+    .then((serverResponse)=>{
+      console.log('Stop received!',serverResponse);
+    })
+    .catch((err)=>{
+      console.log('error happened');
+    })
   }
 
   mapButtonStateToString(buttonState){
