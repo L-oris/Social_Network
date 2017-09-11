@@ -64,10 +64,42 @@ router.get('/api/getUser/:id',function(req,res){
   })
 })
 
+function nextGoStatus(currentStatus,isSender){
+  let user
+  isSender ? user = 'SENDER' : user = 'RECEIVER'
+  const key = `${currentStatus.toUpperCase()}_${user}`
+  const statuses = {
+    NONE_SENDER: 'PENDING',
+    PENDING_RECEIVER: 'ACCEPTED'
+  }
+  return statuses[key]
+}
+
+function nextStopStatus(currentStatus,isSender){
+  let user
+  isSender ? user = 'SENDER' : user = 'RECEIVER'
+  const key = `${currentStatus.toUpperCase()}_${user}`
+  const statuses = {
+    PENDING_SENDER: 'CANCELED',
+    ACCEPTED_SENDER: 'TERMINATED',
+    PENDING_RECEIVER: 'REJECTED',
+    ACCEPTED_RECEIVER: 'TERMINATED',
+  }
+  return statuses[key]
+}
+
+//SEND BACK NEXT STATE FOR BOTH 'GoButton' and 'StopButton'
 router.get('/api/getUserFriendship/:id',function(req,res){
-  getUserFriendship(req.session.user.user_id,req.params.id)
+  const {user_id} = req.session.user
+  const {id:friend_id} = req.params
+  getUserFriendship(user_id,friend_id)
   .then(function(userData){
-    res.json(userData)
+    const {status,sender_id} = userData
+    const goStatus = nextGoStatus(status,sender_id===user_id) || ''
+    const stopStatus = nextStopStatus(status,sender_id===user_id) || ''
+    res.json({
+      goStatus, stopStatus
+    })
   })
   .catch(function(err){
     res.status(404).json({success:false})
