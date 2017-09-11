@@ -1,21 +1,35 @@
-import React from 'react'
+import React,{Component} from 'react'
 
-export default function FriendshipButton ({friendshipGo,friendshipStop,handleFriendshipGo,handleFriendshipStop}){
-  
-  const renderFriendshipButton = ()=>{
-    let htmlFriendshipButton
-    if(friendshipGo){
-      htmlFriendshipButton += <button onClick={handleFriendshipGo}>{friendshipGo}</button>
-    }
-    if(friendshipStop){
-      htmlFriendshipButton += <button onClick={handleFriendshipStop}>{friendshipStop}</button>
-    }
-    return htmlFriendshipButton
+export default class FriendshipButton extends Component {
+
+  constructor(props){
+    super(props)
+    this.state = {}
   }
 
-  return (
-    <div>
-      {renderFriendshipButton()}
-    </div>
-  )
+  handleFriendshipGo(e){
+    console.log('button clicked');
+  }
+
+  handleFriendshipStop(e){
+    console.log('button clicked');
+  }
+
+  render(){
+    const {friendshipGo,friendshipStop} = this.state
+    const renderFriendshipGoButton = ()=>{
+      return friendshipGo && <button onClick={e=>this.handleFriendshipGo(e)}>{friendshipGo}</button>
+    }
+    const renderFriendshipStopButton = ()=>{
+      return friendshipStop && <button onClick={e=>this.handleFriendshipStop(e)}>{friendshipStop}</button>
+    }
+
+    return (
+      <div>
+        {renderFriendshipGoButton()}
+        {renderFriendshipStopButton()}
+      </div>
+    )
+  }
+
 }

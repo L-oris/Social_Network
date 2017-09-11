@@ -55,14 +55,18 @@ router.get('/api/getUser/:id',function(req,res){
   if(req.params.id == req.session.user.user_id){
     return res.status(301).json({success:false})
   }
-  let userData
   getUser(req.params.id)
-  .then(function(dbUser){
-    userData = dbUser
-    return getUserFriendship(req.session.user.user_id,req.params.id)
+  .then(function(userData){
+    res.json(userData)
   })
-  .then(function(dbFriendship){
-    console.log('friendship is ',dbFriendship);
+  .catch(function(err){
+    res.status(404).json({success:false})
+  })
+})
+
+router.get('/api/getUserFriendship/:id',function(req,res){
+  getUserFriendship(req.session.user.user_id,req.params.id)
+  .then(function(userData){
     res.json(userData)
   })
   .catch(function(err){

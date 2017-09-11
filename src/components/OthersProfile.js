@@ -28,35 +28,15 @@ export default class OthersProfile extends Component {
     })
   }
 
-  handleFriendshipGo(e){
-    console.log('button clicked');
-  }
-
-  handleFriendshipStop(e){
-    console.log('button clicked');
-  }
-
   render(){
     const {first,last,profilePicUrl,bio} = this.state
-    const {friendshipGo, friendshipStop} = this.state
-    const renderFriendshipButton = ()=>{
-      let htmlFriendshipButton
-      if(friendshipGo){
-        htmlFriendshipButton += <button onClick={e=>this.handleFriendshipGo(e)}>{friendshipGo}</button>
-      }
-      if(friendshipStop){
-        htmlFriendshipButton += <button onClick={e=>this.handleFriendshipStop(e)}>{friendshipStop}</button>
-      }
-      return htmlFriendshipButton
-    }
-
     return (
       <div>
         <h1>User's profile here</h1>
         <ProfilePic first={first} last={last} profilePicUrl={profilePicUrl}/>
         <h4>{first} {last}</h4>
         <h4>Bio here {bio}</h4>
-        <FriendshipButton friendshipGo={friendshipGo} friendshipStop={friendshipStop} handleFriendshipGo={e=>this.handleFriendshipGo(e)} handleFriendshipStop={e=>this.handleFriendshipStop(e)}/>
+        <FriendshipButton />
       </div>
     )
   }
