@@ -4,6 +4,7 @@ import axios from '../axios'
 
 //React Components
 import ProfilePic from './ProfilePic'
+import FriendshipButton from './FriendshipButton'
 
 export default class OthersProfile extends Component {
 
@@ -48,14 +49,14 @@ export default class OthersProfile extends Component {
       }
       return htmlFriendshipButton
     }
-    
+
     return (
       <div>
         <h1>User's profile here</h1>
         <ProfilePic first={first} last={last} profilePicUrl={profilePicUrl}/>
         <h4>{first} {last}</h4>
         <h4>Bio here {bio}</h4>
-        {renderFriendshipButton()}
+        <FriendshipButton friendshipGo={friendshipGo} friendshipStop={friendshipStop} handleFriendshipGo={e=>this.handleFriendshipGo(e)} handleFriendshipStop={e=>this.handleFriendshipStop(e)}/>
       </div>
     )
   }
