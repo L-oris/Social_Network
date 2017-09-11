@@ -13,6 +13,7 @@ export default class FriendshipButton extends Component {
     axios.get(`/api/getUserFriendship/${id}`)
     .then((serverResponse)=>{
       console.log('received!',serverResponse);
+      this.setState(serverResponse.data)
     })
     .catch((err)=>{
       console.log('error happened');
@@ -27,14 +28,25 @@ export default class FriendshipButton extends Component {
     console.log('button clicked');
   }
 
+  mapButtonStateToString(buttonState){
+    const obj = {
+      PENDING: 'Ask for friendship!',
+      CANCEL: 'Delete your request',
+      REJECT: 'Reject friendship request',
+      ACCEPT: 'Accept friendship request',
+      TERMINATE: 'End your friendship'
+    }
+    return obj[buttonState]
+  }
+
   render(){
-    const {friendshipGo,friendshipStop} = this.state
+    const {nextGoStatus,nextStopStatus} = this.state
     return (
       <div>
 
-        {friendshipGo && <button onClick={e=>this.handleFriendshipGo(e)}>{friendshipGo}</button>}
+        {nextGoStatus && <button onClick={e=>this.handleFriendshipGo(e)}>{this.mapButtonStateToString(nextGoStatus)}</button>}
 
-        {friendshipStop && <button onClick={e=>this.handleFriendshipStop(e)}>{friendshipStop}</button>}
+        {nextStopStatus && <button onClick={e=>this.handleFriendshipStop(e)}>{this.mapButtonStateToString(nextStopStatus)}</button>}
 
       </div>
     )
