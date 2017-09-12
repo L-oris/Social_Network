@@ -88,7 +88,7 @@ function getNextGoStatus(currentStatus,isSender){
   isSender ? user = 'SENDER' : user = 'RECEIVER'
   const key = `${currentStatus.toUpperCase()}_${user}`
   const statuses = {
-    NONE_SENDER: 'PENDING', //not used, useful here just for understanding friendship flow
+    nothing_SENDER: 'PENDING', //not used, useful here just for understanding friendship flow
     PENDING_RECEIVER: 'ACCEPT'
   }
   return statuses[key]
@@ -111,7 +111,7 @@ module.exports.getNextUserFriendshipState = function(user_id,friend_id){
   const query = 'SELECT sender_id,status FROM friendships WHERE (sender_id = $1 AND receiver_id = $2) OR (sender_id = $2 AND receiver_id = $1)'
   return db.query(query,[user_id,friend_id])
   .then(function(userData){
-    //when no existing friendship found
+    //when no existing friendship found return button statuses for creating new one
     if(!userData.rows[0]){
       return {
         nextGoStatus: 'PENDING',
@@ -119,10 +119,9 @@ module.exports.getNextUserFriendshipState = function(user_id,friend_id){
       }
     }
     const {status,sender_id} = userData.rows[0]
-    const nextGoStatus = getNextGoStatus(status,sender_id===user_id) || ''
-    const nextStopStatus = getNextStopStatus(status,sender_id===user_id) || ''
     return {
-      nextGoStatus, nextStopStatus
+      nextGoStatus: getNextGoStatus(status,sender_id===user_id) || '',
+      nextStopStatus: getNextStopStatus(status,sender_id===user_id) || ''
     }
   })
 }
@@ -132,10 +131,9 @@ module.exports.createFriendshipStatus = function(user_id,friend_id){
   return db.query(query,[user_id,friend_id])
   .then(function(userData){
     const {status,sender_id} = userData.rows[0]
-    const nextGoStatus = getNextGoStatus(status,sender_id===user_id) || ''
-    const nextStopStatus = getNextStopStatus(status,sender_id===user_id) || ''
     return {
-      nextGoStatus, nextStopStatus
+      nextGoStatus: getNextGoStatus(status,sender_id===user_id) || '',
+      nextStopStatus: getNextStopStatus(status,sender_id===user_id) || ''
     }
   })
 }
@@ -145,10 +143,9 @@ module.exports.updateFriendShipStatus = function(user_id,friend_id,newStatus){
   return db.query(query,[user_id,friend_id,newStatus])
   .then(function(userData){
     const {status,sender_id} = userData.rows[0]
-    const nextGoStatus = getNextGoStatus(status,sender_id===user_id) || ''
-    const nextStopStatus = getNextStopStatus(status,sender_id===user_id) || ''
     return {
-      nextGoStatus, nextStopStatus
+      nextGoStatus: getNextGoStatus(status,sender_id===user_id) || '',
+      nextStopStatus: getNextStopStatus(status,sender_id===user_id) || ''
     }
   })
 }
