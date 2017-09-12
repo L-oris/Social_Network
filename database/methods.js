@@ -142,7 +142,7 @@ module.exports.createFriendshipStatus = function(user_id,friend_id){
 
 module.exports.updateFriendShipStatus = function(user_id,friend_id,newStatus){
   const query = 'UPDATE friendships SET status = $3 WHERE (sender_id = $1 AND receiver_id = $2) OR (sender_id = $2 AND receiver_id = $1) RETURNING status,sender_id'
-  db.query(query,[user_id,friend_id,newStatus])
+  return db.query(query,[user_id,friend_id,newStatus])
   .then(function(userData){
     const {status,sender_id} = userData.rows[0]
     const nextGoStatus = getNextGoStatus(status,sender_id===user_id) || ''

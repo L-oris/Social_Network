@@ -12,7 +12,6 @@ export default class FriendshipButton extends Component {
     const {id} = this.props
     axios.get(`/api/getUserFriendship/${id}`)
     .then((serverResponse)=>{
-      console.log('received!',serverResponse);
       this.setState(serverResponse.data)
     })
     .catch((err)=>{
@@ -23,7 +22,7 @@ export default class FriendshipButton extends Component {
   handleFriendshipGo(e){
     axios.post('/api/friend_go',{id:this.props.id})
     .then((serverResponse)=>{
-      console.log('Go received!',serverResponse);
+      this.setState(serverResponse.data)
     })
     .catch((err)=>{
       console.log('error happened');
@@ -33,7 +32,7 @@ export default class FriendshipButton extends Component {
   handleFriendshipStop(e){
     axios.post('/api/friend_stop',{id:this.props.id})
     .then((serverResponse)=>{
-      console.log('Stop received!',serverResponse);
+      this.setState(serverResponse.data)
     })
     .catch((err)=>{
       console.log('error happened');

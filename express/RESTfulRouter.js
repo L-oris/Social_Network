@@ -65,7 +65,7 @@ router.get('/api/getUser/:id',function(req,res){
 })
 
 //SEND BACK NEXT STATE FOR BOTH 'GoButton' and 'StopButton'
-router.get('/api/getUserFriendship/:id',function(req,res){
+router.get('/api/getUserFriendship/:id',function(req,res,next){
   const {user_id} = req.session.user
   const {id:friend_id} = req.params
   getNextUserFriendshipState(user_id,friend_id)
@@ -79,7 +79,7 @@ router.get('/api/getUserFriendship/:id',function(req,res){
 })
 
 //UPDATE NEW FRIENDSHIP STATUS
-router.post('/api/friend_go',function(req,res){
+router.post('/api/friend_go',function(req,res,next){
   //calculate next stop status, update database, calculate updated next possible statuses and send them back to client
   const {user_id} = req.session.user
   const {id:friend_id} = req.body
@@ -102,7 +102,7 @@ router.post('/api/friend_go',function(req,res){
 })
 
 //UPDATE NEW FRIENDSHIP STATUS
-router.post('/api/friend_stop',function(req,res){
+router.post('/api/friend_stop',function(req,res,next){
   //calculate next stop status, update database, calculate updated next possible statuses and send them back to client
   const {user_id} = req.session.user
   const {id:friend_id} = req.body

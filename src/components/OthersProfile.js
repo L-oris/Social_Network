@@ -13,6 +13,10 @@ export default class OthersProfile extends Component {
     this.state = {}
   }
 
+  componentDidMount(){
+    this.componentWillReceiveProps()
+  }
+
   componentWillReceiveProps(){
     const {id} = this.props.params
     axios.get(`/api/getUser/${id}`)
