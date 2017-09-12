@@ -8,10 +8,9 @@ import EditableBio from './EditableBio'
 export default function Profile (props){
   const {first,last,profilePicUrl,bio} = props
   return (
-    <div>
-      <h1>User's profile here</h1>
+    <div className="profile container-padding">
+      <h1 className="profile-name">{first} {last}</h1>
       <ProfilePic first={first} last={last} profilePicUrl={profilePicUrl}/>
-      <h4>{first} {last}</h4>
       <EditableBio bio={bio}/>
     </div>
   )

@@ -94,11 +94,12 @@ export default class App extends Component {
           </div>
         </nav>
 
-        <h4 className="text-error">{error}</h4>
-        <h4 className="text-info">{info}</h4>
+        <div className="main-content">
+          <h4 className="text-error">{error}</h4>
+          <h4 className="text-info">{info}</h4>
 
-        {children}
-
+          {children}
+        </div>
       </div>
     )
   }

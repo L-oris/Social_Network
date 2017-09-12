@@ -44,16 +44,16 @@ export default class EditableBio extends Component {
 
     const noBioText = <p onClick={e=>this.editBioIsVisible(true)} className="text-link">Add your bio now</p>
     const bioText = (
-      <div>
+      <div className="bio-text">
         <h4 className="text-error">{error}</h4>
-        <p>{bio} || <span onClick={e=>this.editBioIsVisible(true)} className="text-link">Edit</span></p>
+        <p>{bio}<span onClick={e=>this.editBioIsVisible(true)} className="text-link">Edit</span></p>
       </div>
     )
     const bioInput = (
       <div>
-        <textarea onChange={e=>this.handleChangeBio(e)} rows="4" cols="50">{bio}</textarea>
-        <button onClick={e=>this.handleSaveBio(e)}>Save</button>
-        <button onClick={e=>this.editBioIsVisible(false)}>Return</button>
+        <textarea onChange={e=>this.handleChangeBio(e)} rows="4" cols="50" className="bio-input">{bio}</textarea>
+        <button onClick={e=>this.handleSaveBio(e)} className="bio-button">Save</button>
+        <button onClick={e=>this.editBioIsVisible(false)} className="bio-button">Return</button>
       </div>
     )
     const bioRender =()=>{
@@ -64,7 +64,7 @@ export default class EditableBio extends Component {
     }
 
     return (
-      <div>
+      <div className="bio">
         {bioRender()}
       </div>
     )
