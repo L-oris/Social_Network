@@ -38,18 +38,6 @@ export default class App extends Component {
     })
   }
 
-  setInfo(newMessage){
-    this.setState({
-      info: newMessage
-    })
-  }
-
-  setError(newMessage){
-    this.setState({
-      error: newMessage
-    })
-  }
-
   deleteMessages(){
     this.setState({
       info: null,
@@ -59,7 +47,9 @@ export default class App extends Component {
 
   uploadUserPic(e){
     this.closeUploader()
-    this.setInfo('Loading..')
+    this.setState({
+      info: 'Loading..'
+    })
     //use built-in FormData API
     const formData = new FormData()
     formData.append('file',e.target.files[0])
@@ -69,7 +59,9 @@ export default class App extends Component {
       this.deleteMessages()
     })
     .catch((err)=>{
-      setError('Something went wrong. Please try again!')
+      this.setState({
+        error: 'Something went wrong. Please try again'
+      })
     })
   }
 
@@ -86,13 +78,24 @@ export default class App extends Component {
         {uploaderIsVisible && <ProfilePicUpload uploadUserPic={e=>this.uploadUserPic(e)} closeUploader={e=>this.closeUploader(e)}/>}
 
         <nav className="nav">
-          <Logo/>
-          <ProfilePic first={first} last={last} profilePicUrl={profilePicUrl} showUploader={e=>this.showUploader(e)}/>
+          <div className="nav-main">
+            <Logo/>
+            <ProfilePic first={first} last={last} profilePicUrl={profilePicUrl} showUploader={e=>this.showUploader(e)}/>
+          </div>
+          <div className="nav-sub">
+            <Link className="nav-sub-link" to="/friends">
+              <i className="fa fa-users" aria-hidden="true"></i>
+              <h5>FRIENDS</h5>
+            </Link>
+            <Link className="nav-sub-link" to="/api/logout">
+              <i className="fa fa-sign-out" aria-hidden="true"></i>
+              <h5>LOGOUT</h5>
+            </Link>
+          </div>
         </nav>
 
         <h4 className="text-error">{error}</h4>
         <h4 className="text-info">{info}</h4>
-        <div>Hi there from App component</div>
 
         {children}
 

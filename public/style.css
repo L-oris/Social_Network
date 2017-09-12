@@ -19,6 +19,7 @@ a {
   color: green;
 }
 
+
 /*===========*/
 /*WELCOME*/
 /*===========*/
@@ -72,18 +73,26 @@ a {
   vertical-align: middle;
 }
 
+
 /*===========*/
 /*NAV*/
 /*===========*/
 .nav {
   background-color: green;
 }
+.nav-main {}
 .nav .social_logo {}
 .nav .social_logo-img {}
-.nav-user {
-  width: 10%;
-}
+.nav .user_pic {}
+.nav .user_pic-img {}
+.nav-sub {}
+.nav-sub-link {}
+.nav-sub-link i {}
+.nav-sub-link h5 {}
 
+/*===========*/
+/*IMAGE UPLOADER MODAL*/
+/*===========*/
 .uploader-overlay {
   position: fixed;
   top: 0;
@@ -102,23 +111,14 @@ a {
   border-radius: 1em;
   background-color: yellow;
 }
-/*#file-input {
-	width: 0.1px;
-	height: 0.1px;
-	opacity: 0;
-	overflow: hidden;
-	position: absolute;
-	z-index: -1;
-}
-#file-input + label {
-  font-size: 1.25em;
-  background-color: red;
-  display: inline-block;
-  border: 2px solid black;
-  padding: .3em 1em;
-  margin: 1.5em;
-  border-radius: 5px;
-}*/
+
+
+/*===========*/
+/*OTHERS PROFILE*/
+/*===========*/
+.others .user_pic {}
+.others .user_pic-img {}
+
 
 @media screen and (min-width: 768px){
   .welcome {

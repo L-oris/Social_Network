@@ -35,7 +35,7 @@ export default class OthersProfile extends Component {
   render(){
     const {first,last,profilePicUrl,bio} = this.state
     return (
-      <div>
+      <div className="others">
         <h1>User's profile here</h1>
         <ProfilePic first={first} last={last} profilePicUrl={profilePicUrl}/>
         <h4>{first} {last}</h4>
