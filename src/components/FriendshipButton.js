@@ -15,7 +15,9 @@ export default class FriendshipButton extends Component {
       this.setState(serverResponse.data)
     })
     .catch((err)=>{
-      console.log('error happened');
+      this.setState({
+        error: 'Friendship Button Error'
+      })
     })
   }
 
@@ -25,7 +27,9 @@ export default class FriendshipButton extends Component {
       this.setState(serverResponse.data)
     })
     .catch((err)=>{
-      console.log('error happened');
+      this.setState({
+        error: 'Friendship Button Error'
+      })
     })
   }
 
@@ -35,7 +39,9 @@ export default class FriendshipButton extends Component {
       this.setState(serverResponse.data)
     })
     .catch((err)=>{
-      console.log('error happened');
+      this.setState({
+        error: 'Friendship Button Error'
+      })
     })
   }
 
@@ -51,9 +57,10 @@ export default class FriendshipButton extends Component {
   }
 
   render(){
-    const {nextGoStatus,nextStopStatus} = this.state
+    const {error,nextGoStatus,nextStopStatus} = this.state
     return (
       <div>
+        <h6 className="text-error">{error}</h6>
 
         {nextGoStatus && <button onClick={e=>this.handleFriendshipGo(e)}>{this.mapButtonStateToString(nextGoStatus)}</button>}
 
