@@ -73,12 +73,12 @@ export default class App extends Component {
     })
 
     return (
-      <div>
+      <div className="app">
 
         {uploaderIsVisible && <ProfilePicUpload uploadUserPic={e=>this.uploadUserPic(e)} closeUploader={e=>this.closeUploader(e)}/>}
 
         <nav className="nav">
-          <div className="nav-main">
+          <div className="nav-main container-padding">
             <Logo/>
             <ProfilePic first={first} last={last} profilePicUrl={profilePicUrl} showUploader={e=>this.showUploader(e)}/>
           </div>

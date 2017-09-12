@@ -1,9 +1,15 @@
 :root {
   --logo_text-color: #0CB3CC;
+  --nav-main-height: 60px;
+  --nav-main-elems-height: 50px;
 }
 body, input, button {
+  box-sizing: border-box;
   font-family: 'Gochi Hand', cursive;
   background-color: rgba(30,144,255,.1);
+}
+body, .nav-main {
+  box-sizing: border-box;
 }
 a {
   color: inherit;
@@ -18,14 +24,23 @@ a {
 .text-info {
   color: green;
 }
+.container-margin {
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.container-padding {
+  padding-left: 2.5%;
+  padding-right: 2.5%;
+}
 
 
 /*===========*/
 /*WELCOME*/
 /*===========*/
 .welcome {
-  width: 95%;
-  margin: 2em auto;
+  margin-top: 2em;
+  margin-bottom: 2em;
 }
 .welcome .social_logo {}
 .welcome .social_logo-img {
@@ -78,17 +93,53 @@ a {
 /*NAV*/
 /*===========*/
 .nav {
-  background-color: green;
 }
-.nav-main {}
+.nav-main {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(95,146,255,.6);
+  height: var(--nav-main-height);
+}
 .nav .social_logo {}
-.nav .social_logo-img {}
-.nav .user_pic {}
-.nav .user_pic-img {}
-.nav-sub {}
-.nav-sub-link {}
+.nav .social_logo-img {
+  height: var(--nav-main-elems-height);
+  vertical-align: bottom;
+}
+.nav .user_pic {
+  position: relative;
+  overflow: hidden;
+  width: var(--nav-main-elems-height);
+  height: var(--nav-main-elems-height);
+  border-radius: 50%;
+}
+.nav .user_pic-img {
+  position: absolute;
+  margin: auto;
+  height: 100%;
+}
+.nav-sub {
+  position: fixed;
+  width: 100%;
+  top: var(--nav-main-height);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+  background-color: rgba(4,47,116,.6);
+  color: white;
+  height: var(--nav-main-height);
+}
+.nav-sub-link {
+  text-align: center;
+}
 .nav-sub-link i {}
-.nav-sub-link h5 {}
+.nav-sub-link h5 {
+  margin: 0;
+}
 
 /*===========*/
 /*IMAGE UPLOADER MODAL*/
@@ -116,13 +167,27 @@ a {
 /*===========*/
 /*OTHERS PROFILE*/
 /*===========*/
+
+.user_pic-img {
+  max-width: 100%;
+}
 .others .user_pic {}
 .others .user_pic-img {}
 
 
 @media screen and (min-width: 768px){
-  .welcome {
+  :root {
+    --nav-main-height: 80px;
+    --nav-main-elems-height: 65px;
+  }
+  .container-margin {
     width: 85%;
+  }
+  .container-padding {
+    padding-left: 7.5%;
+    padding-right: 7.5%;
+  }
+  .welcome {
     font-size: 1.8em;
   }
   .welcome .social_logo-img {
@@ -134,11 +199,24 @@ a {
   .form-submit_btn img {
     height: 100px;
   }
+
+  .nav-sub {
+    position: fixed;
+    flex-direction: column;
+    height: 100%;
+    width: var(--nav-main-height);
+  }
 }
 
 @media screen and (min-width: 1024px){
-  .welcome {
+  .container-margin {
     width: 75%;
+  }
+  .container-padding {
+    padding-left: 12.5%;
+    padding-right: 12.5%;
+  }
+  .welcome {
     text-align: center;
     font-size: 2.2em;
   }
