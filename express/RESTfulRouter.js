@@ -73,15 +73,21 @@ router.get('/api/getUserFriendship/:id',function(req,res){
     res.json(userData)
   })
   .catch(function(err){
-    res.status(404).json({success:false})
+    //pass error to next Express error handler
+    next('Error happened when calculating next possible friendship statuses')
   })
 })
 
+//UPDATE NEW FRIENDSHIP STATUS
 router.post('/api/friend_go',function(req,res){
+  //calculate next stop status, update database, calculate updated next possible statuses and send them back to client
   const {user_id} = req.session.user
   const {id:friend_id} = req.body
   getNextUserFriendshipState(user_id,friend_id)
   .then(function({nextGoStatus}){
+    if(nextGoStatus==='PENDING'){
+      return createFriendshipStatus(user_id,friend_id)
+    }
     return updateFriendShipStatus(user_id,friend_id,nextGoStatus)
   })
   .then(function({nextGoStatus,nextStopStatus}){
@@ -90,12 +96,32 @@ router.post('/api/friend_go',function(req,res){
     })
   })
   .catch(function(err){
-    res.status(404).json({success:false})
+    //pass error to next Express error handler
+    next('Failed to update friendship status')
   })
 })
 
+//UPDATE NEW FRIENDSHIP STATUS
 router.post('/api/friend_stop',function(req,res){
-  console.log('Received post stop');
+  //calculate next stop status, update database, calculate updated next possible statuses and send them back to client
+  const {user_id} = req.session.user
+  const {id:friend_id} = req.body
+  getNextUserFriendshipState(user_id,friend_id)
+  .then(function({nextStopStatus}){
+    if(nextStopStatus==='REJECT' || nextStopStatus==='CANCEL' || nextStopStatus==='TERMINATE'){
+      return deleteFriendshipStatus(user_id,friend_id)
+    }
+    return updateFriendShipStatus(user_id,friend_id,nextStopStatus)
+  })
+  .then(function({nextGoStatus,nextStopStatus}){
+    res.json({
+      nextGoStatus, nextStopStatus
+    })
+  })
+  .catch(function(err){
+    //pass error to next Express error handler
+    next('Failed to update friendship status')
+  })
 })
 
 //UPDATE USER'S PROFILE PICTURE

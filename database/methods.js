@@ -88,7 +88,7 @@ function getNextGoStatus(currentStatus,isSender){
   isSender ? user = 'SENDER' : user = 'RECEIVER'
   const key = `${currentStatus.toUpperCase()}_${user}`
   const statuses = {
-    NONE_SENDER: 'PENDING',
+    NONE_SENDER: 'PENDING', //not used, useful here just for understanding friendship flow
     PENDING_RECEIVER: 'ACCEPT'
   }
   return statuses[key]
@@ -101,10 +101,8 @@ function getNextStopStatus(currentStatus,isSender){
   const statuses = {
     PENDING_SENDER: 'CANCEL',
     ACCEPT_SENDER: 'TERMINATE',
-    TERMINATE_SENDER: 'NONE',
     PENDING_RECEIVER: 'REJECT',
     ACCEPT_RECEIVER: 'TERMINATE',
-    TERMINATE_RECEIVER: 'NONE'
   }
   return statuses[key]
 }
@@ -113,6 +111,13 @@ module.exports.getNextUserFriendshipState = function(user_id,friend_id){
   const query = 'SELECT sender_id,status FROM friendships WHERE (sender_id = $1 AND receiver_id = $2) OR (sender_id = $2 AND receiver_id = $1)'
   return db.query(query,[user_id,friend_id])
   .then(function(userData){
+    //when no existing friendship found
+    if(!userData.rows[0]){
+      return {
+        nextGoStatus: 'PENDING',
+        nextStopStatus: ''
+      }
+    }
     const {status,sender_id} = userData.rows[0]
     const nextGoStatus = getNextGoStatus(status,sender_id===user_id) || ''
     const nextStopStatus = getNextStopStatus(status,sender_id===user_id) || ''
@@ -123,7 +128,16 @@ module.exports.getNextUserFriendshipState = function(user_id,friend_id){
 }
 
 module.exports.updateFriendShipStatus = function(user_id,friend_id,newStatus){
-
+  const query = 'UPDATE friendships SET status = $3 WHERE (sender_id = $1 AND receiver_id = $2) OR (sender_id = $2 AND receiver_id = $1) RETURNING status,sender_id'
+  db.query(query,[user_id,friend_id,newStatus])
+  .then(function(userData){
+    const {status,sender_id} = userData.rows[0]
+    const nextGoStatus = getNextGoStatus(status,sender_id===user_id) || ''
+    const nextStopStatus = getNextStopStatus(status,sender_id===user_id) || ''
+    return {
+      nextGoStatus, nextStopStatus
+    }
+  })
 }
 
 module.exports.updateProfilePic = function(user_id,filename){
