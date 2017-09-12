@@ -2,7 +2,7 @@ const express = require('express'),
       router = express.Router()
 
 const {uploader,uploadToS3} = require('./middlewares')
-const {createUser, checkUser, getUser, getNextUserFriendshipState, updateProfilePic, updateBio} = require('../database/methods')
+const {createUser, checkUser, getUser, getNextUserFriendshipState, createFriendshipStatus, updateFriendShipStatus, deleteFriendshipStatus, updateProfilePic, updateBio} = require('../database/methods')
 
 
 //CREATE NEW USER INTO DATABASE

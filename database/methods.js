@@ -127,6 +127,19 @@ module.exports.getNextUserFriendshipState = function(user_id,friend_id){
   })
 }
 
+module.exports.createFriendshipStatus = function(user_id,friend_id){
+  const query = `INSERT INTO friendships (sender_id,receiver_id,status) VALUES ($1,$2,'PENDING') RETURNING status,sender_id`
+  return db.query(query,[user_id,friend_id])
+  .then(function(userData){
+    const {status,sender_id} = userData.rows[0]
+    const nextGoStatus = getNextGoStatus(status,sender_id===user_id) || ''
+    const nextStopStatus = getNextStopStatus(status,sender_id===user_id) || ''
+    return {
+      nextGoStatus, nextStopStatus
+    }
+  })
+}
+
 module.exports.updateFriendShipStatus = function(user_id,friend_id,newStatus){
   const query = 'UPDATE friendships SET status = $3 WHERE (sender_id = $1 AND receiver_id = $2) OR (sender_id = $2 AND receiver_id = $1) RETURNING status,sender_id'
   db.query(query,[user_id,friend_id,newStatus])
@@ -136,6 +149,17 @@ module.exports.updateFriendShipStatus = function(user_id,friend_id,newStatus){
     const nextStopStatus = getNextStopStatus(status,sender_id===user_id) || ''
     return {
       nextGoStatus, nextStopStatus
+    }
+  })
+}
+
+module.exports.deleteFriendshipStatus = function(user_id,friend_id){
+  const query = 'DELETE FROM friendships WHERE (sender_id = $1 AND receiver_id = $2) OR (sender_id = $2 AND receiver_id = $1)'
+  return db.query(query,[user_id,friend_id])
+  .then(function(){
+    return {
+      nextGoStatus: 'PENDING',
+      nextStopStatus: ''
     }
   })
 }
