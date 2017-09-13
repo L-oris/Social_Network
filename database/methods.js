@@ -161,6 +161,26 @@ module.exports.deleteFriendshipStatus = function(user_id,friend_id){
   })
 }
 
+module.exports.getFriendsLists = function(user_id){
+  //get pending friends
+  const query = `SELECT first,last,profilepicurl FROM users INNER JOIN friendships ON users.id = friendships.receiver_id WHERE status = 'PENDING' and users.id = $1`
+  return db.query(query,[user_id])
+  .then(function(dbPendingFriends){
+    //get current friends
+    const query = `
+      SELECT first,last,profilepicurl FROM users INNER JOIN friendships ON users.id = friendships.sender_id WHERE status = 'ACCEPT' AND receiver_id = $1 AND sender_id <> $1
+      UNION
+      SELECT first,last,profilepicurl FROM users INNER JOIN friendships ON users.id = friendships.receiver_id WHERE status = 'ACCEPT' AND sender_id = $1 AND receiver_id <> $1`
+    return db.query(query,[user_id])
+    .then(function(dbCurrentFriends){
+      return {
+        pendingFriends: dbPendingFriends.rows,
+        currentFriends: dbCurrentFriends.rows
+      }
+    })
+  })
+}
+
 module.exports.updateProfilePic = function(user_id,filename){
   const query = 'UPDATE users SET profilepicurl = $1 WHERE id = $2'
   return db.query(query,[filename,user_id])

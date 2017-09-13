@@ -2,7 +2,7 @@ const express = require('express'),
       router = express.Router()
 
 const {uploader,uploadToS3} = require('./middlewares')
-const {createUser, checkUser, getUser, getNextUserFriendshipState, createFriendshipStatus, updateFriendShipStatus, deleteFriendshipStatus, updateProfilePic, updateBio} = require('../database/methods')
+const {createUser, checkUser, getUser, getNextUserFriendshipState, createFriendshipStatus, updateFriendShipStatus, deleteFriendshipStatus, getFriendsLists, updateProfilePic, updateBio} = require('../database/methods')
 
 
 //CREATE NEW USER INTO DATABASE
@@ -126,8 +126,14 @@ router.post('/api/friend_stop',function(req,res,next){
 
 //GET LIST OF PENDING FRIENDS (whose friendship request to user needs to be accepted yet) AND CURRENT FRIENDS
 router.get('/api/getFriends',function(req,res,next){
-  console.log('request received');
-  res.send('ok')
+  getFriendsLists(req.session.user.user_id)
+  .then(function(friendsData){
+    console.log('final friendsData',friendsData);
+    res.send('ok')
+  })
+  .catch(function(err){
+    next('Failed getting list of friends')
+  })
 })
 
 //UPDATE USER'S PROFILE PICTURE
