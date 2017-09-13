@@ -1,7 +1,8 @@
 import React,{Component} from 'react'
-import axios from '../axios'
+import {connect} from 'react-redux'
+import {getFriends} from '../actions'
 
-export default class Friends extends Component {
+class Friends extends Component {
 
   constructor(props){
     super(props)
@@ -9,19 +10,11 @@ export default class Friends extends Component {
   }
 
   componentDidMount(){
-    axios.get('/api/getFriends')
-    .then((serverResponse)=>{
-      this.setState({
-        friends:serverResponse.data
-      })
-    })
-    .catch((err)=>{
-      console.log('Error happened!',err);
-    })
+    this.props.dispatch(getFriends())
   }
 
   render(){
-    const {friends} = this.state
+    const {friends} = this.props
     const renderPendingFriends = ()=>{
       return friends.map(friend=>{
         return friend.status==='PENDING' && (
@@ -58,3 +51,11 @@ export default class Friends extends Component {
   }
 
 }
+
+function mapStateToProps(state){
+  return {
+    friends: state.friends
+  }
+}
+
+export default connect(mapStateToProps)(Friends)

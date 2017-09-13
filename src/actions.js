@@ -1,5 +1,14 @@
 import axios from './axios'
 
-export function doSomething(){
-  // return axios.get(...)
+export function getFriends(){
+  return axios.get('/api/getFriends')
+  .then((serverResponse)=>{
+    return {
+      type: 'GET_FRIENDS',
+      friends: serverResponse.data
+    }
+  })
+  .catch((err)=>{
+    console.log('Error happened!',err);
+  })
 }
