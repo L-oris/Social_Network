@@ -14,7 +14,7 @@ CREATE TABLE users(
 
 CREATE TABLE friendships(
   id SERIAL PRIMARY KEY,
-  sender_id INTEGER NOT NULL,
-  receiver_id INTEGER NOT NULL,
+  sender_id INTEGER REFERENCES users(id),
+  receiver_id INTEGER REFERENCES users(id),
   status VARCHAR(20) NOT NULL
 );
