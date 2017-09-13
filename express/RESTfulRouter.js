@@ -124,6 +124,12 @@ router.post('/api/friend_stop',function(req,res,next){
   })
 })
 
+//GET LIST OF PENDING FRIENDS (whose friendship request to user needs to be accepted yet) AND CURRENT FRIENDS
+router.get('/api/getFriends',function(req,res,next){
+  console.log('request received');
+  res.send('ok')
+})
+
 //UPDATE USER'S PROFILE PICTURE
 router.put('/api/upload_profile_pic',uploader.single('file'),uploadToS3,function(req,res,next){
   const {user_id} = req.session.user
