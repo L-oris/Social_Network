@@ -1,11 +1,12 @@
 const db = require('./db');
 const {hashPassword,checkPassword} = require('./hashing')
 const {s3Url} = require('../config/config.json')
+const defaultImageUrl = '765-default-avatar.png'
 
 module.exports.createUser = function({first,last,email,password}){
   return hashPassword(password)
   .then(function(hash){
-    const query = 'INSERT INTO users (first,last,email,password) VALUES ($1,$2,$3,$4) RETURNING id,first,last,email'
+    const query = `INSERT INTO users (first,last,email,password,profilepicurl) VALUES ($1,$2,$3,$4,'${defaultImageUrl}') RETURNING id,first,last,email,profilepicurl`
     return db.query(query,[first,last,email,hash])
   })
   .then(function(userData){
@@ -14,7 +15,7 @@ module.exports.createUser = function({first,last,email,password}){
       first:userData.rows[0].first,
       last:userData.rows[0].last,
       email:userData.rows[0].email,
-      profilePicUrl:'https://s3.amazonaws.com/social-network-loris/765-default-avatar.png',
+      profilePicUrl:s3Url+userData.rows[0].profilepicurl,
       bio:null
     }
   })
@@ -31,30 +32,20 @@ module.exports.checkUser = function({email,password:plainTextPassword}){
       first:userData.rows[0].first,
       last:userData.rows[0].last,
       email:userData.rows[0].email,
-      profilePicUrl:userData.rows[0].profilepicurl,
+      profilePicUrl:s3Url+userData.rows[0].profilepicurl,
       bio:userData.rows[0].bio,
       hashedPassword:userData.rows[0].password
     }
   })
-  .then(function(userObj){
+  .then(function({user_id,first,last,email,hashedPassword,profilePicUrl,bio}){
     //compare saved password with new one provided from user
-    return checkPassword(plainTextPassword,userObj.hashedPassword)
+    return checkPassword(plainTextPassword,hashedPassword)
     .then(function(doesMatch){
-      //if passwords match return from promise 'id','firstName','lastName' of currently searched user, otherwise throw an error
       if(!doesMatch){
         throw 'Passwords do not match!'
       }
-      if(userObj.profilePicUrl){
-        //append path to AWS S3
-        userObj.profilePicUrl = s3Url + userObj.profilePicUrl
-      }
       return {
-        user_id: userObj.id,
-        first: userObj.first,
-        last: userObj.last,
-        email: userObj.email,
-        profilePicUrl: userObj.profilePicUrl || 'https://s3.amazonaws.com/social-network-loris/765-default-avatar.png',
-        bio: userObj.bio
+        user_id,first,last,email,profilePicUrl,bio
       }
     })
   })
@@ -67,16 +58,11 @@ module.exports.getUser = function(user_id){
     if(!userData){
       throw 'User not found'
     }
-    let profilePicUrl = userData.rows[0].profilepicurl
-    if(profilePicUrl){
-      //append path to AWS S3
-      profilePicUrl = s3Url + profilePicUrl
-    }
     return {
       first:userData.rows[0].first,
       last:userData.rows[0].last,
       email:userData.rows[0].email,
-      profilePicUrl:profilePicUrl || 'https://s3.amazonaws.com/social-network-loris/765-default-avatar.png',
+      profilePicUrl:s3Url+userData.rows[0].profilepicurl,
       bio:userData.rows[0].bio
     }
   })
