@@ -28,7 +28,7 @@ module.exports.checkUser = function({email,password:plainTextPassword}){
   .then(function(userData){
     //create object containing useful user's data
     return {
-      id:userData.rows[0].id,
+      user_id:userData.rows[0].id,
       first:userData.rows[0].first,
       last:userData.rows[0].last,
       email:userData.rows[0].email,
@@ -149,20 +149,34 @@ module.exports.deleteFriendshipStatus = function(user_id,friend_id){
 
 module.exports.getFriendsLists = function(user_id){
   //get pending friends
-  const query = `SELECT first,last,profilepicurl FROM users INNER JOIN friendships ON users.id = friendships.receiver_id WHERE status = 'PENDING' and users.id = $1`
+  const query = `SELECT users.id,first,last,profilepicurl FROM users INNER JOIN friendships ON users.id = friendships.receiver_id WHERE status = 'PENDING' and users.id = $1`
   return db.query(query,[user_id])
   .then(function(dbPendingFriends){
     //get current friends
     const query = `
-      SELECT first,last,profilepicurl FROM users INNER JOIN friendships ON users.id = friendships.sender_id WHERE status = 'ACCEPT' AND receiver_id = $1 AND sender_id <> $1
+      SELECT users.id,first,last,profilepicurl FROM users INNER JOIN friendships ON users.id = friendships.sender_id WHERE status = 'ACCEPT' AND receiver_id = $1 AND sender_id <> $1
       UNION
-      SELECT first,last,profilepicurl FROM users INNER JOIN friendships ON users.id = friendships.receiver_id WHERE status = 'ACCEPT' AND sender_id = $1 AND receiver_id <> $1`
+      SELECT users.id,first,last,profilepicurl FROM users INNER JOIN friendships ON users.id = friendships.receiver_id WHERE status = 'ACCEPT' AND sender_id = $1 AND receiver_id <> $1`
     return db.query(query,[user_id])
     .then(function(dbCurrentFriends){
-      return {
-        pendingFriends: dbPendingFriends.rows,
-        currentFriends: dbCurrentFriends.rows
-      }
+      //map list of friends to add their status
+      const pendingFriends = dbPendingFriends.rows.map(friend=>{
+        const {id,first,last,profilepicurl} = friend
+        return {
+          id,first,last,
+          profilePicUrl: s3Url+profilepicurl,
+          status: 'PENDING'
+        }
+      })
+      const currentFriends = dbCurrentFriends.rows.map(friend=>{
+        const {id,first,last,profilepicurl} = friend
+        return {
+          id,first,last,
+          profilePicUrl: s3Url+profilepicurl,
+          status: 'ACCEPT'
+        }
+      })
+      return [...pendingFriends,...currentFriends]
     })
   })
 }

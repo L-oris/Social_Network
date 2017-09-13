@@ -15,6 +15,7 @@ router.post('/api/register', function(req,res,next){
   .then(function(userData){
     //set user info inside session
     req.session.user = userData
+    console.log('session is now',req.session);
     res.json({success:true})
   })
   .catch(function(err){
@@ -128,8 +129,7 @@ router.post('/api/friend_stop',function(req,res,next){
 router.get('/api/getFriends',function(req,res,next){
   getFriendsLists(req.session.user.user_id)
   .then(function(friendsData){
-    console.log('final friendsData',friendsData);
-    res.send('ok')
+    res.json(friendsData)
   })
   .catch(function(err){
     next('Failed getting list of friends')
