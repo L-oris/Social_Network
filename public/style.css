@@ -1,3 +1,8 @@
+/*from Friends.js component*/
+.small-deleteme {
+  width: 50px;
+}
+
 :root {
   --logo_text-color: #0CB3CC;
   --nav-main-height: 60px;
