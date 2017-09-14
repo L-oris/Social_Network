@@ -1,4 +1,5 @@
 import React,{Component} from 'react'
+import {Link} from 'react-router'
 import {connect} from 'react-redux'
 import {getFriends,acceptFriendship,removeFriendship} from '../actions'
 
@@ -20,9 +21,11 @@ class Friends extends Component {
       return friends.map(friend=>{
         return friend.status==='PENDING' && (
           <li>
-            <p>{friend.first} {friend.last}</p>
-            <img className="small-deleteme" src={friend.profilePicUrl} alt={friend.first,' ',friend.last}/>
-            <button onClick={()=>dispatch(acceptFriendship(friend.id))}>Accept friendship</button>
+            <Link to={`/user/${friend.id}`}>
+              <p>{friend.first} {friend.last}</p>
+              <img className="small-deleteme" src={friend.profilePicUrl} alt={friend.first,' ',friend.last}/>
+              <button onClick={()=>dispatch(acceptFriendship(friend.id))}>Accept friendship</button>
+            </Link>
           </li>
         )
       })
@@ -31,9 +34,11 @@ class Friends extends Component {
       return friends.map(friend=>{
         return friend.status==='ACCEPT' && (
           <li>
-            <p>{friend.first} {friend.last}</p>
-            <img className="small-deleteme" src={friend.profilePicUrl} alt={friend.first,' ',friend.last}/>
-            <button onClick={()=>dispatch(removeFriendship(friend.id))}>End this friendship</button>
+            <Link to={`/user/${friend.id}`}>
+              <p>{friend.first} {friend.last}</p>
+              <img className="small-deleteme" src={friend.profilePicUrl} alt={friend.first,' ',friend.last}/>
+              <button onClick={()=>dispatch(removeFriendship(friend.id))}>End this friendship</button>
+          </Link>
           </li>
         )
       })
