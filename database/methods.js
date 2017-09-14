@@ -149,7 +149,7 @@ module.exports.deleteFriendshipStatus = function(user_id,friend_id){
 
 module.exports.getFriendsLists = function(user_id){
   const query = `
-    SELECT first,last,profilepicurl,status
+    SELECT users.id,first,last,profilepicurl,status
     FROM friendships INNER JOIN users
     ON (friendships.status = 'PENDING' AND receiver_id = $1 AND sender_id = users.id)
     OR (friendships.status = 'ACCEPT' AND sender_id = $1 AND receiver_id = users.id)

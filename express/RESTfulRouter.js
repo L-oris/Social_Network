@@ -15,7 +15,6 @@ router.post('/api/register', function(req,res,next){
   .then(function(userData){
     //set user info inside session
     req.session.user = userData
-    console.log('session is now',req.session);
     res.json({success:true})
   })
   .catch(function(err){

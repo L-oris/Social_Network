@@ -28,6 +28,7 @@ class Friends extends Component {
       })
     }
     const renderCurrentFriends = ()=>{
+      console.log('friends are',friends);
       return friends.map(friend=>{
         return friend.status==='ACCEPT' && (
           <li>

@@ -9,7 +9,9 @@ export default function(state={},action){
   if(action.type==='ACCEPT_FRIEND'){
     return Object.assign({},state,{
       friends: state.friends.map(friend=>{
-        if(action.friend_id===friend.id){friend.status='ACCEPT'}
+        if(action.friend_id===friend.id){
+          friend.status='ACCEPT'
+        }
         return friend
       })
     })

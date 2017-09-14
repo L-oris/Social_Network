@@ -15,7 +15,7 @@ export function acceptFriendship(friend_id){
   .then(()=>{
     return {
       type: 'ACCEPT_FRIEND',
-      friend: friend_id
+      friend_id
     }
   })
 }
@@ -25,7 +25,7 @@ export function removeFriendship(friend_id){
   .then(()=>{
     return {
       type: 'REMOVE_FRIEND',
-      friend: friend_id
+      friend_id
     }
   })
 }
