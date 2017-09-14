@@ -1,7 +1,7 @@
 import axios from './axios'
 
 export function getFriends(){
-  return axios.get('/api/getFriends')
+  return axios.get('/api/get_friends_list')
   .then((serverResponse)=>{
     return {
       type: 'GET_FRIENDS',

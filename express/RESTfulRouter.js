@@ -42,7 +42,7 @@ router.post('/api/login', function(req,res,next){
 })
 
 //GET LOGGED-IN USER'S INFO (FROM SESSION)
-router.get('/api/getUser',function(req,res){
+router.get('/api/get_user',function(req,res){
   if(!req.session.user){
     throw 'No logged in user in current session'
   }
@@ -50,7 +50,7 @@ router.get('/api/getUser',function(req,res){
 })
 
 //SEARCH FOR USER INFO BY ID (FROM DATABASE)
-router.get('/api/getUser/:id',function(req,res){
+router.get('/api/get_user/:id',function(req,res){
   //when user tries to get his own profile, send back 301 HTTP Redirect status
   if(req.params.id == req.session.user.user_id){
     return res.status(301).json({success:false})
@@ -65,7 +65,7 @@ router.get('/api/getUser/:id',function(req,res){
 })
 
 //SEND BACK NEXT STATE FOR BOTH 'GoButton' and 'StopButton'
-router.get('/api/getUserFriendship/:id',function(req,res,next){
+router.get('/api/get_user_friendship/:id',function(req,res,next){
   const {user_id} = req.session.user
   const {id:friend_id} = req.params
   getNextUserFriendshipState(user_id,friend_id)
@@ -125,7 +125,7 @@ router.post('/api/friend_stop',function(req,res,next){
 })
 
 //GET LIST OF PENDING FRIENDS (whose friendship request to user needs to be accepted yet) AND CURRENT FRIENDS
-router.get('/api/getFriends',function(req,res,next){
+router.get('/api/get_friends_list',function(req,res,next){
   getFriendsLists(req.session.user.user_id)
   .then(function(friendsData){
     res.json(friendsData)

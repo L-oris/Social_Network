@@ -10,7 +10,7 @@ export default class FriendshipButton extends Component {
 
   componentDidMount(){
     const {id} = this.props
-    axios.get(`/api/getUserFriendship/${id}`)
+    axios.get(`/api/get_user_friendship/${id}`)
     .then((serverResponse)=>{
       this.setState(serverResponse.data)
     })

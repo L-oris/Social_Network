@@ -15,7 +15,7 @@ export default class App extends Component {
   }
 
   componentDidMount(){
-    axios.get('/api/getUser')
+    axios.get('/api/get_user')
     .then((serverResponse)=>{
       this.setState(serverResponse.data)
     })
