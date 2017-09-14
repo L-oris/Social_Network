@@ -2,7 +2,7 @@ import React,{Component} from 'react'
 import {Link,browserHistory} from 'react-router'
 import axios from '../axios'
 import {connect} from 'react-redux'
-import {searchFriendsByName} from '../actions'
+import {searchUserByName} from '../actions'
 
 //React Components
 import Logo from './Logo'
@@ -17,7 +17,7 @@ class App extends Component {
   }
 
   componentDidMount(){
-    axios.get('/api/get_user')
+    axios.get('/api/get_current_user')
     .then((serverResponse)=>{
       this.setState(serverResponse.data)
     })
@@ -56,12 +56,12 @@ class App extends Component {
   handleSearchSubmit(e){
     const {friendSearchInput} = this.state
     if(friendSearchInput){
-      this.props.dispatch(searchFriendsByName(friendSearchInput))
+      this.props.dispatch(searchUserByName(friendSearchInput))
       this.setState({
         friendSearchInput: ''
       })
       //render results to user
-      browserHistory.push('/search')      
+      browserHistory.push('/search')
     }
   }
 

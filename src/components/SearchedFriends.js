@@ -3,19 +3,19 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router'
 
 function SearchedFriends(props){
-  const friendsList = props.friends && props.friends.map(friend=>{
+  const usersList = props.users && props.users.map(user=>{
     return (
       <li>
-        <Link to={`/user/${friend.id}`}>
-          <h5>{friend.first} {friend.last}</h5>
-          <img className="small-deleteme" src={friend.profilePicUrl} alt={friend.first+' '+friend.last}/>
+        <Link to={`/user/${user.id}`}>
+          <h5>{user.first} {user.last}</h5>
+          <img className="small-deleteme" src={user.profilePicUrl} alt={user.first+' '+user.last}/>
         </Link>
       </li>
     )
   })
   return (
     <div>
-      {friendsList}
+      {usersList}
     </div>
   )
 }
@@ -23,7 +23,7 @@ function SearchedFriends(props){
 
 function mapStateToProps(reduxState){
   return {
-    friends: reduxState.searchedFriendsList
+    users: reduxState.searchedUsersList
   }
 }
 

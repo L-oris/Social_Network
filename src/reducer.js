@@ -25,9 +25,9 @@ export default function(state={},action){
     })
   }
 
-  if(action.type==='SEARCH_FRIENDS_BY_NAME'){
+  if(action.type==='SEARCH_USER_BY_NAME'){
     return Object.assign({},state,{
-      searchedFriendsList: action.searchedFriendsList
+      searchedUsersList: action.searchedUsersList
     })
   }
 
