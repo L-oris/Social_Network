@@ -10,6 +10,7 @@ import App from './components/App'
 import Profile from './components/Profile'
 import OthersProfile from './components/OthersProfile'
 import Friends from './components/Friends'
+import SearchedFriends from './components/SearchedFriends'
 import NotFound from './components/NotFound'
 
 //Redux
@@ -39,6 +40,7 @@ const loggedInRouter = (
         <IndexRoute component={Profile}/>
         <Route path="user/:id" component={OthersProfile}/>
         <Route path="friends" component={Friends}/>
+        <Route path="search" component={SearchedFriends}/>
         <Route path="*" component={NotFound}/>
       </Route>
     </Router>

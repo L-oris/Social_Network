@@ -49,6 +49,22 @@ router.get('/api/get_user',function(req,res){
   res.json(req.session.user)
 })
 
+// //SEARCH FOR USER(S) BY 'ID' OR 'NAME' (passed inside body of POST request)
+// router.post('/api/search_users',function(req,res){
+//   if('something'){
+//     getUser()
+//   }
+//   else {
+//     getElse()
+//   }
+//   .then(..)
+//
+//
+//
+//
+//
+// })
+
 //SEARCH FOR USER INFO BY ID (FROM DATABASE)
 router.get('/api/get_user/:id',function(req,res){
   //when user tries to get his own profile, send back 301 HTTP Redirect status

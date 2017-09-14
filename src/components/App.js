@@ -1,5 +1,5 @@
 import React,{Component} from 'react'
-import {Link} from 'react-router'
+import {Link,browserHistory} from 'react-router'
 import axios from '../axios'
 import {connect} from 'react-redux'
 import {searchFriendsByName} from '../actions'
@@ -55,6 +55,8 @@ class App extends Component {
 
   handleSearchSubmit(e){
     this.props.dispatch(searchFriendsByName(this.state.friendSearchInput))
+    //render results to user
+    browserHistory.push('/search')
   }
 
   uploadUserPic(e){
