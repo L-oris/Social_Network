@@ -54,9 +54,15 @@ class App extends Component {
   }
 
   handleSearchSubmit(e){
-    this.props.dispatch(searchFriendsByName(this.state.friendSearchInput))
-    //render results to user
-    browserHistory.push('/search')
+    const {friendSearchInput} = this.state
+    if(friendSearchInput){
+      this.props.dispatch(searchFriendsByName(friendSearchInput))
+      this.setState({
+        friendSearchInput: ''
+      })
+      //render results to user
+      browserHistory.push('/search')      
+    }
   }
 
   uploadUserPic(e){
@@ -114,7 +120,7 @@ class App extends Component {
           <h4 className="text-info">{info}</h4>
 
           <div>
-            <input type="text" name="friendSearchInput" placeholder="Marge" onChange={e=>this.handleSearchChange(e)}/>
+            <input type="text" name="friendSearchInput" value={this.state.friendSearchInput} placeholder="Marge" onChange={e=>this.handleSearchChange(e)}/>
             <button onClick={e=>this.handleSearchSubmit(e)}>Search!</button>
           </div>
 
