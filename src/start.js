@@ -15,10 +15,11 @@ import NotFound from './components/NotFound'
 //Redux
 import {createStore,applyMiddleware} from 'redux'
 import reduxPromise from 'redux-promise'
+import {composeWithDevTools} from 'redux-devtools-extension'
 import {Provider} from 'react-redux'
 import reducer from './reducer'
 
-const store = createStore(reducer,applyMiddleware(reduxPromise))
+const store = createStore(reducer,composeWithDevTools(applyMiddleware(reduxPromise)))
 
 //client-side routing for non-registered users
 const welcomeRouter = (

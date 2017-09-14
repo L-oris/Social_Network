@@ -8,7 +8,4 @@ export function getFriends(){
       friends: serverResponse.data
     }
   })
-  .catch((err)=>{
-    console.log('Error happened!',err);
-  })
 }
