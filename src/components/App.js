@@ -1,13 +1,15 @@
 import React,{Component} from 'react'
 import {Link} from 'react-router'
 import axios from '../axios'
+import {connect} from 'react-redux'
+import {searchFriendsByName} from '../actions'
 
 //React Components
 import Logo from './Logo'
 import ProfilePic from './ProfilePic'
 import ProfilePicUpload from './ProfilePicUpload'
 
-export default class App extends Component {
+class App extends Component {
 
   constructor(props){
     super(props)
@@ -43,6 +45,16 @@ export default class App extends Component {
       info: null,
       error: null
     })
+  }
+
+  handleSearchChange(e){
+    this.setState({
+      friendSearchInput: e.target.value
+    })
+  }
+
+  handleSearchSubmit(e){
+    this.props.dispatch(searchFriendsByName(this.state.friendSearchInput))
   }
 
   uploadUserPic(e){
@@ -82,6 +94,7 @@ export default class App extends Component {
             <Logo/>
             <ProfilePic first={first} last={last} profilePicUrl={profilePicUrl} showUploader={e=>this.showUploader(e)}/>
           </div>
+
           <div className="nav-sub">
             <Link className="nav-sub-link" to="/friends">
               <i className="fa fa-users" aria-hidden="true"></i>
@@ -98,6 +111,12 @@ export default class App extends Component {
           <h4 className="text-error">{error}</h4>
           <h4 className="text-info">{info}</h4>
 
+          <div>
+            <input type="text" name="friendSearchInput" placeholder="Marge" onChange={e=>this.handleSearchChange(e)}/>
+            <button onClick={e=>this.handleSearchSubmit(e)}>Search!</button>
+          </div>
+
+
           {children}
         </div>
       </div>
@@ -105,3 +124,10 @@ export default class App extends Component {
   }
 
 }
+
+
+function mapStateToProps(reduxState){
+  return {}
+}
+
+export default connect(mapStateToProps)(App)

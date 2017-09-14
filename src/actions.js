@@ -29,3 +29,14 @@ export function removeFriendship(friend_id){
     }
   })
 }
+
+export function searchFriendsByName(nameString){
+  return axios.post('/api/search_friends_by_name',{name:nameString})
+  .then(function(serverResponse){
+    console.log('response received from server',serverResponse);
+    return {
+      type: 'SEARCH_FRIENDS_BY_NAME',
+      searchedFriendsList: serverResponse.data
+    }
+  })
+}
