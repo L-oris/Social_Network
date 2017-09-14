@@ -148,35 +148,20 @@ module.exports.deleteFriendshipStatus = function(user_id,friend_id){
 }
 
 module.exports.getFriendsLists = function(user_id){
-  //get pending friends
-  const query = `SELECT users.id,first,last,profilepicurl FROM users INNER JOIN friendships ON users.id = friendships.receiver_id WHERE status = 'PENDING' and users.id = $1`
+  const query = `
+    SELECT first,last,profilepicurl,status
+    FROM friendships INNER JOIN users
+    ON (friendships.status = 'PENDING' AND receiver_id = $1 AND sender_id = users.id)
+    OR (friendships.status = 'ACCEPT' AND sender_id = $1 AND receiver_id = users.id)
+    OR (friendships.status = 'ACCEPT' AND receiver_id = $1 AND sender_id = users.id)`
   return db.query(query,[user_id])
-  .then(function(dbPendingFriends){
-    //get current friends
-    const query = `
-      SELECT users.id,first,last,profilepicurl FROM users INNER JOIN friendships ON users.id = friendships.sender_id WHERE status = 'ACCEPT' AND receiver_id = $1 AND sender_id <> $1
-      UNION
-      SELECT users.id,first,last,profilepicurl FROM users INNER JOIN friendships ON users.id = friendships.receiver_id WHERE status = 'ACCEPT' AND sender_id = $1 AND receiver_id <> $1`
-    return db.query(query,[user_id])
-    .then(function(dbCurrentFriends){
-      //map list of friends to add their status
-      const pendingFriends = dbPendingFriends.rows.map(friend=>{
-        const {id,first,last,profilepicurl} = friend
-        return {
-          id,first,last,
-          profilePicUrl: s3Url+profilepicurl,
-          status: 'PENDING'
-        }
-      })
-      const currentFriends = dbCurrentFriends.rows.map(friend=>{
-        const {id,first,last,profilepicurl} = friend
-        return {
-          id,first,last,
-          profilePicUrl: s3Url+profilepicurl,
-          status: 'ACCEPT'
-        }
-      })
-      return [...pendingFriends,...currentFriends]
+  .then(function(dbFriends){
+    return dbFriends.rows.map(friend=>{
+      const {id,first,last,status,profilepicurl} = friend
+      return {
+        id,first,last,status,
+        profilePicUrl: s3Url+profilepicurl,
+      }
     })
   })
 }
