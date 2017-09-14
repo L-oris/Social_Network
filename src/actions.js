@@ -9,3 +9,23 @@ export function getFriends(){
     }
   })
 }
+
+export function acceptFriendship(friend_id){
+  return axios.post('/api/friend_go',{id:friend_id})
+  .then(()=>{
+    return {
+      type: 'ACCEPT_FRIEND',
+      friend: friend_id
+    }
+  })
+}
+
+export function removeFriendship(friend_id){
+  return axios.post('/api/friend_stop',{id:friend_id})
+  .then(()=>{
+    return {
+      type: 'REMOVE_FRIEND',
+      friend: friend_id
+    }
+  })
+}
