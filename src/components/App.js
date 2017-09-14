@@ -87,10 +87,10 @@ export default class App extends Component {
               <i className="fa fa-users" aria-hidden="true"></i>
               <h5>FRIENDS</h5>
             </Link>
-            <Link className="nav-sub-link" to="/api/logout">
+            <a className="nav-sub-link" href="/api/logout">
               <i className="fa fa-sign-out" aria-hidden="true"></i>
               <h5>LOGOUT</h5>
-            </Link>
+            </a>
           </div>
         </nav>
 
