@@ -2,7 +2,7 @@ const express = require('express'),
       router = express.Router()
 
 const {uploader,uploadToS3} = require('./middlewares')
-const {createUser, checkUser, getUser, getNextUserFriendshipState, createFriendshipStatus, updateFriendShipStatus, deleteFriendshipStatus, getFriendsLists, updateProfilePic, updateBio} = require('../database/methods')
+const {createUser, checkUser, getUser, getNextUserFriendshipState, createFriendshipStatus, updateFriendShipStatus, deleteFriendshipStatus, getFriendsLists, getFriendsByName, updateProfilePic, updateBio} = require('../database/methods')
 
 
 //CREATE NEW USER INTO DATABASE
@@ -132,6 +132,19 @@ router.get('/api/get_friends_list',function(req,res,next){
   })
   .catch(function(err){
     next('Failed getting list of friends')
+  })
+})
+
+router.post('/api/search_friends_by_name',function(req,res,next){
+  if(!req.body.name){
+    throw 'No name provided for searching'
+  }
+  getFriendsByName(req.body.name)
+  .then(function(friendsList){
+    res.json(friendsList)
+  })
+  .catch(function(err){
+    next('Failed getting friends by name')
   })
 })
 

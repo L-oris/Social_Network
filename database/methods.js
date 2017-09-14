@@ -160,7 +160,28 @@ module.exports.getFriendsLists = function(user_id){
       const {id,first,last,status,profilepicurl} = friend
       return {
         id,first,last,status,
-        profilePicUrl: s3Url+profilepicurl,
+        profilePicUrl: s3Url+profilepicurl
+      }
+    })
+  })
+}
+
+module.exports.getFriendsByName = function(nameString){
+  const namesArr = nameString.split(" ")
+  let query
+  if(namesArr.length<2){
+    query = 'SELECT id,first,last,email,profilepicurl,bio FROM users WHERE first = $1 OR last = $1'
+  } else {
+    query = 'SELECT id,first,last,email,profilepicurl,bio FROM users WHERE (first = $1 AND last = $2) OR (first = $2 AND last = $1)'
+  }
+  //if more than 2 words provided, just take first ones
+  return db.query(query,namesArr.slice(0,2))
+  .then(function(dbFriends){
+    return dbFriends.rows.map(friend=>{
+      const {id,first,last,email,profilepicurl,bio} = friend
+      return {
+        id,first,last,email,bio,
+        profilePicUrl: s3Url+profilepicurl
       }
     })
   })
