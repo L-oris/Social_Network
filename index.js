@@ -5,7 +5,7 @@ const express = require('express'),
 
 const {middlewares} = require('./express/middlewares'),
       RESTfulRouter = require('./express/RESTfulRouter'),
-      {searchUsersById} = require('./database/methods')
+      {searchUserById,searchUsersById} = require('./database/methods')
 
 if(process.env.NODE_ENV != 'production'){
   app.use('/bundle.js', require('http-proxy-middleware')({
@@ -26,12 +26,14 @@ let onlineUsers = []
 
 //LISTER FOR EVENTS FROM 'SOCKET.IO'
 io.on('connection', function(socket){
-  //inform all online users about new connected one
-
   socket.on('disconnect', function(){
     //inform all online users about new disconnected one
+    const objToRemove = onlineUsers.filter(user=>user.socketId===socket.id)
+    onlineUsers.splice(onlineUsers.indexOf(objToRemove[0]),1)
+    if(objToRemove.length===1){
+      io.sockets.emit('userLeft',{userId:objToRemove[0].userId})
+    }
   })
-
 })
 
 app.post('/api/connected/:socketId',function(req,res,next){
@@ -43,6 +45,14 @@ app.post('/api/connected/:socketId',function(req,res,next){
     onlineUsers.push({
       userId,socketId
     })
+    //inform all other online users about new connected one, if is new
+    const numberOfSocketsPerUser = onlineUsers.filter(user=>user.userId===userId)
+    if(numberOfSocketsPerUser.length===1){
+      searchUserById(userId)
+      .then(function(userData){
+        io.sockets.emit('userJoined',userData)
+      })
+    }
     //search for users by id based on ids stored inside onlineUsers[]
     const onlineIds = onlineUsers.map(user=>user.userId)
     searchUsersById(onlineIds)

@@ -17,8 +17,8 @@ export default function getSocket(){
     socket.on('userJoined',function(newOnlineUser){
       console.log('new online user is now',newOnlineUser);
     })
-    socket.on('userLeft',function(offlineUser){
-      console.log('offline user is',offlineUser);
+    socket.on('userLeft',function(newOfflineUser){
+      console.log('offline user is',newOfflineUser);
     })
   }
   return socket
