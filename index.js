@@ -4,7 +4,8 @@ const express = require('express'),
       io = require('socket.io')(server)
 
 const {middlewares} = require('./express/middlewares'),
-      RESTfulRouter = require('./express/RESTfulRouter')
+      RESTfulRouter = require('./express/RESTfulRouter'),
+      {searchUsersById} = require('./database/methods')
 
 if(process.env.NODE_ENV != 'production'){
   app.use('/bundle.js', require('http-proxy-middleware')({
@@ -33,9 +34,16 @@ app.post('/api/connected/:socketId',function(req,res,next){
       userId,socketId
     })
     //search for users by id based on ids stored inside onlineUsers[]
-    io.sockets.sockets[socketId].emit('onlineUsers',[{a:'a'},{b:'b'},{c:'c'}])
+    const onlineIds = onlineUsers.map(user=>user.userId)
+    searchUsersById(onlineIds)
+    .then(function(users){
+      io.sockets.sockets[socketId].emit('onlineUsers',users)
+      res.json({success:true})
+    })
+    .catch(function(err){
+      next('Failed getting online users list');
+    })
   }
-  res.json({success:true})
 })
 
 //REDIRECT USER BASED ON HIS REGISTRATION STATUS

@@ -108,6 +108,20 @@ module.exports.searchUserById = function(user_id){
   })
 }
 
+module.exports.searchUsersById = function(idArray){
+  const query = 'SELECT id,first,last,profilepicurl FROM users WHERE id = ANY($1)'
+  return db.query(query,[idArray])
+  .then(function(dbUsers){
+    return dbUsers.rows.map(dbUser=>{
+      const {id,first,last,profilepicurl} = dbUser
+      return {
+        id,first,last,
+        profilePicUrl: s3Url+profilepicurl
+      }
+    })
+  })
+}
+
 module.exports.searchUserByName = function(nameString){
   const namesArr = nameString.split(" ")
   let query
