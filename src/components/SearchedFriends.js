@@ -5,18 +5,21 @@ import {Link} from 'react-router'
 function SearchedFriends(props){
   const usersList = props.users && props.users.map(user=>{
     return (
-      <li>
+      <li className="srced_friends-item">
         <Link to={`/user/${user.id}`}>
-          <h5>{user.first} {user.last}</h5>
-          <img className="small-deleteme" src={user.profilePicUrl} alt={user.first+' '+user.last}/>
+        <img src={user.profilePicUrl} alt={user.first+' '+user.last}/>
+        <div className="srced_friends-item-text">
+          <h4 className="srced_friends-item-name">{user.first} {user.last}</h4>
+          <p className="srced_friends-item-bio">{user.bio}</p>
+        </div>
         </Link>
       </li>
     )
   })
   return (
-    <div>
+    <ul className='srced_friends container-margin'>
       {usersList}
-    </div>
+    </ul>
   )
 }
 

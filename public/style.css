@@ -5,10 +5,10 @@
 
 :root {
   --logo_text-color: #0CB3CC;
-  --nav-main-height: 60px;
-  --nav-main-elems-height: 50px;
+  --nav-main-height: 50px;
+  --nav-main-elems-height: 40px;
 }
-body, input, button {
+body, input, button, img {
   box-sizing: border-box;
   font-family: 'Gochi Hand', cursive;
   background-color: rgba(30,144,255,.1);
@@ -18,6 +18,14 @@ body, .nav-main, .bio-input {
 }
 a {
   color: inherit;
+  text-decoration: none;
+}
+ul,li {
+  margin: 0;
+  padding: 0;
+}
+li {
+  list-style-type: none;
 }
 .text-link {
   text-decoration: underline;
@@ -101,6 +109,7 @@ a {
   margin-top: calc(var(--nav-main-height)*2);
 }
 
+
 /*===========*/
 /*NAV*/
 /*===========*/
@@ -116,10 +125,18 @@ a {
   background-color: rgba(95,146,255,.6);
   height: var(--nav-main-height);
 }
-.nav .social_logo {}
+.nav .social_logo {
+  display: inline;
+}
 .nav .social_logo-img {
   height: var(--nav-main-elems-height);
   vertical-align: bottom;
+}
+.nav-social_title {
+  display: inline;
+  color: var(--logo_text-color);
+  margin: .4em;
+  font-size: 2.2em;
 }
 .nav .user_pic {
   position: relative;
@@ -127,6 +144,7 @@ a {
   width: var(--nav-main-elems-height);
   height: var(--nav-main-elems-height);
   border-radius: 50%;
+  border: 2px solid coral;
 }
 .nav .user_pic-img {
   position: absolute;
@@ -152,6 +170,7 @@ a {
 .nav-sub-link h5 {
   margin: 0;
 }
+
 
 /*===========*/
 /*IMAGE UPLOADER MODAL*/
@@ -237,6 +256,36 @@ a {
 .others .user_pic {}
 .others .user_pic-img {}
 
+
+
+/*===========*/
+/*SEARCHED FRIENDS*/
+/*===========*/
+.srced_friends {}
+.srced_friends-item {
+  border-bottom: 1px solid coral;
+  padding: 1em 0;
+}
+.srced_friends-item img {
+  width: 15%;
+  border-radius: 1em .3em;
+  border: 2px solid coral;
+  vertical-align: bottom;
+}
+.srced_friends-item-text {
+  width: 75%;
+  display: inline-block;
+  padding: 0 5%;
+}
+.srced_friends-item-name {
+  margin: 0;
+}
+.srced_friends-item-bio {
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 @media screen and (min-width: 768px){
   :root {

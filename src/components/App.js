@@ -99,7 +99,10 @@ class App extends Component {
 
         <nav className="nav">
           <div className="nav-main container-padding">
-            <Logo/>
+            <div>
+              <Logo/>
+              <h1 className="nav-social_title">Slipperz</h1>
+            </div>
             <ProfilePic first={first} last={last} profilePicUrl={profilePicUrl} showUploader={e=>this.showUploader(e)}/>
           </div>
 
