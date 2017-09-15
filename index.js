@@ -1,5 +1,7 @@
 const express = require('express'),
-      app = express()
+      app = express(),
+      server = require('http').Server(app),
+      io = require('socket.io')(server)
 
 const {middlewares} = require('./express/middlewares'),
       RESTfulRouter = require('./express/RESTfulRouter')
@@ -35,6 +37,17 @@ app.use(function (err, req, res, next){
 
 
 const port = 8080
-app.listen(port, function() {
+server.listen(port, function() {
   console.log(`Server listening on port ${port}`)
+})
+
+
+//LISTER FOR EVENTS FROM 'SOCKET.IO'
+io.on('connection', function(socket){
+  console.log(`socket with the id ${socket.id} is now connected`)
+
+  socket.on('disconnect', function(){
+    console.log(`socket with the id ${socket.id} is now disconnected`)
+  })
+
 })
