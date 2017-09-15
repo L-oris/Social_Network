@@ -24,6 +24,16 @@ app.use('/',RESTfulRouter)
 
 let onlineUsers = []
 
+//LISTER FOR EVENTS FROM 'SOCKET.IO'
+io.on('connection', function(socket){
+  //inform all online users about new connected one
+
+  socket.on('disconnect', function(){
+    //inform all online users about new disconnected one
+  })
+
+})
+
 app.post('/api/connected/:socketId',function(req,res,next){
   const {socketId} = req.params
   const {user_id:userId} = req.session.user
@@ -43,6 +53,8 @@ app.post('/api/connected/:socketId',function(req,res,next){
     .catch(function(err){
       next('Failed getting online users list');
     })
+  } else {
+    res.json({success:false})
   }
 })
 
@@ -64,15 +76,4 @@ app.use(function (err, req, res, next){
 const port = 8080
 server.listen(port, function() {
   console.log(`Server listening on port ${port}`)
-})
-
-
-//LISTER FOR EVENTS FROM 'SOCKET.IO'
-io.on('connection', function(socket){
-  console.log(`socket with the id ${socket.id} is now connected`)
-
-  socket.on('disconnect', function(){
-    console.log(`socket with the id ${socket.id} is now disconnected`)
-  })
-
 })

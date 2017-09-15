@@ -39,3 +39,10 @@ export function searchUserByName(nameString){
     }
   })
 }
+
+export function addOnlineUsers(onlineUsers){
+  return {
+    type: 'ONLINE_USERS',
+    onlineUsers
+  }
+}

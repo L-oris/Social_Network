@@ -11,6 +11,7 @@ import Profile from './components/Profile'
 import OthersProfile from './components/OthersProfile'
 import Friends from './components/Friends'
 import SearchedFriends from './components/SearchedFriends'
+import Online from './components/Online'
 import NotFound from './components/NotFound'
 
 //Redux
@@ -20,7 +21,7 @@ import {composeWithDevTools} from 'redux-devtools-extension'
 import {Provider} from 'react-redux'
 import reducer from './reducer'
 
-const store = createStore(reducer,composeWithDevTools(applyMiddleware(reduxPromise)))
+export const store = createStore(reducer,composeWithDevTools(applyMiddleware(reduxPromise)))
 
 //client-side routing for non-registered users
 const welcomeRouter = (
@@ -41,6 +42,7 @@ const loggedInRouter = (
         <Route path="user/:id" component={OthersProfile}/>
         <Route path="friends" component={Friends}/>
         <Route path="search" component={SearchedFriends}/>
+        <Route path="online" component={Online}/>
         <Route path="*" component={NotFound}/>
       </Route>
     </Router>

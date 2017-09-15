@@ -3,7 +3,7 @@ import {Link,browserHistory} from 'react-router'
 import axios from '../axios'
 import {connect} from 'react-redux'
 import {searchUserByName} from '../actions'
-import socket from '../socket'
+import getSocket from '../socket'
 
 //React Components
 import Logo from './Logo'
@@ -14,11 +14,11 @@ class App extends Component {
 
   constructor(props){
     super(props)
+    getSocket()
     this.state = {}
   }
 
   componentDidMount(){
-    socket()
     axios.get('/api/get_current_user')
     .then((serverResponse)=>{
       this.setState(serverResponse.data)

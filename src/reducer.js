@@ -31,5 +31,11 @@ export default function(state={},action){
     })
   }
 
+  if(action.type==='ONLINE_USERS'){
+    return Object.assign({},state,{
+      onlineUsers: action.onlineUsers
+    })
+  }
+
   return state
 }
