@@ -21,6 +21,23 @@ app.use(express.static('./public'))
 //apply RESTful routes
 app.use('/',RESTfulRouter)
 
+let onlineUsers = []
+
+app.post('/api/connected/:socketId',function(req,res,next){
+  const {socketId} = req.params
+  const {user_id:userId} = req.session.user
+  //if current socket not inside 'onlineUsers' already, then add it and send back complete list of online users
+  const socketAlreadyThere = onlineUsers.find(socket=>socket===socketId)
+  if(!socketAlreadyThere){
+    onlineUsers.push({
+      userId,socketId
+    })
+    //search for users by id based on ids stored inside onlineUsers[]
+    io.sockets.sockets[socketId].emit('onlineUsers',[{a:'a'},{b:'b'},{c:'c'}])
+  }
+  res.json({success:true})
+})
+
 //REDIRECT USER BASED ON HIS REGISTRATION STATUS
 app.get('*', function(req,res){
   if(!req.session.user && req.url !== '/welcome'){
