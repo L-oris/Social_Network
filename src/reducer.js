@@ -45,7 +45,7 @@ export default function(state={},action){
 
   if(action.type==='REMOVE_ONLINE_USER'){
     return Object.assign({},state,{
-      onlineUsers: state.onlineUsers.filter(user => user.id != action.userId)
+      onlineUsers: state.onlineUsers.filter(user => user.id!==action.userId)
     })
   }
 
