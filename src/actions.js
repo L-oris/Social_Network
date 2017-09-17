@@ -40,23 +40,23 @@ export function searchUserByName(nameString){
   })
 }
 
-export function addOnlineUsers(onlineUsers){
+export function saveOnlineUsers(onlineUsers){
   return {
-    type: 'ONLINE_USERS',
+    type: 'SAVE_ONLINE_USERS',
     onlineUsers
   }
 }
 
-export function addOnlineUser(onlineUser){
+export function addOnlineUser(user){
   return {
-    type: 'NEW_ONLINE_USER',
-    onlineUser
+    type: 'ADD_ONLINE_USER',
+    user
   }
 }
 
-export function removeOnlineUser(onlineUser){
+export function removeOnlineUser(userId){
   return {
     type: 'REMOVE_ONLINE_USER',
-    onlineUser
+    userId
   }
 }

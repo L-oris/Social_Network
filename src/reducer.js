@@ -31,21 +31,21 @@ export default function(state={},action){
     })
   }
 
-  if(action.type==='ONLINE_USERS'){
+  if(action.type==='SAVE_ONLINE_USERS'){
     return Object.assign({},state,{
       onlineUsers: action.onlineUsers
     })
   }
 
-  if(action.type==='NEW_ONLINE_USER'){
+  if(action.type==='ADD_ONLINE_USER'){
     return Object.assign({},state,{
-      onlineUsers: [...state.onlineUsers]
+      onlineUsers: [...state.onlineUsers,action.user]
     })
   }
 
   if(action.type==='REMOVE_ONLINE_USER'){
     return Object.assign({},state,{
-      onlineUsers: state.onlineUsers.filter(user=>user.id!==action.userId)
+      onlineUsers: state.onlineUsers.filter(user => user.id != action.userId)
     })
   }
 
