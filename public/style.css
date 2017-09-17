@@ -37,6 +37,12 @@ li {
 .text-info {
   color: green;
 }
+.background-error {
+  background-color: red;
+}
+.background-info {
+  background-color: green;
+}
 .container-margin {
   width: 90%;
   margin-left: auto;
@@ -285,6 +291,63 @@ li {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+
+
+/*===========*/
+/*FRIENDS*/
+/*===========*/
+.friends {
+  text-align: center;
+  margin-top: 2em;
+}
+.friends-title {
+  margin: 0;
+}
+.friends-items {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 2em;
+}
+.friends-item {
+  width: 200px;
+}
+.friends-item-name {
+  margin: .5em;
+  text-decoration: underline;
+  font-size: 1.3em;
+}
+.friends-item-pic {
+  position: relative;
+  margin-bottom: 60px;
+}
+.friends-item img {
+  width: 100px;
+  height: 100px;
+  border-top-left-radius: 1em;
+}
+.friends-item_pending img {
+  border: 2px solid red;
+}
+.friends-item_current img {
+  border: 2px solid green;
+}
+.friends-item button {
+  position: absolute;
+  top: 100px;
+  left: 50px;
+  width: 100px;
+  border: none;
+  color: white;
+  border-bottom-right-radius: 1em;
+}
+.friends-item_pending button {
+  background-color: red;
+}
+.friends-item_current button {
+  background-color: green;
 }
 
 @media screen and (min-width: 768px){

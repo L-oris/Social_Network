@@ -20,38 +20,43 @@ class Friends extends Component {
     const renderPendingFriends = ()=>{
       return friends.map(friend=>{
         return friend.status==='PENDING' && (
-          <li>
+          <li className="friends-item friends-item_pending">
             <Link to={`/user/${friend.id}`}>
-              <p>{friend.first} {friend.last}</p>
-              <img className="small-deleteme" src={friend.profilePicUrl} alt={friend.first,' ',friend.last}/>
-              <button onClick={()=>dispatch(acceptFriendship(friend.id))}>Accept friendship</button>
+              <p className="friends-item-name">{friend.first} {friend.last}</p>
             </Link>
+            <div className="friends-item-pic">
+              <img src={friend.profilePicUrl} alt={friend.first,' ',friend.last}/>
+              <button onClick={()=>dispatch(acceptFriendship(friend.id))}>Accept friendship</button>
+            </div>
           </li>
         )
       })
     }
+
     const renderCurrentFriends = ()=>{
       return friends.map(friend=>{
         return friend.status==='ACCEPT' && (
-          <li>
+          <li className="friends-item friends-item_current">
             <Link to={`/user/${friend.id}`}>
-              <p>{friend.first} {friend.last}</p>
-              <img className="small-deleteme" src={friend.profilePicUrl} alt={friend.first,' ',friend.last}/>
+              <p className="friends-item-name">{friend.first} {friend.last}</p>
+            </Link>
+            <div className="friends-item-pic">
+              <img src={friend.profilePicUrl}  alt={friend.first,' ',friend.last}/>
               <button onClick={()=>dispatch(removeFriendship(friend.id))}>End this friendship</button>
-          </Link>
+            </div>
           </li>
         )
       })
     }
 
     return (
-      <div>
-        <h2>Pending friends</h2>
-        <ul>
+      <div className="friends container-margin">
+        <h2 className="friends-title">Pending friends</h2>
+        <ul className="friends-items">
           {friends && renderPendingFriends()}
         </ul>
-        <h2>Current friends</h2>
-        <ul>
+        <h2 className="friends-title">Current friends</h2>
+        <ul className="friends-items">
           {friends && renderCurrentFriends()}
         </ul>
       </div>
