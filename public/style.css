@@ -204,10 +204,6 @@ li {
 /*===========*/
 /*PROFILE*/
 /*===========*/
-.user_pic-img {
-  max-width: 100%;
-}
-
 .profile {
   text-align: center;
 }
@@ -257,10 +253,15 @@ li {
 
 
 /*===========*/
-/*OTHERS PROFILE*/
+/*OTHERS PROFILE (same styling as 'PROFILE')*/
 /*===========*/
+.others {
+  text-align: center;
+}
 .others .user_pic {}
-.others .user_pic-img {}
+.others .user_pic-img {
+  width: 100%;
+}
 
 
 

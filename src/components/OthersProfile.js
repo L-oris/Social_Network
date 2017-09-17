@@ -35,11 +35,12 @@ export default class OthersProfile extends Component {
   render(){
     const {first,last,profilePicUrl,bio} = this.state
     return (
-      <div className="others">
-        <h1>User's profile here</h1>
+      <div className="others container-padding">
+        <h1 className="profile-name">{first} {last}</h1>
         <ProfilePic first={first} last={last} profilePicUrl={profilePicUrl}/>
-        <h4>{first} {last}</h4>
-        <h4>Bio here {bio}</h4>
+        <div className="bio">
+          <h4 className="bio-text">{bio}</h4>
+        </div>
         <FriendshipButton id={this.props.params.id}/>
       </div>
     )
