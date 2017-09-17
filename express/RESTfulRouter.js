@@ -2,7 +2,7 @@ const express = require('express'),
       router = express.Router()
 
 const {uploader,uploadToS3} = require('./middlewares')
-const {createUser, loginUser, updateProfilePic, updateBio, searchUserById, searchUserByName, getFriends, getNextFriendshipState, createFriendshipStatus, updateFriendShipStatus, deleteFriendshipStatus} = require('../database/methods')
+const {createUser, loginUser, updateProfilePic, updateBio, searchUserById, searchUsersByName, getFriends, getNextFriendshipState, createFriendshipStatus, updateFriendShipStatus, deleteFriendshipStatus} = require('../database/methods')
 
 
 //CREATE NEW USER INTO DATABASE
@@ -120,7 +120,7 @@ router.post('/api/search_user_by_name',function(req,res,next){
   if(!req.body.name){
     throw 'No name provided for searching'
   }
-  searchUserByName(req.body.name)
+  searchUsersByName(req.body.name)
   .then(function(friendsList){
     res.json(friendsList)
   })

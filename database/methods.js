@@ -122,7 +122,7 @@ module.exports.searchUsersById = function(idArray){
   })
 }
 
-module.exports.searchUserByName = function(nameString){
+module.exports.searchUsersByName = function(nameString){
   const namesArr = nameString.split(" ")
   let query
   if(namesArr.length<2){
