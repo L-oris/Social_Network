@@ -37,5 +37,17 @@ export default function(state={},action){
     })
   }
 
+  if(action.type==='NEW_ONLINE_USER'){
+    return Object.assign({},state,{
+      onlineUsers: [...state.onlineUsers]
+    })
+  }
+
+  if(action.type==='REMOVE_ONLINE_USER'){
+    return Object.assign({},state,{
+      onlineUsers: state.onlineUsers.filter(user=>user.id!==action.userId)
+    })
+  }
+
   return state
 }
