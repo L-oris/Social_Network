@@ -1,7 +1,7 @@
 import * as io from 'socket.io-client'
 import axios from './axios'
 import {store} from './start'
-import {saveOnlineUsers,addOnlineUser,removeOnlineUser} from './actions'
+import {saveOnlineUsers,addOnlineUser,removeOnlineUser,createChatMessages,addChatMessage} from './actions'
 
 
 let socket
@@ -24,9 +24,11 @@ export default function getSocket(){
     })
     socket.on('chatMessages',function(chatMessages){
       console.log('chat Messages received',chatMessages);
+      store.dispatch(createChatMessages(chatMessages))
     })
     socket.on('chatMessage',function(newChatMessage){
       console.log('new message has been sent!',newChatMessage);
+      store.dispatch(addChatMessage(newChatMessage))
     })
   }
 

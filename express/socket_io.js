@@ -24,7 +24,7 @@ module.exports = function(app,io){
 
     //new message received
     socket.on('chatMessage',function(message){
-      //save new message into database and add to 'chatMessages' array
+      //save new message into database and add it to 'chatMessages' array
       const messageSender = onlineUsers.filter(user=>user.socketId===socket.id)[0]
       addChatMessage(messageSender.userId,message)
       .then(function(timestamp){
@@ -49,11 +49,12 @@ module.exports = function(app,io){
     const {socketId} = req.params
     const {user_id:userId} = req.session.user
 
-    //send to new connected socket complete list of online users
+    //send to new connected socket complete list of online users and last chat messages saved on server
     const onlineIds = onlineUsers.map(user=>user.userId)
     searchUsersById(onlineIds)
     .then(function(users){
       io.sockets.sockets[socketId].emit('onlineUsers',users)
+      io.sockets.sockets[socketId].emit('chatMessages',chatMessages)
       res.json({success:true})
     })
     .catch(function(err){

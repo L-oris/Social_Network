@@ -49,5 +49,17 @@ export default function(state={},action){
     })
   }
 
+  if(action.type==='CREATE_CHAT_MESSAGES'){
+    return Object.assign({},state,{
+      chatMessages: action.chatMessages
+    })
+  }
+
+  if(action.type==='ADD_CHAT_MESSAGE'){
+    return Object.assign({},state,{
+      chatMessages: [...action.chatMessages,action.message]
+    })
+  }
+
   return state
 }

@@ -60,3 +60,17 @@ export function removeOnlineUser(userId){
     userId
   }
 }
+
+export function createChatMessages(chatMessages){
+  return {
+    type: 'CREATE_CHAT_MESSAGES',
+    chatMessages
+  }
+}
+
+export function addChatMessage(message){
+  return {
+    type: 'ADD_CHAT_MESSAGE',
+    message
+  }
+}
