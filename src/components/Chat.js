@@ -24,9 +24,9 @@ class Chat extends Component {
       return (
         <li>
           <h6>{message.first} {message.last}</h6>
-          <img src={message.profilePicUrl}/>
-          <p>{message.text}</p>
-          <p>{message.time}</p>
+          <img className="small-deleteme" src={message.profilePicUrl}/>
+          <p>{message.message}</p>
+          <p>{message.timestamp}</p>
         </li>
       )
     })
