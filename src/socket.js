@@ -1,7 +1,7 @@
 import * as io from 'socket.io-client'
 import axios from './axios'
 import {store} from './start'
-import {saveOnlineUsers,addOnlineUser,removeOnlineUser,createChatMessages,addChatMessage} from './actions'
+import {createOnlineUsers,addOnlineUser,removeOnlineUser,createChatMessages,addChatMessage} from './actions'
 
 
 let socket
@@ -14,7 +14,7 @@ export default function getSocket(){
       axios.post(`/api/connected/${socket.id}`)
     })
     socket.on('onlineUsers',function(onlineUsers){
-      store.dispatch(saveOnlineUsers(onlineUsers))
+      store.dispatch(createOnlineUsers(onlineUsers))
     })
     socket.on('userJoined',function(newOnlineUser){
       store.dispatch(addOnlineUser(newOnlineUser))

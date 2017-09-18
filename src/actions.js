@@ -40,9 +40,9 @@ export function searchUserByName(nameString){
   })
 }
 
-export function saveOnlineUsers(onlineUsers){
+export function createOnlineUsers(onlineUsers){
   return {
-    type: 'SAVE_ONLINE_USERS',
+    type: 'CREATE_ONLINE_USERS',
     onlineUsers
   }
 }
