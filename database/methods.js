@@ -222,3 +222,12 @@ module.exports.deleteFriendshipStatus = function(user_id,friend_id){
     }
   })
 }
+
+
+module.exports.addChatMessage = function(user_id,message){
+  const query = 'INSERT INTO messages (user_id,message) VALUES ($1,$2) RETURNING created_at'
+  return db.query(query,[user_id,message])
+  .then(function(dbMessage){
+    return dbMessage.rows[0].created_at
+  })
+}

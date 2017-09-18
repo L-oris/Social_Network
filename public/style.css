@@ -63,6 +63,7 @@ li {
 }
 .welcome .social_logo {}
 .welcome .social_logo-img {
+  background-color: transparent;
   display: block;
   width: 50%;
   margin: 0 auto;

@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS messages;
 DROP TABLE IF EXISTS friendships;
 DROP TABLE IF EXISTS users;
 
@@ -17,4 +18,11 @@ CREATE TABLE friendships(
   sender_id INTEGER REFERENCES users(id),
   receiver_id INTEGER REFERENCES users(id),
   status VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE messages(
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER REFERENCES users(id),
+  message VARCHAR(200),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

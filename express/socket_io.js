@@ -1,9 +1,10 @@
-const {searchUserById,searchUsersById} = require('../database/methods')
+const {searchUserById,searchUsersById,addChatMessage} = require('../database/methods')
 
 //add socket.io settings to current 'app'
 module.exports = function(app,io){
 
   let onlineUsers = []
+  let chatMessages = []
 
   //LISTER FOR EVENTS FROM 'SOCKET.IO'
   io.on('connection',function(socket){
@@ -23,7 +24,21 @@ module.exports = function(app,io){
 
     //new message received
     socket.on('chatMessage',function(message){
-      console.log('message received!',message);
+      //save new message into database and add to 'chatMessages' array
+      const messageSender = onlineUsers.filter(user=>user.socketId===socket.id)[0]
+      addChatMessage(messageSender.userId,message)
+      .then(function(timestamp){
+        //store no more than 10 messages on running server
+        chatMessages.length>10 && chatMessages.shift()
+        chatMessages.push({
+          user_id: messageSender.userId,
+          text: message,
+          timestamp
+        })
+      })
+      .catch(function(err){
+        console.log('Error adding chat message to database');
+      })
     })
   })
 
