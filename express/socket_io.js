@@ -6,9 +6,10 @@ module.exports = function(app,io){
   let onlineUsers = []
 
   //LISTER FOR EVENTS FROM 'SOCKET.IO'
-  io.on('connection', function(socket){
-    socket.on('disconnect', function(){
+  io.on('connection',function(socket){
 
+    //socket disconnected
+    socket.on('disconnect',function(){
       //remove disconnected socket from 'onlineUsers'
       const socketToRemove = onlineUsers.filter(user=>user.socketId===socket.id)[0]
       onlineUsers.splice(onlineUsers.indexOf(socketToRemove),1)
@@ -18,7 +19,11 @@ module.exports = function(app,io){
       if(disconnectedUserSockets.length===0){
         io.sockets.emit('userLeft',{userId:socketToRemove.userId})
       }
+    })
 
+    //new message received
+    socket.on('chatMessage',function(message){
+      console.log('message received!',message);
     })
   })
 

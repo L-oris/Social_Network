@@ -117,6 +117,10 @@ class App extends Component {
               <i className="fa fa-plug" aria-hidden="true"></i>
               <h5>ONLINE</h5>
             </Link>
+            <Link className="nav-sub-link" to="/chat">
+              <i className="fa fa-commenting-o" aria-hidden="true"></i>
+              <h5>CHAT</h5>
+            </Link>
             <a className="nav-sub-link" href="/api/logout">
               <i className="fa fa-sign-out" aria-hidden="true"></i>
               <h5>LOGOUT</h5>

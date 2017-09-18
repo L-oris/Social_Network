@@ -12,6 +12,7 @@ import OthersProfile from './components/OthersProfile'
 import Friends from './components/Friends'
 import SearchedFriends from './components/SearchedFriends'
 import Online from './components/Online'
+import Chat from './components/Chat'
 import NotFound from './components/NotFound'
 
 //Redux
@@ -43,6 +44,7 @@ const loggedInRouter = (
         <Route path="friends" component={Friends}/>
         <Route path="search" component={SearchedFriends}/>
         <Route path="online" component={Online}/>
+        <Route path="chat" component={Chat}/>
         <Route path="*" component={NotFound}/>
       </Route>
     </Router>
