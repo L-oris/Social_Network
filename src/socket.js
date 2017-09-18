@@ -22,6 +22,12 @@ export default function getSocket(){
     socket.on('userLeft',function(newOfflineUser){
       store.dispatch(removeOnlineUser(newOfflineUser.userId))
     })
+    socket.on('chatMessages',function(chatMessages){
+      console.log('chat Messages received',chatMessages);
+    })
+    socket.on('chatMessage',function(newChatMessage){
+      console.log('new message has been sent!',newChatMessage);
+    })
   }
 
   return socket

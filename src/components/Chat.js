@@ -12,7 +12,9 @@ class Chat extends Component {
   componentDidMount(){
     this.newMessage.addEventListener('keydown',e=>{
       if(e.keyCode===13){
+        e.preventDefault()
         getSocket().emit('chatMessage',e.target.value)
+        e.target.value = ''
       }
     })
   }

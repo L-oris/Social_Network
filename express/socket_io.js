@@ -28,13 +28,16 @@ module.exports = function(app,io){
       const messageSender = onlineUsers.filter(user=>user.socketId===socket.id)[0]
       addChatMessage(messageSender.userId,message)
       .then(function(timestamp){
-        //store no more than 10 messages on running server
-        chatMessages.length>10 && chatMessages.shift()
-        chatMessages.push({
+        const newChatMessage = {
           user_id: messageSender.userId,
           text: message,
           timestamp
-        })
+        }
+        chatMessages.push(newChatMessage)
+        //store no more than 10 messages on server
+        chatMessages.length>10 && chatMessages.shift()
+        //broadcast new message to all users
+        io.sockets.emit('chatMessage',newChatMessage)
       })
       .catch(function(err){
         console.log('Error adding chat message to database');
