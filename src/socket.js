@@ -23,11 +23,9 @@ export default function getSocket(){
       store.dispatch(removeOnlineUser(newOfflineUser.userId))
     })
     socket.on('chatMessages',function(chatMessages){
-      console.log('chat Messages received',chatMessages);
       store.dispatch(createChatMessages(chatMessages))
     })
     socket.on('chatMessage',function(newChatMessage){
-      console.log('new message has been sent!',newChatMessage);
       store.dispatch(addChatMessage(newChatMessage))
     })
   }
