@@ -13,9 +13,16 @@ class Online extends Component {
   }
 
   handleClickedUser(friendId){
+
+    //TODO
     //check if private conversations already saved into Redux store
+
+
     //get previous messages with clicked user from server
     getSocket().emit('privateMessages',{friendId})
+    this.setState({
+      chattingFriendId: friendId
+    })
   }
 
   render(){
@@ -37,7 +44,7 @@ class Online extends Component {
         <ul>
           {this.props.onlineUsers && displayOnlineUsers(this.props.onlineUsers)}
         </ul>
-        <PrivateChat/>
+        <PrivateChat friendId={this.state.chattingFriendId}/>
       </div>
     )
   }
