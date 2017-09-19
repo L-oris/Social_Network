@@ -1,24 +1,45 @@
-import React from 'react'
+import React,{Component} from 'react'
 import {connect} from 'react-redux'
+import getSocket from '../socket'
 
-function Online(props){
-  let htmlOnlineUsersList = ''
-  if(props.onlineUsers){
-    htmlOnlineUsersList = props.onlineUsers.map(user=>{
-      return (
-        <li>
-          <h3>{user.first} {user.last}</h3>
-          <img className="small-deleteme" src={user.profilePicUrl}/>
-        </li>
-      )
-    })
+//React components
+import PrivateChat from './PrivateChat'
+
+class Online extends Component {
+
+  constructor(props){
+    super(props)
+    this.state = {}
   }
-  return (
-    <div>
-      <h1>List of online users!</h1>
-      <ul>{htmlOnlineUsersList}</ul>
-    </div>
-  )
+
+  handleClickedUser(userId){
+    getSocket().emit('privateMessages',{userId})
+  }
+
+  render(){
+
+    const displayOnlineUsers = ()=>{
+      return this.props.onlineUsers.map(user=>{
+        return (
+          <li onClick={e=>this.handleClickedUser(user.id)}>
+            <h3>{user.first} {user.last}</h3>
+            <img className="small-deleteme" src={user.profilePicUrl}/>
+          </li>
+        )
+      })
+    }
+
+    return (
+      <div>
+        <h1>List of online users!</h1>
+        <ul>
+          {this.props.onlineUsers && displayOnlineUsers(this.props.onlineUsers)}
+        </ul>
+        <PrivateChat/>
+      </div>
+    )
+  }
+
 }
 
 function mapStateToProps(reduxState){
