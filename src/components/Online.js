@@ -12,8 +12,10 @@ class Online extends Component {
     this.state = {}
   }
 
-  handleClickedUser(userId){
-    getSocket().emit('privateMessages',{userId})
+  handleClickedUser(friendId){
+    //check if private conversations already saved into Redux store
+    //get previous messages with clicked user from server
+    getSocket().emit('privateMessages',{friendId})
   }
 
   render(){

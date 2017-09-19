@@ -1,4 +1,4 @@
-const {searchUserById,searchUsersById,addChatMessage} = require('../database/methods')
+const {searchUserById,searchUsersById,addChatMessage,getPrivateChat} = require('../database/methods')
 
 //add socket.io settings to current 'app'
 module.exports = function(app,io){
@@ -49,6 +49,19 @@ module.exports = function(app,io){
         console.log('Error adding chat message to database');
       })
     })
+
+    //new private chat is gonna start, so send back to user previous messages found on database
+    socket.on('privateMessages',function({friendId}){
+      const {userId} = onlineUsers.filter(user=>user.socketId===socket.id)[0]
+      getPrivateChat(userId,friendId)
+      .then(function(messages){
+        io.sockets.sockets[socket.id].emit('privateMessages',messages)
+      })
+      .catch(function(err){
+        console.log(`Error fetching previous chats between ${userId} and ${friendId}`);
+      })
+    })
+
   })
 
   app.post('/api/connected/:socketId',function(req,res,next){

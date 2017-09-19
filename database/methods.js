@@ -231,3 +231,20 @@ module.exports.addChatMessage = function(user_id,message){
     return dbMessage.rows[0].created_at
   })
 }
+
+module.exports.getPrivateChat = function(userId,friendId){
+  const query = 'SELECT sender_id,message,created_at FROM private_messages WHERE (sender_id = $2 AND receiver_id = $1) OR (sender_id = $1 AND receiver_id = $2) ORDER BY created_at LIMIT 10'
+  return db.query(query,[userId,friendId])
+  .then(function(dbMessages){
+    const messages = dbMessages.rows.map(message=>{
+      return {
+        ownMessage: message.sender_id == userId,
+        message: message.message,
+        timestamp: message.created_at
+      }
+    })
+    return {
+      friendId,messages
+    }
+  })
+}

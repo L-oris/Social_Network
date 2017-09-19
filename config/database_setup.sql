@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS private_messages;
 DROP TABLE IF EXISTS messages;
 DROP TABLE IF EXISTS friendships;
 DROP TABLE IF EXISTS users;
@@ -26,3 +27,11 @@ CREATE TABLE messages(
   message VARCHAR(200),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE private_messages(
+  id SERIAL PRIMARY KEY,
+  sender_id INTEGER REFERENCES users(id),
+  receiver_id INTEGER REFERENCES users(id),
+  message VARCHAR(200),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)
