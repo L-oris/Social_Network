@@ -101,11 +101,23 @@ class App extends Component {
 
         <nav className="nav">
           <div className="nav-main container-padding">
+
             <div>
-              <Logo/>
-              <h1 className="nav-social_title">Slipperz</h1>
+              <Link to="/">
+                <Logo/>
+                <h1 className="nav-social_title">Slipperz</h1>
+              </Link>
             </div>
+
+            <div className="nav-search">
+              <input type="text" name="friendSearchInput" value={this.state.friendSearchInput} placeholder="Marge" onChange={e=>this.handleSearchChange(e)}/>
+              <button onClick={e=>this.handleSearchSubmit(e)}>
+                <i className="fa fa-search" aria-hidden="true"></i>
+              </button>
+            </div>
+
             <ProfilePic first={first} last={last} profilePicUrl={profilePicUrl} showUploader={e=>this.showUploader(e)}/>
+
           </div>
 
           <div className="nav-sub">
@@ -131,12 +143,6 @@ class App extends Component {
         <div className="main-content">
           <h4 className="text-error">{error}</h4>
           <h4 className="text-info">{info}</h4>
-
-          <div>
-            <input type="text" name="friendSearchInput" value={this.state.friendSearchInput} placeholder="Marge" onChange={e=>this.handleSearchChange(e)}/>
-            <button onClick={e=>this.handleSearchSubmit(e)}>Search!</button>
-          </div>
-
 
           {children}
         </div>

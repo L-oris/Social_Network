@@ -5,8 +5,8 @@
 
 :root {
   --logo_text-color: #0CB3CC;
-  --nav-main-height: 50px;
-  --nav-main-elems-height: 40px;
+  --nav-main-height: 60px;
+  --nav-main-elems-height: 45px;
 }
 body, input, button, img {
   box-sizing: border-box;
@@ -129,7 +129,7 @@ li {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: rgba(95,146,255,.6);
+  background-color: #96B9FF;
   height: var(--nav-main-height);
 }
 .nav .social_logo {
@@ -137,13 +137,34 @@ li {
 }
 .nav .social_logo-img {
   height: var(--nav-main-elems-height);
-  vertical-align: bottom;
+  vertical-align: middle;
 }
 .nav-social_title {
-  display: inline;
+  display: none;
   color: var(--logo_text-color);
-  margin: .4em;
+  margin-left: .4em;
+  margin-right: -1em;
   font-size: 2.2em;
+}
+.nav-search {}
+.nav-search input {
+  width: 150px;
+  height: 2em;
+  background-color: white;
+  border: 2px solid rgba(4,47,116,1);
+  border-bottom-left-radius: .5em;
+  border-top-left-radius: .5em;
+  vertical-align: bottom;
+  padding: 0 .4em;
+}
+.nav-search button {
+  height: 2em;
+  width: 2em;
+  color: white;
+  border: 2px solid rgba(4,47,116,1);
+  background-color: rgba(4,47,116,1);
+  border-top-right-radius: .5em;
+  border-bottom-right-radius: .5em;
 }
 .nav .user_pic {
   position: relative;
@@ -166,7 +187,7 @@ li {
   justify-content: space-around;
   align-items: center;
   flex-wrap: wrap;
-  background-color: rgba(4,47,116,.6);
+  background-color: #5F7DAC;
   color: white;
   height: var(--nav-main-height);
 }
@@ -392,8 +413,8 @@ li {
 
 @media screen and (min-width: 768px){
   :root {
-    --nav-main-height: 80px;
-    --nav-main-elems-height: 65px;
+    --nav-main-height: 70px;
+    --nav-main-elems-height: 55px;
   }
   .container-margin {
     width: 85%;
@@ -414,11 +435,21 @@ li {
   .form-submit_btn img {
     height: 100px;
   }
-
+  .nav-social_title {
+    display: inline;
+  }
+  .nav-search input {
+    width: 220px;
+    height: 2.5em
+  }
+  .nav-search button {
+    height: 2.5em;
+    width: 2.5em;
+  }
   .nav-sub {
     position: fixed;
     flex-direction: column;
-    height: 100%;
+    height: calc(100% - var(--nav-main-height));
     width: var(--nav-main-height);
   }
   .main-content {
@@ -447,7 +478,7 @@ li {
     vertical-align: bottom;
   }
   .welcome-title {
-    display: inline;
+    display: inline-block;
   }
   .form-field-input {
     font-size: .6em;
