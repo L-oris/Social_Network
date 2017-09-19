@@ -1,7 +1,7 @@
 import * as io from 'socket.io-client'
 import axios from './axios'
 import {store} from './start'
-import {createOnlineUsers,addOnlineUser,removeOnlineUser,createChatMessages,addChatMessage} from './actions'
+import {createOnlineUsers,addOnlineUser,removeOnlineUser,createChatMessages,addChatMessage,createPrivateChatMessages} from './actions'
 
 
 let socket
@@ -30,6 +30,7 @@ export default function getSocket(){
     })
     socket.on('privateMessages',function(privateMessages){
       console.log('privateMessages',privateMessages);
+      store.dispatch(createPrivateChatMessages(privateMessages))
     })
   }
 

@@ -61,5 +61,12 @@ export default function(state={},action){
     })
   }
 
+  if(action.type==='CREATE_PRIVATE_CHAT_MESSAGES'){
+    const {friendId,messages} = action.chatMessages
+    return Object.assign({},state,{
+      privateMessages: Object.assign({},state.privateMessages,{[friendId]: messages})
+    })
+  }
+
   return state
 }
