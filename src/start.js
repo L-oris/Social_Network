@@ -12,6 +12,7 @@ import OthersProfile from './components/OthersProfile'
 import Friends from './components/Friends'
 import SearchedFriends from './components/SearchedFriends'
 import Online from './components/Online'
+import PrivateChat from './components/PrivateChat'
 import Chat from './components/Chat'
 import NotFound from './components/NotFound'
 
@@ -44,6 +45,7 @@ const loggedInRouter = (
         <Route path="friends" component={Friends}/>
         <Route path="search" component={SearchedFriends}/>
         <Route path="online" component={Online}/>
+        <Route path="private_chat/:id" component={PrivateChat}/>
         <Route path="chat" component={Chat}/>
         <Route path="*" component={NotFound}/>
       </Route>

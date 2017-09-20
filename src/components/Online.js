@@ -1,11 +1,9 @@
 import React,{Component} from 'react'
+import {browserHistory} from 'react-router'
 import {connect} from 'react-redux'
 import getSocket from '../socket'
 import {store} from '../start'
 
-
-//React components
-import PrivateChat from './PrivateChat'
 
 class Online extends Component {
 
@@ -19,9 +17,7 @@ class Online extends Component {
     if(!store.getState().privateMessages[friendId]){
       getSocket().emit('privateMessages',{friendId})
     }
-    this.setState({
-      chattingFriendId: friendId
-    })
+    browserHistory.push(`/private_chat/${friendId}`)
   }
 
   render(){
@@ -44,7 +40,6 @@ class Online extends Component {
           {this.props.onlineUsers && displayOnlineUsers(this.props.onlineUsers)}
         </ul>
         <h4>notifications: {this.props.privateMessageNotifications}</h4>
-        <PrivateChat friendId={this.state.chattingFriendId}/>
       </div>
     )
   }

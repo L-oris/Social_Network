@@ -14,7 +14,7 @@ class PrivateChat extends Component {
 
   componentWillReceiveProps(){
     //eventually remove notifications about new private chat message coming in
-    const {friendId,privateMessageNotifications} = this.props
+    const {privateMessageNotifications,params:{id:friendId}} = this.props
     if(privateMessageNotifications && privateMessageNotifications.indexOf(friendId)>-1){
       store.dispatch(removePrivateMessageNotification(friendId))
     }
@@ -27,7 +27,7 @@ class PrivateChat extends Component {
   }
 
   handleMessageSubmit(e){
-    const {friendId} = this.props
+    const friendId = this.props.params.id
     const {newMessage} = this.state
     newMessage && getSocket().emit('privateMessage',{
       friendId, newMessage
@@ -35,7 +35,7 @@ class PrivateChat extends Component {
   }
 
   render(){
-    const {privateMessages,friendId} = this.props
+    const {privateMessages,params:{id:friendId}} = this.props
     const renderChatMessages = (messages)=>{
       return messages[friendId] && messages[friendId].map(message=>{
         let appliedStyle
