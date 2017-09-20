@@ -81,3 +81,10 @@ export function createPrivateChatMessages(chatMessages){
     chatMessages
   }
 }
+
+export function addPrivateChatMessage(message){
+  return {
+    type: 'ADD_PRIVATE_CHAT_MESSAGE',
+    message
+  }
+}

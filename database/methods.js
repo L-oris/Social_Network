@@ -233,7 +233,7 @@ module.exports.addChatMessage = function(user_id,message){
 }
 
 module.exports.getPrivateChat = function(userId,friendId){
-  const query = 'SELECT sender_id,message,created_at FROM private_messages WHERE (sender_id = $2 AND receiver_id = $1) OR (sender_id = $1 AND receiver_id = $2) ORDER BY created_at LIMIT 10'
+  const query = 'SELECT sender_id,message,created_at FROM private_messages WHERE (sender_id = $2 AND receiver_id = $1) OR (sender_id = $1 AND receiver_id = $2) ORDER BY created_at DESC LIMIT 10'
   return db.query(query,[userId,friendId])
   .then(function(dbMessages){
     const messages = dbMessages.rows.map(message=>{
@@ -253,19 +253,26 @@ module.exports.addPrivateChatMessage = function(userId,friendId,newMessage){
   const query = 'INSERT INTO private_messages (sender_id,receiver_id,message) VALUES ($1,$2,$3) RETURNING created_at'
   return db.query(query,[userId,friendId,newMessage])
   .then(function(dbData){
-    const userMessage = {
+    const user_message = {
       ownMessage: true,
       message: newMessage,
       timestamp: dbData.rows[0].created_at
     }
-    const friendMessage = {
+    const friend_message = {
       ownMessage: false,
       message: newMessage,
       timestamp: dbData.rows[0].created_at
     }
-    
+
     return {
-      userMessage,friendMessage
+      userMessage:{
+        friendId: friendId,
+        message: user_message
+      },
+      friendMessage:{
+        friendId: userId,
+        message: friend_message
+      }
     }
   })
 }
