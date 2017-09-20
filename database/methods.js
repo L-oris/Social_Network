@@ -248,3 +248,24 @@ module.exports.getPrivateChat = function(userId,friendId){
     }
   })
 }
+
+module.exports.addPrivateChatMessage = function(userId,friendId,newMessage){
+  const query = 'INSERT INTO private_messages (sender_id,receiver_id,message) VALUES ($1,$2,$3) RETURNING created_at'
+  return db.query(query,[userId,friendId,newMessage])
+  .then(function(dbData){
+    const userMessage = {
+      ownMessage: true,
+      message: newMessage,
+      timestamp: dbData.rows[0].created_at
+    }
+    const friendMessage = {
+      ownMessage: false,
+      message: newMessage,
+      timestamp: dbData.rows[0].created_at
+    }
+    
+    return {
+      userMessage,friendMessage
+    }
+  })
+}

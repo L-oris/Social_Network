@@ -29,8 +29,10 @@ export default function getSocket(){
       store.dispatch(addChatMessage(newChatMessage))
     })
     socket.on('privateMessages',function(privateMessages){
-      console.log('privateMessages',privateMessages);
       store.dispatch(createPrivateChatMessages(privateMessages))
+    })
+    socket.on('privateMessage',function(newPrivateMessage){
+      console.log('new private message received!',newPrivateMessage);
     })
   }
 

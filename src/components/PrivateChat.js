@@ -9,6 +9,20 @@ class PrivateChat extends Component {
     this.state = {}
   }
 
+  handlMessageChange(e){
+    this.setState({
+      newMessage: e.target.value
+    })
+  }
+
+  handleMessageSubmit(e){
+    const {friendId} = this.props
+    const {newMessage} = this.state
+    newMessage && getSocket().emit('privateMessage',{
+      friendId, newMessage
+    })
+  }
+
   render(){
     const {privateMessages,friendId} = this.props
     const renderChatMessages = (messages)=>{
@@ -25,10 +39,16 @@ class PrivateChat extends Component {
       })
     }
 
+    const messageEditor = <div>
+      <textarea onChange={e=>this.handlMessageChange(e)}></textarea>
+      <button onClick={e=>this.handleMessageSubmit(e)}>Send</button>
+    </div>
+
     return (
       <div>
         Here's the PrivateChat component
         {privateMessages && renderChatMessages(privateMessages)}
+        {privateMessages && messageEditor}
       </div>
     )
   }

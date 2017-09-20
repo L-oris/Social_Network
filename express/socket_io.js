@@ -1,4 +1,4 @@
-const {searchUserById,searchUsersById,addChatMessage,getPrivateChat} = require('../database/methods')
+const {searchUserById,searchUsersById,addChatMessage,getPrivateChat,addPrivateChatMessage} = require('../database/methods')
 
 //add socket.io settings to current 'app'
 module.exports = function(app,io){
@@ -59,6 +59,22 @@ module.exports = function(app,io){
       })
       .catch(function(err){
         console.log(`Error fetching previous chats between ${userId} and ${friendId}`);
+      })
+    })
+
+    //private message sent between current user and another one
+    socket.on('privateMessage',function({friendId,newMessage}){
+      const {userId} = onlineUsers.filter(user=>user.socketId===socket.id)[0]
+      addPrivateChatMessage(userId,friendId,newMessage)
+      .then(function({userMessage,friendMessage}){
+        //send back new message to all user sockets and all friend sockets
+        const userSockets = onlineUsers.filter(user => user.userId===userId).map(userObj => userObj.socketId)
+        const friendSockets = onlineUsers.filter(user => user.userId===friendId).map(userObj => userObj.socketId)
+        io.sockets.sockets[userSockets].emit('privateMessage',userMessage)
+        io.sockets.sockets[friendSockets].emit('privateMessage',friendMessage)
+      })
+      .catch(function(err){
+        console.log(`Error adding new private message between ${userId} and ${friendId}`);
       })
     })
 
