@@ -123,12 +123,12 @@ module.exports.searchUsersById = function(idArray){
 }
 
 module.exports.searchUsersByName = function(nameString){
-  const namesArr = nameString.split(" ")
+  const namesArr = nameString.split(" ").map(name=>`${name}%`)
   let query
-  if(namesArr.length<2){
-    query = 'SELECT id,first,last,email,profilepicurl,bio FROM users WHERE first = $1 OR last = $1'
+  if(namesArr.length===1){
+    query = 'SELECT id,first,last,email,profilepicurl,bio FROM users WHERE first ILIKE $1 OR last ILIKE $1'
   } else {
-    query = 'SELECT id,first,last,email,profilepicurl,bio FROM users WHERE (first = $1 AND last = $2) OR (first = $2 AND last = $1)'
+    query = 'SELECT id,first,last,email,profilepicurl,bio FROM users WHERE (first ILIKE $1 AND last ILIKE $2) OR (first ILIKE $2 AND last ILIKE $1)'
   }
   //if more than 2 words provided, just take first ones
   return db.query(query,namesArr.slice(0,2))
