@@ -34,6 +34,7 @@ export default function(state={},action){
   if(action.type==='CREATE_ONLINE_USERS'){
     return Object.assign({},state,{
       onlineUsers: action.onlineUsers,
+      privateMessages: {},
       privateMessageNotifications: []
     })
   }

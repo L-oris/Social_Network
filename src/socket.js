@@ -32,13 +32,13 @@ export default function getSocket(){
       store.dispatch(createPrivateChatMessages(privateMessages))
     })
     socket.on('privateMessage',function(newPrivateMessage){
-      const {friendId,message} = newPrivateMessage
       //send notification about incoming message
+      const {friendId,message} = newPrivateMessage
       if(!message.ownMessage){
         store.dispatch(addPrivateMessageNotification(friendId))
       }
       //store incoming message into Redux store (if previous messages with that user has been fetched already)
-      if(store.getState().privateMessages && store.getState().privateMessages[friendId]){
+      if(store.getState().privateMessages[friendId]){
         store.dispatch(addPrivateChatMessage(newPrivateMessage))
       }
     })

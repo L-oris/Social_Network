@@ -1,6 +1,8 @@
 import React,{Component} from 'react'
 import {connect} from 'react-redux'
 import getSocket from '../socket'
+import {store} from '../start'
+
 
 //React components
 import PrivateChat from './PrivateChat'
@@ -12,14 +14,11 @@ class Online extends Component {
     this.state = {}
   }
 
-
   handleClickedUser(friendId){
-
-    //TODO
-    //check if private conversations already saved into Redux store
-
-    //get previous messages with clicked user from server
-    getSocket().emit('privateMessages',{friendId})
+    //check if private conversations already saved into Redux store, otherwise fetch from database
+    if(!store.getState().privateMessages[friendId]){
+      getSocket().emit('privateMessages',{friendId})
+    }
     this.setState({
       chattingFriendId: friendId
     })
