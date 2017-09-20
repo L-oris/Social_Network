@@ -33,7 +33,8 @@ export default function(state={},action){
 
   if(action.type==='CREATE_ONLINE_USERS'){
     return Object.assign({},state,{
-      onlineUsers: action.onlineUsers
+      onlineUsers: action.onlineUsers,
+      privateMessageNotifications: []
     })
   }
 
@@ -74,6 +75,18 @@ export default function(state={},action){
       privateMessages: Object.assign({},state.privateMessages,{
         [friendId]: [message, ...state.privateMessages[friendId]]
       })
+    })
+  }
+
+  if(action.type==='ADD_PRIVATE_MESSAGE_NOTIFICATION'){
+    return Object.assign({},state,{
+      privateMessageNotifications: [...state.privateMessageNotifications,action.friendId]
+    })
+  }
+
+  if(action.type==='REMOVE_PRIVATE_MESSAGE_NOTIFICATION'){
+    return Object.assign({},state,{
+      privateMessageNotifications: state.privateMessageNotifications.filter(userId=>userId!==action.friendId)
     })
   }
 

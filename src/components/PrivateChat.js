@@ -1,6 +1,9 @@
 import React,{Component} from 'react'
 import {connect} from 'react-redux'
+import {store} from '../start'
 import getSocket from '../socket'
+import {removePrivateMessageNotification} from '../actions'
+
 
 class PrivateChat extends Component {
 
@@ -9,7 +12,15 @@ class PrivateChat extends Component {
     this.state = {}
   }
 
-  handlMessageChange(e){
+  componentWillReceiveProps(){
+    //eventually remove notifications about new private chat message coming in
+    const {friendId,privateMessageNotifications} = this.props
+    if(privateMessageNotifications && privateMessageNotifications.indexOf(friendId)>-1){
+      store.dispatch(removePrivateMessageNotification(friendId))
+    }
+  }
+
+  handleMessageChange(e){
     this.setState({
       newMessage: e.target.value
     })
@@ -40,7 +51,7 @@ class PrivateChat extends Component {
     }
 
     const messageEditor = <div>
-      <textarea onChange={e=>this.handlMessageChange(e)}></textarea>
+      <textarea onChange={e=>this.handleMessageChange(e)}></textarea>
       <button onClick={e=>this.handleMessageSubmit(e)}>Send</button>
     </div>
 
@@ -57,7 +68,8 @@ class PrivateChat extends Component {
 
 function mapStateToProps(reduxState){
   return {
-    privateMessages: reduxState.privateMessages
+    privateMessages: reduxState.privateMessages,
+    privateMessageNotifications: reduxState.privateMessageNotifications
   }
 }
 

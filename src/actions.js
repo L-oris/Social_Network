@@ -88,3 +88,17 @@ export function addPrivateChatMessage(message){
     message
   }
 }
+
+export function addPrivateMessageNotification(friendId){
+  return {
+    type: 'ADD_PRIVATE_MESSAGE_NOTIFICATION',
+    friendId
+  }
+}
+
+export function removePrivateMessageNotification(friendId){
+  return {
+    type: 'REMOVE_PRIVATE_MESSAGE_NOTIFICATION',
+    friendId
+  }
+}

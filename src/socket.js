@@ -1,7 +1,7 @@
 import * as io from 'socket.io-client'
 import axios from './axios'
 import {store} from './start'
-import {createOnlineUsers,addOnlineUser,removeOnlineUser,createChatMessages,addChatMessage,createPrivateChatMessages,addPrivateChatMessage} from './actions'
+import {createOnlineUsers,addOnlineUser,removeOnlineUser,createChatMessages,addChatMessage,createPrivateChatMessages,addPrivateChatMessage,addPrivateMessageNotification} from './actions'
 
 
 let socket
@@ -29,12 +29,18 @@ export default function getSocket(){
       store.dispatch(addChatMessage(newChatMessage))
     })
     socket.on('privateMessages',function(privateMessages){
-      console.log('privateMessages',privateMessages);
       store.dispatch(createPrivateChatMessages(privateMessages))
     })
     socket.on('privateMessage',function(newPrivateMessage){
-      console.log('new private message received!',newPrivateMessage);
-      store.dispatch(addPrivateChatMessage(newPrivateMessage))
+      const {friendId,message} = newPrivateMessage
+      //send notification about incoming message
+      if(!message.ownMessage){
+        store.dispatch(addPrivateMessageNotification(friendId))
+      }
+      //store incoming message into Redux store (if previous messages with that user has been fetched already)
+      if(store.getState().privateMessages && store.getState().privateMessages[friendId]){
+        store.dispatch(addPrivateChatMessage(newPrivateMessage))
+      }
     })
   }
 
