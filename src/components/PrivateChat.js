@@ -39,26 +39,28 @@ class PrivateChat extends Component {
     const renderChatMessages = (messages)=>{
       return messages[friendId] && messages[friendId].map(message=>{
         let appliedStyle
-        message.ownMessage ? appliedStyle='text-info' : appliedStyle='text-error'
+        message.ownMessage ? appliedStyle='private_chat-msg private_chat-msg--own' : appliedStyle='private_chat-msg private_chat-msg--friend'
         return (
-          <li>
-            <div className={appliedStyle}>
-              <p>{message.message}</p>
-            </div>
+          <li className={appliedStyle}>
+            <p>{message.message}</p>
           </li>
         )
       })
     }
 
-    const messageEditor = <div>
+    const messageEditor = <div className="private_chat-editor">
       <textarea onChange={e=>this.handleMessageChange(e)}></textarea>
-      <button onClick={e=>this.handleMessageSubmit(e)}>Send</button>
+      <button onClick={e=>this.handleMessageSubmit(e)}>
+        <i className="fa fa-paper-plane" aria-hidden="true"></i>
+      </button>
     </div>
 
     return (
-      <div>
-        Here's the PrivateChat component
-        {privateMessages && renderChatMessages(privateMessages)}
+      <div className="private_chat container-margin">
+        <h1>Private Chat</h1>
+        <ul>
+          {privateMessages && renderChatMessages(privateMessages)}
+        </ul>
         {privateMessages && messageEditor}
       </div>
     )
