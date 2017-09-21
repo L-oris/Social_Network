@@ -1,4 +1,6 @@
 import React,{Component} from 'react'
+import {Link} from 'react-router'
+import moment from 'moment'
 import {connect} from 'react-redux'
 import getSocket from '../socket'
 
@@ -22,20 +24,30 @@ class Chat extends Component {
   render(){
     const renderChatMessages = () => this.props.chatMessages.map(message=>{
       return (
-        <li>
-          <h6>{message.first} {message.last}</h6>
-          <img className="small-deleteme" src={message.profilePicUrl}/>
-          <p>{message.message}</p>
-          <p>{message.timestamp}</p>
+        <li className="post">
+          <Link to={`/user/${message.user_id}`}>
+            <h4 className="post-name">#{message.first} {message.last}</h4>
+          </Link>
+          {/* <img className="small-deleteme" src={message.profilePicUrl}/> */}
+          <h5 className="post-text">{message.message}</h5>
+          <h6 className="post-timestamp">{moment(message.timestamp).format('MMMM Do YYYY, h:mm:ss a')}</h6>
         </li>
       )
     })
     return (
-      <div className="container-margin">
-        <h1>Here below should be displayed chat messages</h1>
-        {this.props.chatMessages && renderChatMessages()}
-        <h4>Send a new message!</h4>
-        <textarea name="newMessage" ref={newMessage=>this.newMessage=newMessage}></textarea>
+      <div className="chat container-margin">
+
+        <h1>Slipperz Table!</h1>
+
+        <ul>
+          {this.props.chatMessages && renderChatMessages()}
+        </ul>
+
+        <div className="chat-create">
+          <h4>Send a new message!</h4>
+          <textarea name="newMessage" ref={newMessage=>this.newMessage=newMessage}></textarea>
+        </div>
+
       </div>
     )
   }

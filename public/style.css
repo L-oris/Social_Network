@@ -418,6 +418,63 @@ li {
 
 
 /*===========*/
+/*CHAT*/
+/*===========*/
+.chat {}
+  .chat h1 {
+    text-align: center;
+    margin: 0;
+    padding: 1em;
+  }
+.chat-create {}
+.chat ul {
+  display: flex;
+  flex-wrap: wrap;
+  font-family: 'Reenie Beanie', cursive;
+}
+  .post {
+    flex: 1 40%;
+    text-align: center;
+    margin: 5%;
+    background-color: #ffc;
+    box-shadow: 10px 17px 28px -6px rgba(0,0,0,0.75);
+    position: relative;
+  }
+  .post:nth-child(even) {
+    top:5px;
+    transform: rotate(4deg);
+  }
+  .post:nth-child(3n) {
+    top:-5px;
+    transform: rotate(-3deg);
+  }
+  .post:nth-child(5n) {
+    top:-10px;
+    transform: rotate(5deg);
+  }
+  .post:hover, .post:focus {
+    box-shadow:10px 10px 7px rgba(0,0,0,.7);
+    transform: scale(1.25);
+    z-index: 2
+  }
+    .post-name {
+      margin: 0;
+      text-decoration: underline;
+    }
+    .post img {}
+    .post-text {
+      margin: 2em;
+    }
+    .post-timestamp {
+      margin: 0;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+    }
+
+
+
+/*===========*/
 /*ONLINE*/
 /*===========*/
 .online {}
@@ -597,6 +654,10 @@ li {
     margin-top: var(--nav-main-height);
     margin-left: var(--nav-main-height);
   }
+  .post {
+    flex: 1 25%;
+    margin: 4%;
+  }
 }
 
 @media screen and (min-width: 1024px){
@@ -623,5 +684,9 @@ li {
   }
   .form-field-input {
     font-size: .6em;
+  }
+  .post {
+    flex: 1 20%;
+    margin: 2%;
   }
 }
