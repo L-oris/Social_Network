@@ -68,8 +68,8 @@ module.exports = function(app,io){
       addPrivateChatMessage(userId,friendId,newMessage)
       .then(function({userMessage,friendMessage}){
         //send back new message to all user sockets and all friend sockets
-        const userSockets = onlineUsers.filter(user => user.userId===userId).map(userObj => userObj.socketId)
-        const friendSockets = onlineUsers.filter(user => user.userId===friendId).map(userObj => userObj.socketId)
+        const userSockets = onlineUsers.filter(user => user.userId==userId).map(userObj => userObj.socketId)
+        const friendSockets = onlineUsers.filter(user => user.userId==friendId).map(userObj => userObj.socketId)
         io.sockets.sockets[userSockets].emit('privateMessage',userMessage)
         io.sockets.sockets[friendSockets].emit('privateMessage',friendMessage)
       })

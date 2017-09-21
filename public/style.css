@@ -421,9 +421,10 @@ li {
 .online h1 {
   text-align: center;
   padding: .5em;
+  margin: 0;
 }
 .online ul {
-  margin: 2em 0;
+  margin: 1em 0;
 }
   .online li {
     display: flex;
