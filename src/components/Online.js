@@ -24,14 +24,12 @@ class Online extends Component {
     const {privateMessageNotifications} = this.props
 
     const displayOnlineUsers = ()=>{
-      const notification = 'online-notification'
       return this.props.onlineUsers.map(user=>{
         return (
           <li onClick={e=>this.handleClickedUser(user.id)}>
             <img src={user.profilePicUrl}/>
             <h3 className="online-name">{user.first} {user.last}</h3>
-            {/* {privateMessageNotifications.indexOf(user.id)>-1 && <div className="online-notification"></div>} */}
-            <div className={notification}></div>
+            {privateMessageNotifications.indexOf(user.id)>-1 && <div className="online-notification"></div>}
             <i className="fa fa-arrow-right" aria-hidden="true"></i>
           </li>
         )
@@ -44,7 +42,6 @@ class Online extends Component {
         <ul>
           {this.props.onlineUsers && displayOnlineUsers(this.props.onlineUsers)}
         </ul>
-        <h4>notifications: {privateMessageNotifications}</h4>
       </div>
     )
   }

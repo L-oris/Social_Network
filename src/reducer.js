@@ -87,7 +87,7 @@ export default function(state={},action){
 
   if(action.type==='REMOVE_PRIVATE_MESSAGE_NOTIFICATION'){
     return Object.assign({},state,{
-      privateMessageNotifications: state.privateMessageNotifications.filter(userId=>userId!==action.friendId)
+      privateMessageNotifications: state.privateMessageNotifications.filter(userId=>userId!=action.friendId)
     })
   }
 

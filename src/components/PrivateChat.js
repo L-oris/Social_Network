@@ -15,13 +15,11 @@ class PrivateChat extends Component {
   }
 
   componentDidUpdate(){
+    //scroll page to bottom
     document.body.scrollTop += 1000;
-  }
-
-  componentWillReceiveProps(){
     //eventually remove notifications about new private chat message coming in
     const {privateMessageNotifications,params:{id:friendId}} = this.props
-    if(privateMessageNotifications && privateMessageNotifications.indexOf(friendId)>-1){
+    if(privateMessageNotifications && privateMessageNotifications.indexOf(Number(friendId))>-1){
       store.dispatch(removePrivateMessageNotification(friendId))
     }
   }

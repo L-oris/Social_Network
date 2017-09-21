@@ -369,6 +369,7 @@ li {
 }
 .friends-title {
   margin: 0;
+  padding: 1em;
 }
 .friends-items {
   display: flex;
