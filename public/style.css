@@ -283,19 +283,26 @@ li {
   margin: 0;
   padding: .5em;
 }
-.profile .user_pic {}
+.profile .user_pic {
+  padding: 4px;
+  background-color: darkblue;
+  border-radius: 20%;
+}
 .profile .user_pic-img {
+  border-radius: 20%;
+  border: 4px solid white;
   width: 100%;
 }
 .bio {
   margin-top: 2em;
   font-family: 'Caveat', cursive;
   font-size: 1.3em;
-  border-top: 2px solid black;
+  border-top: 2px solid grey;
 }
 .bio-text {
   width: 85%;
   margin: 0 auto;
+  font-size: 1.1em;
 }
 .bio .text-link {
   display: block;
@@ -311,16 +318,22 @@ li {
   resize: none;
   text-align: center;
   font-family: 'Caveat', cursive;
-  border: 3px solid var(--logo_text-color);
+  border: 1px solid grey;
   border-radius: .5em;
 }
 .bio-button {
-  border: 3px solid var(--logo_text-color);
-  padding: .5em;
+  padding: .3em;
   margin: 0 1em;
   background-color: white;
-  color: var(--logo_text-color);
-  border-radius: 1em;
+  border-radius: .5em;
+}
+.bio-button--save {
+  border: 2px solid green;
+  color: green;
+}
+.bio-button--return {
+  border: 2px solid red;
+  color: red;
 }
 
 
@@ -330,11 +343,16 @@ li {
 .others {
   text-align: center;
 }
-.others .user_pic {}
+.others .user_pic {
+  padding: 4px;
+  background-color: darkblue;
+  border-radius: 20%;
+}
 .others .user_pic-img {
+  border-radius: 20%;
+  border: 4px solid white;
   width: 100%;
 }
-
 
 
 /*===========*/
@@ -676,6 +694,12 @@ li {
   .main-content {
     margin-top: var(--nav-main-height);
     margin-left: var(--nav-main-height);
+  }
+  .bio-text {
+    font-size: 1.3em;
+  }
+  .bio-input {
+    font-size: 1.3em;
   }
   .uploader-container {
     top: 300px;

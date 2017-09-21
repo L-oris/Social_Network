@@ -52,8 +52,8 @@ export default class EditableBio extends Component {
     const bioInput = (
       <div>
         <textarea onChange={e=>this.handleChangeBio(e)} rows="4" cols="50" className="bio-input">{bio}</textarea>
-        <button onClick={e=>this.handleSaveBio(e)} className="bio-button">Save</button>
-        <button onClick={e=>this.editBioIsVisible(false)} className="bio-button">Return</button>
+        <button onClick={e=>this.handleSaveBio(e)} className="bio-button bio-button--save">Save</button>
+        <button onClick={e=>this.editBioIsVisible(false)} className="bio-button bio-button--return">Return</button>
       </div>
     )
     const bioRender =()=>{
