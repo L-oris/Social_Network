@@ -13,7 +13,7 @@ class Chat extends Component {
 
   componentDidMount(){
     this.newMessage.addEventListener('keydown',e=>{
-      if(e.keyCode===13){
+      if(e.keyCode===13 && e.target.value){
         e.preventDefault()
         getSocket().emit('chatMessage',e.target.value)
         e.target.value = ''
@@ -39,14 +39,14 @@ class Chat extends Component {
 
         <h1>Slipperz Table!</h1>
 
+        <div className="chat-create">
+          <input name="newMessage" ref={newMessage=>this.newMessage=newMessage}></input>
+          <h4>Publish your post!</h4>
+        </div>
+
         <ul>
           {this.props.chatMessages && renderChatMessages()}
         </ul>
-
-        <div className="chat-create">
-          <h4>Send a new message!</h4>
-          <textarea name="newMessage" ref={newMessage=>this.newMessage=newMessage}></textarea>
-        </div>
 
       </div>
     )
@@ -55,7 +55,7 @@ class Chat extends Component {
 
 function mapStateToProps(reduxState){
   return {
-    chatMessages: reduxState.chatMessages
+    chatMessages: reduxState.chatMessages && reduxState.chatMessages.reverse()
   }
 }
 

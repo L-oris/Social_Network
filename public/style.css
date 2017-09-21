@@ -10,7 +10,7 @@
   --nav-main-height: 60px;
   --nav-main-elems-height: 45px;
 }
-body, input, button, img {
+body, input, button {
   box-sizing: border-box;
   font-family: 'Gochi Hand', cursive;
   background-color: rgba(30,144,255,.1);
@@ -218,16 +218,24 @@ li {
 }
 .uploader-container {
   position: absolute;
-  top: 25%;
+  top: 250px;
   left: 50%;
   z-index: 11;
   width: 75%;
   transform: translateX(-50%);
   padding: 1em;
-  border: 3px solid coral;
+  border: 3px solid rebeccapurple;
   border-radius: .5em;
   background-color: white;
   text-align: center;
+}
+.uploader-overlay img {
+  width: 240px;
+  position: absolute;
+  z-index: 15;
+  top: 188px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 .uploader-title {
   color: grey;
@@ -238,7 +246,7 @@ li {
   height: 1em;
   text-align: center;
   border-radius: 50%;
-  border: 2px solid red;
+  font-size: 2em;
 }
 #file-input {
   width: 0.1px;
@@ -426,11 +434,26 @@ li {
     margin: 0;
     padding: 1em;
   }
-.chat-create {}
+.chat-create {
+  text-align: center;
+}
+  .chat-create input {
+    background-color: #ffc;
+    transform: rotate(-2deg);
+    padding: 1em;
+    border: none;
+    box-shadow: 10px 17px 28px -6px rgba(0,0,0,0.75);
+  }
+  .chat-create h4 {
+    color: gray;
+    margin: 1.5em;
+  }
 .chat ul {
   display: flex;
   flex-wrap: wrap;
   font-family: 'Reenie Beanie', cursive;
+  border-top: 3px solid gray;
+  margin-top: 3em;
 }
   .post {
     flex: 1 40%;
@@ -653,6 +676,13 @@ li {
   .main-content {
     margin-top: var(--nav-main-height);
     margin-left: var(--nav-main-height);
+  }
+  .uploader-container {
+    top: 300px;
+  }
+  .uploader-overlay img {
+    width: 500px;
+    left: 42%;
   }
   .post {
     flex: 1 25%;
