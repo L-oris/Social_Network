@@ -66,7 +66,7 @@ export default function(state={},action){
   if(action.type==='CREATE_PRIVATE_CHAT_MESSAGES'){
     const {friendId,messages} = action.chatMessages
     return Object.assign({},state,{
-      privateMessages: Object.assign({},state.privateMessages,{[friendId]: messages})
+      privateMessages: Object.assign({},state.privateMessages,{[friendId]: messages.reverse()})
     })
   }
 
@@ -74,7 +74,7 @@ export default function(state={},action){
     const {friendId,message} = action.message
     return Object.assign({},state,{
       privateMessages: Object.assign({},state.privateMessages,{
-        [friendId]: [message, ...state.privateMessages[friendId]]
+        [friendId]: [...state.privateMessages[friendId], message]
       })
     })
   }

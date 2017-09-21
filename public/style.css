@@ -5,6 +5,8 @@
 
 :root {
   --logo_text-color: #0CB3CC;
+  --nav_sub-color: #5F7DAC;
+  --blue-color: rgb(4,47,116);
   --nav-main-height: 60px;
   --nav-main-elems-height: 45px;
 }
@@ -152,7 +154,7 @@ li {
     width: 150px;
     height: 2em;
     background-color: white;
-    border: 2px solid rgba(4,47,116,1);
+    border: 2px solid var(--blue-color);
     border-bottom-left-radius: .5em;
     border-top-left-radius: .5em;
     vertical-align: bottom;
@@ -162,8 +164,8 @@ li {
     height: 2em;
     width: 2em;
     color: white;
-    border: 2px solid rgba(4,47,116,1);
-    background-color: rgba(4,47,116,1);
+    border: 2px solid var(--blue-color);
+    background-color: var(--blue-color);
     border-top-right-radius: .5em;
     border-bottom-right-radius: .5em;
   }
@@ -173,7 +175,7 @@ li {
     width: var(--nav-main-elems-height);
     height: var(--nav-main-elems-height);
     border-radius: 50%;
-    border: 2px solid coral;
+    border: 2px solid var(--blue-color);
   }
   .nav .user_pic-img {
     position: absolute;
@@ -189,7 +191,7 @@ li {
   justify-content: space-around;
   align-items: center;
   flex-wrap: wrap;
-  background-color: #5F7DAC;
+  background-color: var(--nav_sub-color);
   color: white;
   height: var(--nav-main-height);
 }
@@ -332,13 +334,13 @@ li {
 /*===========*/
 .srced_friends {}
 .srced_friends-item {
-  border-bottom: 1px solid coral;
+  border-bottom: 1px solid var(--blue-color);
   padding: 1em 0;
 }
 .srced_friends-item img {
   width: 15%;
   border-radius: 1em .3em;
-  border: 2px solid coral;
+  border: 2px solid var(--blue-color);
   vertical-align: bottom;
 }
 .srced_friends-item-text {
@@ -463,10 +465,10 @@ li {
 .private_chat {
   text-align: center;
 }
-.private_chat h1 {
-  padding: .5em;
+.private_chat ul {
+  padding-top: 1em;
+  margin-bottom: 6em;
 }
-.private_chat ul {}
   .private_chat-msg {
     width: 80%;
     padding: .1em;
@@ -479,7 +481,7 @@ li {
     bottom: 0;
     width: 0;
     height: 0;
-    border: 20px solid transparent;
+    border: 15px solid transparent;
     border-bottom: 0;
     margin-left: -5px;
     margin-bottom: -10px;
@@ -503,9 +505,17 @@ li {
     left: 10%;
 
   }
+  /*message*/
   .private_chat li p {
     font-family: initial;
     font-size: .9em;
+  }
+  /*timestamp*/
+  .private_chat li h6 {
+    margin: 0;
+    text-align: right;
+    color: dimgrey;
+    padding-right: 1em;
   }
 .private_chat-editor {
   position: fixed;
@@ -521,7 +531,7 @@ li {
 }
   .private_chat-editor textarea {
     width: 70%;
-    border: 2px solid rgba(4,47,116,1);
+    border: 2px solid var(--blue-color);
     border-radius: 1em;
     resize: none;
     text-align: center;
@@ -529,7 +539,7 @@ li {
   }
   .private_chat-editor button {
     border: none;
-    background-color: rgba(4,47,116,1);
+    background-color: var(--blue-color);
     border-radius: 50%;
     margin: .3em;
   }

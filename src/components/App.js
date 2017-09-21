@@ -110,7 +110,7 @@ class App extends Component {
             </div>
 
             <div className="nav-search">
-              <input type="text" name="friendSearchInput" value={this.state.friendSearchInput} placeholder="Marge" onChange={e=>this.handleSearchChange(e)}/>
+              <input type="text" name="friendSearchInput" value={this.state.friendSearchInput} placeholder="Marge Simpson" onChange={e=>this.handleSearchChange(e)}/>
               <button onClick={e=>this.handleSearchSubmit(e)}>
                 <i className="fa fa-search" aria-hidden="true"></i>
               </button>

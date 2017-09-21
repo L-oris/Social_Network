@@ -1,4 +1,6 @@
 import React,{Component} from 'react'
+import ReactDOM from 'react-dom'
+import moment from 'moment'
 import {connect} from 'react-redux'
 import {store} from '../start'
 import getSocket from '../socket'
@@ -10,6 +12,10 @@ class PrivateChat extends Component {
   constructor(props){
     super(props)
     this.state = {}
+  }
+
+  componentDidUpdate(){
+    document.body.scrollTop += 1000;
   }
 
   componentWillReceiveProps(){
@@ -32,10 +38,13 @@ class PrivateChat extends Component {
     newMessage && getSocket().emit('privateMessage',{
       friendId, newMessage
     })
+    //clear input
+    this.textArea.value = ''
   }
 
   render(){
     const {privateMessages,params:{id:friendId}} = this.props
+
     const renderChatMessages = (messages)=>{
       return messages[friendId] && messages[friendId].map(message=>{
         let appliedStyle
@@ -43,13 +52,14 @@ class PrivateChat extends Component {
         return (
           <li className={appliedStyle}>
             <p>{message.message}</p>
+            <h6>{moment(message.timestamp).format('MMMM Do YYYY, h:mm:ss a')}</h6>
           </li>
         )
       })
     }
 
     const messageEditor = <div className="private_chat-editor">
-      <textarea onChange={e=>this.handleMessageChange(e)}></textarea>
+      <textarea ref={el=>this.textArea=el} onChange={e=>this.handleMessageChange(e)}></textarea>
       <button onClick={e=>this.handleMessageSubmit(e)}>
         <i className="fa fa-paper-plane" aria-hidden="true"></i>
       </button>
@@ -57,11 +67,13 @@ class PrivateChat extends Component {
 
     return (
       <div className="private_chat container-margin">
-        <h1>Private Chat</h1>
+
         <ul>
           {privateMessages && renderChatMessages(privateMessages)}
         </ul>
+
         {privateMessages && messageEditor}
+
       </div>
     )
   }
