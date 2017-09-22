@@ -1,7 +1,7 @@
 const db = require('./db');
 const {hashPassword,checkPassword} = require('./hashing')
 const {s3Url} = require('../config/config.json')
-const defaultImageUrl = '765-default-avatar.png'
+const defaultImageUrl = 'profile-default.jpg'
 
 module.exports.createUser = function({first,last,email,password}){
   return hashPassword(password)

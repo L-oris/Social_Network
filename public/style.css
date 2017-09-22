@@ -233,7 +233,7 @@ li {
   width: 240px;
   position: absolute;
   z-index: 15;
-  top: 188px;
+  top: -65px;
   left: 50%;
   transform: translateX(-50%);
 }
@@ -257,6 +257,8 @@ li {
   z-index: -1;
 }
 #file-input + label {
+  position: relative;
+  z-index: 20;
   font-size: 1.5em;
   font-weight: bold;
   background-color: white;
@@ -735,6 +737,7 @@ li {
   }
   .uploader-overlay img {
     width: 500px;
+    top: -134px;
     left: 42%;
   }
   .post {
@@ -761,12 +764,17 @@ li {
   .welcome img.social_logo-img {
     display: inline;
     vertical-align: bottom;
+    width: 20%;
   }
   .welcome-title {
     display: inline-block;
+    font-size: 2em;
   }
   .form-field-input {
     font-size: .6em;
+  }
+  .welcome-link {
+    font-size: .8em;
   }
   .post {
     flex: 1 20%;
