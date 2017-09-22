@@ -21,9 +21,12 @@ function SearchedFriends(props){
   }
 
   return (
-    <ul className='srced_friends container-margin'>
-      {props.users && renderFriends()}
-    </ul>
+    <div className='srced_friends container-margin'>
+      <h1>Find your friends!</h1>
+      <ul>
+        {props.users && renderFriends()}
+      </ul>
+    </div>
   )
 }
 

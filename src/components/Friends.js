@@ -51,12 +51,9 @@ class Friends extends Component {
 
     return (
       <div className="friends container-margin">
-        <h2 className="friends-title">Pending friends</h2>
+        <h1 className="friends-title">Follow the Sleeperz!</h1>
         <ul className="friends-items">
           {friends && renderPendingFriends()}
-        </ul>
-        <h2 className="friends-title">Current friends</h2>
-        <ul className="friends-items">
           {friends && renderCurrentFriends()}
         </ul>
       </div>

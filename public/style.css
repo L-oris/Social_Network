@@ -270,7 +270,8 @@ li {
 
 #file-input:focus + label,
 #file-input + label:hover {
-  background-color: red;
+  color: rebeccapurple;
+  border-color: rebeccapurple;
 }
 
 /*===========*/
@@ -342,6 +343,7 @@ li {
 /*===========*/
 .others {
   text-align: center;
+  margin-bottom: 2em;
 }
 .others .user_pic {
   padding: 4px;
@@ -355,15 +357,39 @@ li {
 }
 
 
+.friendship_button {}
+  .friendship_button button {
+    margin: .8em;
+    padding: .5em;
+    background-color: transparent;
+    border: 2px solid var(--logo_text-color);
+    color: var(--logo_text-color);
+    border-radius: 5px;
+    transition: 0.25s;
+  }
+  .friendship_button button:hover,
+  .friendship_button button:focus {
+    box-shadow: inset 0 0 0 2em var(--logo_text-color);
+    color: white;
+  }
+
+
+
 /*===========*/
 /*SEARCHED FRIENDS*/
 /*===========*/
 .srced_friends {}
+.srced_friends h1 {
+  margin: 0;
+  padding: .5em;
+  text-align: center;
+}
 .srced_friends-item {
   border-bottom: 1px solid var(--blue-color);
   padding: 1em 0;
 }
 .srced_friends-item img {
+  box-sizing: border-box;
   width: 15%;
   border-radius: 1em .3em;
   border: 2px solid var(--blue-color);
@@ -395,7 +421,7 @@ li {
 }
 .friends-title {
   margin: 0;
-  padding: 1em;
+  padding: .5em;
 }
 .friends-items {
   display: flex;
@@ -419,12 +445,14 @@ li {
   width: 100px;
   height: 100px;
   border-top-left-radius: 1em;
+  border-top-right-radius: 5px;
+  box-sizing: border-box;
 }
 .friends-item_pending img {
-  border: 2px solid red;
+  border: 2px solid green;
 }
 .friends-item_current img {
-  border: 2px solid green;
+  border: 2px solid #c21807;
 }
 .friends-item button {
   position: absolute;
@@ -434,12 +462,13 @@ li {
   border: none;
   color: white;
   border-bottom-right-radius: 1em;
+  border-bottom-left-radius: 5px;
 }
 .friends-item_pending button {
-  background-color: red;
+  background-color: green;
 }
 .friends-item_current button {
-  background-color: green;
+  background-color: #c21807;
 }
 
 
@@ -450,7 +479,7 @@ li {
   .chat h1 {
     text-align: center;
     margin: 0;
-    padding: 1em;
+    padding: .5em;
   }
 .chat-create {
   text-align: center;
