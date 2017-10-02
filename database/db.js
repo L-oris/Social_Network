@@ -7,7 +7,7 @@ if(process.env.DATABASE_URL){
 } else {
   //grab data for logging into database
   const {dbUser,dbPassword} = require('../secret.json');
-  db = spicedPg(`postgres:${dbUser}:${dbPassword}@localhost:5432/socialNetwork`);
+  db = spicedPg(`postgres:${dbUser}:${dbPassword}@localhost:5432/slipperz`);
 }
 
 module.exports = db;
