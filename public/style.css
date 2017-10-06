@@ -186,6 +186,21 @@ li {
     width: 100%;
     object-fit: cover;
   }
+  @keyframes pulse {
+    25% {
+      transform: scale(1.2);
+    }
+    75% {
+      transform: scale(0.8);
+    }
+  }
+  .nav .user_pic:hover {
+    animation-name: pulse;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+  
 .nav-sub {
   position: fixed;
   z-index: 10;
@@ -206,6 +221,7 @@ li {
   .nav-sub-link h5 {
     margin: 0;
   }
+
 
 
 /*===========*/
