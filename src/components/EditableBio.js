@@ -44,9 +44,12 @@ export default class EditableBio extends Component {
 
     const noBioText = <p onClick={e=>this.editBioIsVisible(true)} className="text-link">Add your bio now</p>
     const bioText = (
-      <div className="bio-text">
+      <div>
+        <p className="bio-text" onClick={e=>this.editBioIsVisible(true)}>
+          {bio}
+          <i className="fa fa-pencil" aria-hidden="true"></i>
+        </p>
         <h4 className="text-error">{error}</h4>
-        <p>{bio}<span onClick={e=>this.editBioIsVisible(true)} className="text-link">Edit</span></p>
       </div>
     )
     const bioInput = (

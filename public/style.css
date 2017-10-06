@@ -116,6 +116,7 @@ li {
 /*===========*/
 .main-content {
   margin-top: calc(var(--nav-main-height)*2);
+  margin-bottom: 2em;
 }
 
 
@@ -178,9 +179,12 @@ li {
     border: 2px solid var(--blue-color);
   }
   .nav .user_pic-img {
+    cursor: pointer;
     position: absolute;
     margin: auto;
     height: 100%;
+    width: 100%;
+    object-fit: cover;
   }
 .nav-sub {
   position: fixed;
@@ -281,54 +285,55 @@ li {
 /*===========*/
 .profile {
   text-align: center;
+  padding-top: 1.5em;
+}
+.profile-tab {
+  background-color: white;
+  border: 2px solid var(--nav_sub-color);
+  border-radius: 1em;
+  padding-bottom: 1.5em;
+}
+.profile .user_pic {}
+.profile .user_pic-img {
+  max-height: 200px;
+  width: 100%;
+  margin-bottom: -25px;
+  object-fit: cover;
+  border-top-left-radius: .8em;
+  border-top-right-radius: .8em;
 }
 .profile-name {
-  margin: 0;
-  padding: .5em;
+  position: relative;
+  margin: 0 0 .5em;
+  border-top: 30px solid rgba(255,255,255,.7);
+  color: var(--nav_sub-color);
 }
-.profile .user_pic {
-  padding: 4px;
-  background-color: darkblue;
-  border-radius: 20%;
-}
-.profile .user_pic-img {
-  border-radius: 20%;
-  border: 4px solid white;
-  width: 100%;
-}
-.bio {
-  margin-top: 2em;
-  font-family: 'Caveat', cursive;
-  font-size: 1.3em;
-  border-top: 2px solid grey;
-}
+.bio {}
 .bio-text {
-  width: 85%;
-  margin: 0 auto;
-  font-size: 1.1em;
+  padding: 1em;
+  padding-top: .3em;
+  margin: 0;
 }
-.bio .text-link {
-  display: block;
-  margin: .5em;
+.bio-text i {
+  padding: 0 1em;
 }
 .bio-input {
-  display: block;
-  margin: 1em auto .5em;
-  width: 85%;
-  background-color: #fff;
+  padding: 1em;
+  padding-top: .3em;
+  width: 100%;
+  text-align: center;
+  border: none;
+  resize: none;
+  font-family: 'Gochi Hand', cursive;
   background-image: linear-gradient(#eee .1em, transparent .1em);
   background-size: 100% 1.2em;
-  resize: none;
-  text-align: center;
-  font-family: 'Caveat', cursive;
-  border: 1px solid grey;
-  border-radius: .5em;
 }
 .bio-button {
   padding: .3em;
   margin: 0 1em;
   background-color: white;
   border-radius: .5em;
+  cursor: pointer;
 }
 .bio-button--save {
   border: 2px solid green;
@@ -725,6 +730,13 @@ li {
   .main-content {
     margin-top: var(--nav-main-height);
     margin-left: var(--nav-main-height);
+    margin-bottom: 4em;
+  }
+  .profile {
+    margin-top: 6em;
+  }
+  .profile .user_pic-img {
+    max-height: 500px;
   }
   .bio-text {
     font-size: 1.3em;
@@ -775,6 +787,15 @@ li {
   }
   .welcome-link {
     font-size: .8em;
+  }
+  .profile {
+    margin-top: 8em;
+  }
+  .profile .user_pic-img {
+    margin-bottom: -40px;
+  }
+  .profile-name {
+    border-top: 45px solid rgba(255,255,255,.7);
   }
   .post {
     flex: 1 20%;
