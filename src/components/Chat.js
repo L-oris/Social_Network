@@ -55,7 +55,7 @@ class Chat extends Component {
 
 function mapStateToProps(reduxState){
   return {
-    chatMessages: reduxState.chatMessages && reduxState.chatMessages.reverse()
+    chatMessages: reduxState.chatMessages && reduxState.chatMessages
   }
 }
 

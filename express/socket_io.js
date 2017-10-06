@@ -1,4 +1,11 @@
-const {searchUserById,searchUsersById,addChatMessage,getPrivateChat,addPrivateChatMessage} = require('../database/methods')
+const {
+  searchUserById,
+  searchUsersById,
+  getChatMessages,
+  addChatMessage,
+  getPrivateChat,
+  addPrivateChatMessage
+} = require('../database/methods')
 
 //add socket.io settings to current 'app'
 module.exports = function(app,io){
@@ -39,7 +46,7 @@ module.exports = function(app,io){
           chatMessages.push(newChatMessage)
 
           //store no more than 10 messages on server
-          chatMessages.length>10 && chatMessages.shift()
+          chatMessages.length>15 && chatMessages.shift()
 
           //broadcast new message to all users
           io.sockets.emit('chatMessage',newChatMessage)
@@ -89,12 +96,26 @@ module.exports = function(app,io){
     searchUsersById(onlineIds)
     .then(function(users){
       io.sockets.sockets[socketId].emit('onlineUsers',users)
-      io.sockets.sockets[socketId].emit('chatMessages',chatMessages)
       res.json({success:true})
     })
     .catch(function(err){
-      next('Failed getting online users list')
+      next(`Failed getting 'socket.io' online users from database`)
     })
+
+    //when server first starting, fill chat messages with previous ones stored inside database
+    if(chatMessages.length === 0){
+      getChatMessages()
+      .then(function(messagesArr){
+        chatMessages.push(...messagesArr)
+        io.sockets.sockets[socketId].emit('chatMessages',chatMessages)
+      })
+      .catch(function(err){
+        next(`Failed getting 'socket.io' public chat messages from database`)
+      })
+    } else {
+      io.sockets.sockets[socketId].emit('chatMessages',chatMessages)
+    }
+
 
     //push new socket into 'onlineUsers' list
     onlineUsers.push({

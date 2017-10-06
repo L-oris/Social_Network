@@ -34,4 +34,4 @@ CREATE TABLE private_messages(
   receiver_id INTEGER REFERENCES users(id),
   message VARCHAR(200),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-)
+);

@@ -224,6 +224,24 @@ module.exports.deleteFriendshipStatus = function(user_id,friend_id){
 }
 
 
+module.exports.getChatMessages = function(){
+  const query = `
+    SELECT first, last, profilepicurl, message, user_id, messages.created_at
+    FROM messages
+    INNER JOIN users ON messages.user_id = users.id
+    LIMIT 15`
+  return db.query(query)
+  .then(function(dbMessages){
+    return dbMessages.rows.map(_message=>{
+      const {first,last,profilepicurl,message,created_at:timestamp,user_id} = _message
+      return {
+        first,last,user_id,message,timestamp,
+        profilePicUrl: s3Url + profilepicurl
+      }
+    })
+  })
+}
+
 module.exports.addChatMessage = function(user_id,message){
   const query = 'INSERT INTO messages (user_id,message) VALUES ($1,$2) RETURNING created_at'
   return db.query(query,[user_id,message])
