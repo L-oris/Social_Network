@@ -229,6 +229,7 @@ module.exports.getChatMessages = function(){
     SELECT first, last, profilepicurl, message, user_id, messages.created_at
     FROM messages
     INNER JOIN users ON messages.user_id = users.id
+    ORDER BY messages.created_at DESC
     LIMIT 15`
   return db.query(query)
   .then(function(dbMessages){

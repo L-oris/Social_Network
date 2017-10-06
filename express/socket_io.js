@@ -43,10 +43,10 @@ module.exports = function(app,io){
             first,last,profilePicUrl,message,timestamp,
             user_id: messageSender.userId,
           }
-          chatMessages.push(newChatMessage)
+          chatMessages.unshift(newChatMessage)
 
-          //store no more than 10 messages on server
-          chatMessages.length>15 && chatMessages.shift()
+          //store no more than 15 messages on server
+          chatMessages.length>15 && chatMessages.pop()
 
           //broadcast new message to all users
           io.sockets.emit('chatMessage',newChatMessage)
@@ -106,7 +106,7 @@ module.exports = function(app,io){
     if(chatMessages.length === 0){
       getChatMessages()
       .then(function(messagesArr){
-        chatMessages.push(...messagesArr)
+        chatMessages = messagesArr
         io.sockets.sockets[socketId].emit('chatMessages',chatMessages)
       })
       .catch(function(err){

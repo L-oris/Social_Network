@@ -59,7 +59,7 @@ export default function(state={},action){
 
   if(action.type==='ADD_CHAT_MESSAGE'){
     return Object.assign({},state,{
-      chatMessages: [...state.chatMessages,action.message]
+      chatMessages: [action.message,...state.chatMessages]
     })
   }
 
