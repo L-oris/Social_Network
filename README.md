@@ -27,16 +27,16 @@ Main technologies used:
 ### Description
 
 Registration and Login. Passwords are hashed and salted server side before being saved into database. All forms include CSRF protection.<br/>
-![](./static/README_gifs/register.gif)
+![](./public/README_gifs/register.gif)
 
 After logging in, the user can customize his profile page by adding a profile picture (then saved into AWS S3) and a bio.
-![](./static/README_gifs/profile.gif)
+![](./public/README_gifs/profile.gif)
 
 
 Slipperz is a social network, so users are able to request, accept, reject and delete friendships. <br/>
 'Friends' component renders the list of current friends and pending friendship requests.
 Users can also search for friends by name, see their profile and manage the friendship status there.
-![](./static/README_gifs/friendship.gif)
+![](./public/README_gifs/friendship.gif)
 
 
 Every Slipperz member can post stickers on the common board, and all other users will instantly see changes on it.<br/>
@@ -45,4 +45,4 @@ Every Slipperz member can post stickers on the common board, and all other users
 The 'Online' component, instead, renders the entire list of online users.<br/>
 From there users can access to a 'WhatsApp-like' page where they can send private messages each other.<br/><br/>
 Instant messaging, for both public & private chats, has been implemented using 'socket.io', a Javascript library that enables real-time, two-way communication between clients and servers using WebSockets
-![](./static/README_gifs/private_chat.gif)
+![](./public/README_gifs/private_chat.gif)
